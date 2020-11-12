@@ -9,3 +9,16 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+.idea/
+googletest-build/
+googletest-download/
+googletest-src/
+libphysics_interface.so
+physics_interface.cbp
+test/handler_tests
+test/object_dyn_tests
+test/object_stat_tests
+test/object_tests
+test/player_tests
+
+

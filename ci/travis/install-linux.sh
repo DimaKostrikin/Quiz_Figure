@@ -3,8 +3,9 @@ sudo apt-get update -qq
 
 sudo apt-get install -qq g++-5
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
-sudo apt-get install -y valgrind
-sudo apt-get install -y cppcheck
+#Закомменчено для ускорения прохождения ci, будет добавлено позже
+#sudo apt-get install -y valgrind
+#sudo apt-get install -y cppcheck
 
 CMAKE_VERSION=3.3.2
 CMAKE_VERSION_DIR=v3.3

@@ -44,8 +44,9 @@ script:
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
     - ctest --output-on-failure
-    - valgrind --leak-check=yes ./IZ1 < ../test/Resources/example.txt
-    - cppcheck --enable=all ../test/*.cpp ../src/*.c ../include/IZ1/*.h
+    # здесь будет валгринд и cppcheck(пока что закомментил, чтобы быстрее проходил ci
+    #- valgrind --leak-check=yes ./IZ1 < ../test/Resources/example.txt
+    #- cppcheck --enable=all ../test/*.cpp ../src/*.cpp
 
 
 deploy:

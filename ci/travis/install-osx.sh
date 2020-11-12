@@ -1,4 +1,5 @@
 brew update
 brew install ragel
-brew install --HEAD Valgrind
-brew install cppcheck
+#Закомменчено для ускорения прохождения ci, будет добавлено позже
+#brew install --HEAD Valgrind
+#brew install cppcheck
