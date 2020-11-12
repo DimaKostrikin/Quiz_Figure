@@ -18,6 +18,18 @@ Parameters_label::Parameters_label(int obj_id) {
 }
 
 void Parameters_label::changed() {
+    //изменения с объектом, свойства меняются в зависимости от того, что из parameters было изменено
+}
+
+void Parameters_label::close() {
+    //деструктором заменить?
+    //убирает объект, дает scene сигнал
+}
+
+Parameters_label::~Parameters_label() {
 
 }
 
+void Parameters_label::init() {
+    //или в конструкторе все выполнить, или все case сюда запихнуть
+}

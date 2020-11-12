@@ -9,5 +9,6 @@ std::string Map_parser::create_json(std::shared_ptr<Container_map> map) {
 }
 
 bool Map_parser::parser(std::shared_ptr<Container_map> map, std::string file_name) {
+    //парсинг объектов
 
 }

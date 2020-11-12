@@ -6,13 +6,12 @@ Map_editor_handler::Map_editor_handler() {
 }
 
 void Map_editor_handler::on_mouse_click() {
-    bool condition = true;
     //нажатие на объект
-    if (condition){
-        //если объект существующий
-        //тут еще айди объекта передает
-        scene->init_label();
-    }
+
+    //если объект существующий
+    //тут еще айди объекта передает
+    scene->init_label();
+
     //нажатие на тулбар элемент
     //по кейсу создаем элемент
     std::shared_ptr<Object> obj;
@@ -20,6 +19,11 @@ void Map_editor_handler::on_mouse_click() {
     scene->draw_object(obj);
 
     //нажатие на label
+    //принимает новое состояние
+    scene->label->changed();
+
+    //нажатие save
+    parser.create_json(map);
 
 
 
@@ -42,4 +46,8 @@ void Map_editor_handler::on_key_click() {
     map->change_object( obj);
     //перерисовывает элемент
     scene->change_object(obj);
+}
+
+Map_editor_handler::~Map_editor_handler() {
+
 }

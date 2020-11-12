@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <map>
+#include "memory"
+#include "Object.h"
 
 class Parameters_label{
 public:
@@ -20,6 +22,7 @@ private:
     int obj_id;
     std::map <std::string, int> parameters_num;
     std::map<std::string, bool> parameters_bool;
+    std::shared_ptr<Object> obj;
 };
 
 #endif //QUIZ_FIGURE_PARAMETERS_LABEL_H

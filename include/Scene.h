@@ -18,9 +18,10 @@ public:
     void change_object(std::shared_ptr<Object> obj);
     void clear_object(std::shared_ptr<Object> obj);
     void init_label();
+    std::shared_ptr<Parameters_label> label;
+
 private:
     void grid_maker();
-    std::shared_ptr<Parameters_label> label;
 };
 
 #endif //QUIZ_FIGURE_SCENE_H

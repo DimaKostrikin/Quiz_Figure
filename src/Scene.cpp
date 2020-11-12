@@ -2,6 +2,8 @@
 
 Scene::Scene() {
     //рисует все и создает сеточку
+    grid_maker();
+    label = nullptr;
 }
 
 void Scene::init_label() {
@@ -12,6 +14,7 @@ void Scene::init_label() {
 
 void Scene::change_object(std::shared_ptr<Object> obj) {
     //меняет объект
+    //возможно обойтись только cl_obj и draw_obj?
 
 }
 
@@ -21,4 +24,8 @@ void Scene::clear_object(std::shared_ptr<Object> obj) {
 void Scene::draw_object(std::shared_ptr<Object> obj) {
 
     //рисует объект
+}
+
+void Scene::grid_maker() {
+    //отрисовка сетки
 }
