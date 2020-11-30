@@ -18,7 +18,6 @@ struct Speed {
 
 class Object {
 public:
-    Object();
     Object(int e_type);
     Object(int e_type, Point &p);
     ~Object();
@@ -34,11 +33,10 @@ private:
 
 class Object_dynamic : public Object {
 public:
-    Object_dynamic();
-    Object_dynamic(int e_type);
-    Object_dynamic(int e_type, Point &p);
-    Object_dynamic(int e_type, Point &p, unsigned int r);
-    Object_dynamic(int e_type, Point &p, unsigned int r, Speed &s);
+    Object_dynamic(int e_type, unsigned int r);
+    Object_dynamic(int e_type, unsigned int r, Point &p);
+    Object_dynamic(int e_type, unsigned int r, Speed &s);
+    Object_dynamic(int e_type, unsigned int r, Point &p, Speed &s);
     ~Object_dynamic();
 
     Speed get_speed();
@@ -53,7 +51,6 @@ private:
 
 class Player : public Object_dynamic {
 public:
-    Player();
     Player(int e_type, unsigned int h, unsigned int r, Point &p);
     ~Player();
 
@@ -66,7 +63,6 @@ private:
 
 class Object_static : public Object {
 public:
-    Object_static();
     Object_static(int e_type, Point &p, unsigned int h, unsigned int l, unsigned int w);
     ~Object_static();
 
