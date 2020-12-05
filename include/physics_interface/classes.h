@@ -3,6 +3,17 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
+
+#define Z_ACCELERATION 980
+#define WINDAGE 20 //Достаточно ли?
+#define FRICTION 100 //Достаточно ли?
+#define LOSS_RATE 0.7
+
+#define WALL 105
+#define FLOOR 205
+
+int time;//???
 
 struct Point {
     int x;
@@ -11,7 +22,7 @@ struct Point {
 };
 
 struct Speed {
-    int dx;
+    int dx;//mm/sec
     int dy;
     int dz;
 };
@@ -85,9 +96,12 @@ public:
     Handler(std::vector<Object_dynamic> &d, std::vector<Object_static> &s, std::vector<Object_activated> &a, Player &p);
     ~Handler();
 
-    void speed_change(Object_dynamic &dyn);
-    void collision(Object &first, Object &second);
-    void position_change(Object_dynamic &dyn);
+    void default_speed_change(Object_dynamic &dyn);
+    void coll_speed_change(Object_dynamic &dyn1, Object_dynamic &dyn2);
+    void coll_speed_change(Object_dynamic &dyn, Object_static &stat);
+    bool collision(Object_dynamic &first, Object_dynamic &second);
+    bool collision(Object_dynamic &first, Object_static &second);
+    void position_change(Object_dynamic &dyn, size_t i);
     void updater();
 
 private:
