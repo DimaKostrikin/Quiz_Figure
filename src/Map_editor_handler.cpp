@@ -1,4 +1,5 @@
-#include "Map_editor_handler.h"
+#include "../include/Map_editor_handler.h"
+
 
 Map_editor_handler::Map_editor_handler() {
     scene_init();

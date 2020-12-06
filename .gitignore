@@ -12,3 +12,7 @@ cmake-build-debug
 _deps
 glfw
 .idea
+glfw-build
+googletest-build
+googletest-download
+googletest-src

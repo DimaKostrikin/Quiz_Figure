@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Quiz_Figure"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\googletest-src\;CMake Files\googletest-src\googlemock\;CMake Files\googletest-src\googlemock\cmake\;CMake Files\googletest-src\googletest\;CMake Files\googletest-src\googletest\cmake\;CMake Files\test\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Quiz_Figure">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/Quiz_Figure" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Quiz_Figure"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Quiz_Figure/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/Quiz_Figure" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Quiz_Figure/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="map_editor_lib">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="map_editor_lib/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_main">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 gmock_main"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_main/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 gmock_main/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/libgmockd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 gmock"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/libgmockd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 gmock/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest_main"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/googletest-build/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_tests_tests">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/test/gmock_tests_tests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 gmock_tests_tests"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_tests_tests/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/test/gmock_tests_tests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 gmock_tests_tests/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtests_tests">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/test/gtests_tests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 gtests_tests"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtests_tests/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/test/gtests_tests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure/test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 gtests_tests/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/src/gmock-all.cc">
+			<Option target="gmock"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/src/gmock_main.cc">
+			<Option target="gmock_main"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/src/gtest-all.cc">
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Interface.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/glad/glad.h">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Container_map.cpp">
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Interface.cpp">
+			<Option target="map_editor_lib"/>
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Map_editor_handler.cpp">
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Map_parser.cpp">
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Parameters_label.cpp">
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Scene.cpp">
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/glad.c">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/main.cpp">
+			<Option target="Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/test/gmock_tests.cpp">
+			<Option target="gmock_tests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/test/gtests.cpp">
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/test/main_tests.cpp">
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/CMakeLists.txt.in">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\googletest-src\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\googletest-src\googlemock\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/cmake/gmock.pc.in">
+			<Option virtualFolder="CMake Files\googletest-src\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/cmake/gmock_main.pc.in">
+			<Option virtualFolder="CMake Files\googletest-src\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\googletest-src\googletest\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/cmake/Config.cmake.in">
+			<Option virtualFolder="CMake Files\googletest-src\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/cmake/gtest.pc.in">
+			<Option virtualFolder="CMake Files\googletest-src\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/cmake/gtest_main.pc.in">
+			<Option virtualFolder="CMake Files\googletest-src\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\googletest-src\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/test/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\test\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

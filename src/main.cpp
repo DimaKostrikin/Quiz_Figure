@@ -2,7 +2,10 @@
 // Created by moroz on 12.11.2020.
 //
 
-int main(){
+#include "Interface.h"
 
-    return 0;
+
+int main() {
+    Interface app;
+    app.cycle();
 }

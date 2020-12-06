@@ -1,4 +1,4 @@
-#include "Map_parser.h"
+#include "../include/Map_parser.h"
 
 std::string Map_parser::create_json(std::shared_ptr<Container_map> map) {
     std::string file_name;

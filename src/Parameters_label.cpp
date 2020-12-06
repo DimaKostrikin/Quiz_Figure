@@ -1,4 +1,4 @@
-#include "Parameters_label.h"
+#include "../include/Parameters_label.h"
 
 Parameters_label::Parameters_label(int obj_id) {
     //по obj_id ищем тайп и его передает
