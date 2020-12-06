@@ -5,7 +5,7 @@
 #ifndef QUIZ_FIGURE_SCENE_H
 #define QUIZ_FIGURE_SCENE_H
 
-#include "Object.h"
+#include "../Objects.h"
 #include <iostream>
 #include "memory"
 #include "Parameters_label.h"

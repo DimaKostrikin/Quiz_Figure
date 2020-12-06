@@ -5,9 +5,10 @@
 #ifndef QUIZ_FIGURE_MAP_PARSER_H
 #define QUIZ_FIGURE_MAP_PARSER_H
 
-#include "Container_map.h"
+#include "../Objects.h"
 #include <iostream>
 #include <memory>
+#include "Container_map.h"
 
 class Map_parser{
 public:

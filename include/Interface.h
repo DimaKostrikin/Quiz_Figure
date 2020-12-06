@@ -10,6 +10,10 @@
 
 #include <iostream>
 #include <memory>
+#include <functional>
+#include "Map_editor_handler.h"
+#include "Menu.h"
+#include "../shader_s.h"
 
 // Константы
 const unsigned int SCR_WIDTH = 800;
@@ -20,10 +24,14 @@ public:
     Interface();
     ~Interface();
     void cycle();
+    std::function<void()> draw;
+    void start_draw();
+
 private:
     GLFWwindow *window;
     int shaderProgram;
     void processInput();
+    float color;
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);

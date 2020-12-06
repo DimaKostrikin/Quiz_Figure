@@ -16,3 +16,8 @@ glfw-build
 googletest-build
 googletest-download
 googletest-src
+shader_s.h
+shader.fs
+shader.vs
+Objects.cbp
+Objects

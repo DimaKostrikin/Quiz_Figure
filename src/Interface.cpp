@@ -2,6 +2,10 @@
 // Created by moroz on 05.12.2020.
 //
 
+/*
+ *
+ *
+ */
 #include "Interface.h"
 
 
@@ -18,8 +22,113 @@ const char* fragmentShaderSource = "#version 330 core\n"
                                    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
                                    "}\n\0";
 
+
+void draw_button(unsigned int &VBO, unsigned int &VAO, unsigned int &EBO){
+
+
+};
+
+void draw_triangle(unsigned int &VBO, unsigned int &VAO){
+
+    // Указывание вершин (и буферов) и настройка вершинных атрибутов
+    float firstTriangle[] = {
+            -0.9f, -0.5f, 0.0f,  // слева
+            -0.0f, -0.5f, 0.0f,  // справа
+            -0.45f, 0.5f, 0.0f,  // вверх
+    };
+    float secondTriangle[] = {
+            0.0f, -0.5f, 0.0f,  // слева
+            0.9f, -0.5f, 0.0f,  // справа
+            0.45f, 0.5f, 0.0f   // вверх
+    };
+
+
+    // Настройка первого треугольника
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(firstTriangle), firstTriangle, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // вершинные атрибуты остаются прежними
+    glEnableVertexAttribArray(0);
+
+    // Рисуем первый треугольник, используя данные из первого VAO
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+
+}
+void Interface::start_draw() {
+    glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    unsigned int VBO, VAO, EBO;
+    glGenBuffers(1, &EBO);
+
+    glGenVertexArrays(1, &VAO); // мы также можем генерировать несколько VAO или буферов одновременно
+    glGenBuffers(1, &VBO);
+    draw_triangle(VBO, VAO);
+
+
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+}
+
+void Interface::cycle() {
+
+
+    // Цикл рендеринга
+    while (!glfwWindowShouldClose(window))
+    {
+        // Обработка ввода
+        processInput();
+
+        // Рендеринг
+
+        glUseProgram(shaderProgram);
+
+        draw();
+
+
+        // glfw: обмен содержимым front- и back- буферов. Отслеживание событий Ввода\Вывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    // Опционально: освобождаем все ресурсы, как только они выполнили своё предназначение
+
+
+    // glfw: завершение, освобождение всех ранее задействованных GLFW-ресурсов
+    glfwTerminate();
+}
+
+// Обработка всех событий ввода: запрос GLFW о нажатии/отпускании клавиш на клавиатуре в данном кадре и соответствующая обработка данных событий
+void Interface::processInput(){
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
+        Map_editor_handler map_editor;
+        draw = std::bind(&Map_editor_handler::draw, &map_editor);
+    }
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+        Map_editor_handler map_editor;
+        draw = std::bind(&Interface::start_draw, this);
+    }
+
+}
+
+// glfw: всякий раз, когда изменяются размеры окна (пользователем или оперионной системой), вызывается данная callback-функция
+void framebuffer_size_callback(GLFWwindow* window, int width, int height){
+    // Убеждаемся, что окно просмотра соответствует новым размерам окна
+    // Обратите внимание, что ширина и высота будут значительно больше, чем указано на Retina-дисплеях
+    glViewport(0, 0, width, height);
+}
+
+Interface::~Interface() {
+
+}
+
 Interface::Interface() {
     // glfw: инициализация и конфигурирование
+    draw = std::bind(&Interface::start_draw, this);
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -83,104 +192,6 @@ Interface::Interface() {
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-
-
-
-
-}
-
-void draw_button(unsigned int &VBO, unsigned int &VAO, unsigned int &EBO){
-
-
-};
-
-void draw_triangle(unsigned int &VBO, unsigned int &VAO){
-
-    // Указывание вершин (и буферов) и настройка вершинных атрибутов
-    float firstTriangle[] = {
-            -0.9f, -0.5f, 0.0f,  // слева
-            -0.0f, -0.5f, 0.0f,  // справа
-            -0.45f, 0.5f, 0.0f,  // вверх
-    };
-    float secondTriangle[] = {
-            0.0f, -0.5f, 0.0f,  // слева
-            0.9f, -0.5f, 0.0f,  // справа
-            0.45f, 0.5f, 0.0f   // вверх
-    };
-
-
-    // Настройка первого треугольника
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(firstTriangle), firstTriangle, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // вершинные атрибуты остаются прежними
-    glEnableVertexAttribArray(0);
-
-    // Рисуем первый треугольник, используя данные из первого VAO
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
-
-}
-
-void Interface::cycle() {
-
-
-    // Цикл рендеринга
-    while (!glfwWindowShouldClose(window))
-    {
-        // Обработка ввода
-        processInput();
-
-        // Рендеринг
-        glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glUseProgram(shaderProgram);
-
-        unsigned int VBO, VAO, EBO;
-        glGenBuffers(1, &EBO);
-
-        glGenVertexArrays(1, &VAO); // мы также можем генерировать несколько VAO или буферов одновременно
-        glGenBuffers(1, &VBO);
-        draw_triangle(VBO, VAO);
-
-
-        glDeleteVertexArrays(1, &VAO);
-        glDeleteBuffers(1, &VBO);
-
-
-
-        // glfw: обмен содержимым front- и back- буферов. Отслеживание событий Ввода\Вывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    // Опционально: освобождаем все ресурсы, как только они выполнили своё предназначение
-
-
-    // glfw: завершение, освобождение всех ранее задействованных GLFW-ресурсов
-    glfwTerminate();
-}
-
-// Обработка всех событий ввода: запрос GLFW о нажатии/отпускании клавиш на клавиатуре в данном кадре и соответствующая обработка данных событий
-void Interface::processInput(){
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
-
-    }
-
-}
-
-// glfw: всякий раз, когда изменяются размеры окна (пользователем или оперионной системой), вызывается данная callback-функция
-void framebuffer_size_callback(GLFWwindow* window, int width, int height){
-    // Убеждаемся, что окно просмотра соответствует новым размерам окна
-    // Обратите внимание, что ширина и высота будут значительно больше, чем указано на Retina-дисплеях
-    glViewport(0, 0, width, height);
-}
-
-Interface::~Interface() {
 
 }
 

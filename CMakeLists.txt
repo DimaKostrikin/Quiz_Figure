@@ -10,18 +10,25 @@ set(CMAKE_CXX_STANDARD 17)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
+add_executable(Objects Objects.cpp)
+
 include_directories(${INCLUDE_DIR})
 include_directories(${SOURCE_DIR})
 
 
 set(SOURCE_FILES src/main.cpp
-        src/Interface.cpp)
+        src/Interface.cpp
+        src/Map_editor_handler.cpp)
 
 #src/Container_map.cpp
 #src/glad.c src/Map_parser.cpp src/Parameters_label.cpp src/Scene.cpp
 #src/Map_editor_handler.cpp
 
 add_executable(${PROJECT_NAME} ${SOURCE_DIR}/main.cpp)
+add_executable(Object Objects.cpp)
+
+add_executable(Shader shader_s.h)
+SET_TARGET_PROPERTIES(Shader PROPERTIES LINKER_LANGUAGE C)
 
 
 SET_TARGET_PROPERTIES(Quiz_Figure PROPERTIES LINKER_LANGUAGE C)
@@ -58,7 +65,8 @@ file(GLOB sources
 
 ###########################
 
-add_library(map_editor_lib STATIC src/Interface.cpp include/Interface.h)
+add_library(map_editor_lib STATIC src/Interface.cpp include/Interface.h
+        src/Map_editor_handler.cpp include/Map_editor_handler.h)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE map_editor_lib)
 
@@ -79,9 +87,4 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC glad ${GLFW_STATIC_LIBRARIES})
 
 
 ####################
-
-
-
-
-
 

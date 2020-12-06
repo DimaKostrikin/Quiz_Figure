@@ -6,9 +6,11 @@
 #define QUIZ_FIGURE_CONTAINER_MAP_H
 
 #include <iostream>
-#include "Object.h"
+#include "../Objects.h"
 #include <vector>
 #include "memory"
+
+
 
 class Container_map{
 public:

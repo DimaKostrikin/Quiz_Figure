@@ -1,4 +1,4 @@
-#include "../include/Map_editor_handler.h"
+#include "Map_editor_handler.h"
 
 
 Map_editor_handler::Map_editor_handler() {
@@ -6,9 +6,16 @@ Map_editor_handler::Map_editor_handler() {
     toolbar_init();
 }
 
+Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
+    this->window = window;
+    scene_init();
+    toolbar_init();
+    color = 1.0f;
+}
+
 void Map_editor_handler::on_mouse_click() {
     //нажатие на объект
-
+/*
     //если объект существующий
     //тут еще айди объекта передает
     scene->init_label();
@@ -24,7 +31,7 @@ void Map_editor_handler::on_mouse_click() {
     scene->label->changed();
 
     //нажатие save
-    parser.create_json(map);
+    parser.create_json(map);*/
 
 
 
@@ -39,16 +46,31 @@ void Map_editor_handler::toolbar_init() {
 }
 
 void Map_editor_handler::on_key_click() {
-    //перемещение элемента по полю по сетке
+    /*//перемещение элемента по полю по сетке
     std::shared_ptr<Object> obj;
     //доп параметром добавить кнопку
     //стирает объект
     scene->clear_object(obj);
     map->change_object( obj);
     //перерисовывает элемент
-    scene->change_object(obj);
+    scene->change_object(obj);*/
 }
 
 Map_editor_handler::~Map_editor_handler() {
 
+}
+
+void Map_editor_handler::draw() {
+    glClearColor(1.0f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    unsigned int VBO, VAO, EBO;
+    glGenBuffers(1, &EBO);
+
+    glGenVertexArrays(1, &VAO); // мы также можем генерировать несколько VAO или буферов одновременно
+    glGenBuffers(1, &VBO);
+
+
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
 }
