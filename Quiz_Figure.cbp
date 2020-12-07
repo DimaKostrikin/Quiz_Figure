@@ -111,40 +111,6 @@
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="map_editor_lib">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="2"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="map_editor_lib/fast">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="2"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 			<Target title="glad">
 				<Option output="/home/moroz/Desktop/Quiz_Figure/libglad.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
@@ -174,6 +140,40 @@
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="map_editor_lib">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="map_editor_lib/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib/fast"/>
 					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
@@ -446,6 +446,9 @@
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/src/gtest_main.cc">
 			<Option target="gtest_main"/>
 		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/GUI.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Interface.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
@@ -462,12 +465,20 @@
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
 		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/GUI.cpp">
+			<Option target="Quiz_Figure"/>
+			<Option target="map_editor_lib"/>
+			<Option target="gmock_tests_tests"/>
+			<Option target="gtests_tests"/>
+		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Interface.cpp">
+			<Option target="Quiz_Figure"/>
 			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Map_editor_handler.cpp">
+			<Option target="Quiz_Figure"/>
 			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
@@ -477,6 +488,7 @@
 			<Option target="gtests_tests"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Menu.cpp">
+			<Option target="Quiz_Figure"/>
 			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>

@@ -12,15 +12,14 @@
 #include <memory>
 #include <functional>
 #include <utility>
-#include "Map_editor_handler.h"
 #include "Menu.h"
 
-#include "../stb_image.h"
+#include "../shader_s.h"
 
 
 // Константы
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1280;
+const unsigned int SCR_HEIGHT = 1024;
 
 
 class Interface {

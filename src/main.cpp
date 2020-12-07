@@ -3,6 +3,7 @@
 //
 
 #include "Interface.h"
+#include "../shader_s.h"
 
 
 int main() {

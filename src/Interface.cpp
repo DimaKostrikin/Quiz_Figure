@@ -40,7 +40,7 @@ void main()
 )";
 
 void Interface::cycle() {
-
+    Shader shader("shader.vs", "shader.fs");
 
     // Цикл рендеринга
     while (!glfwWindowShouldClose(window))
@@ -51,7 +51,7 @@ void Interface::cycle() {
         processInput();
 
         // Рендеринг
-        glUseProgram(shaderProgram);
+        shader.use();
 
 
         draw();
@@ -143,6 +143,7 @@ Interface::Interface() {
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+
 
     menu = std::make_shared<Menu>(window);
 

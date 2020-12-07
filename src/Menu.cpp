@@ -5,7 +5,8 @@
 #include "Menu.h"
 
 Menu::Menu(GLFWwindow *window): button_start("textures/button8.jpg", "textures/button8_act.png"),
-        button_map_editor("textures/button9.jpg", "textures/button9_act.jpg"), window(window) {
+        button_map_editor("textures/button9.jpg", "textures/button9_act.jpg"), window(window),
+        map_editor_handler(nullptr){
     button_start.activate();
     draw = std::bind(&Menu::draw_menu, this);
     processInput = std::bind(&Menu::process_input, this);
@@ -80,53 +81,4 @@ void Menu::draw_menu() {
     glDeleteVertexArrays(2, VAO);
     glDeleteBuffers(2, VBO);
     glDeleteBuffers(2, EBO);
-}
-
-template<std::size_t N>
-void Button_entry<N>::activate(){
-    set_texture(texture_active);
-    activated = true;
-}
-
-template<std::size_t N>
-void Button_entry<N>::deactivate(){
-    set_texture(texture_passive);
-    activated = false;
-}
-
-template<std::size_t N>
-void Button_entry<N>::draw(float (&vertices)[N], unsigned int &VAO, unsigned int &VBO, unsigned int &EBO){
-    unsigned int indices[] = {
-            0, 1, 3, // первый треугольник
-            1, 2, 3  // второй треугольник
-    };
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // координатные атрибуты
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // цветовые атрибуты
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    // атрибуты текстурных координат
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-
-    glBindTexture(GL_TEXTURE_2D, texture_cur);
-
-
-    // Рендеринг ящика
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-}
-
-template<std::size_t N>
-void Button_entry<N>::set_texture(unsigned int texture){
-    texture_cur = texture;
 }

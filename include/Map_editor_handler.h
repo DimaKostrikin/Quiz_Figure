@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 
+
 class Map_editor_handler {
 
 public:
@@ -17,7 +18,6 @@ public:
     void on_key_click();
 
     GLFWwindow *window;
-    float color;
     void draw();
 
 
@@ -29,6 +29,14 @@ private:
     //std::shared_ptr<Container_map>map;
 
 };
+
+/*
+template<std::size_t N>
+class Button_toolbar() : public Button_entry<32> {
+public:
+    std::string type;
+    Button_toolbar(std::string name): type(name){};
+};*/
 
 
 #endif //QUIZ_FIGURE_MAP_EDITOR_HANDLER_H
