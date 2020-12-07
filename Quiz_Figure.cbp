@@ -452,6 +452,9 @@
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Map_editor_handler.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Menu.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/glad/glad.h">
 			<Option target="glad"/>
 		</Unit>
@@ -474,6 +477,7 @@
 			<Option target="gtests_tests"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Menu.cpp">
+			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
 		</Unit>

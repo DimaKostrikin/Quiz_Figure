@@ -61,7 +61,7 @@ Map_editor_handler::~Map_editor_handler() {
 }
 
 void Map_editor_handler::draw() {
-    glClearColor(1.0f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     unsigned int VBO, VAO, EBO;

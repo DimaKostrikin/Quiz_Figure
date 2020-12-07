@@ -19,7 +19,8 @@ include_directories(${SOURCE_DIR})
 
 set(SOURCE_FILES src/main.cpp
         src/Interface.cpp
-        src/Map_editor_handler.cpp)
+        src/Map_editor_handler.cpp
+        src/Menu.cpp)
 
 #src/Container_map.cpp
 #src/glad.c src/Map_parser.cpp src/Parameters_label.cpp src/Scene.cpp
@@ -68,7 +69,8 @@ file(GLOB sources
 ###########################
 
 add_library(map_editor_lib STATIC src/Interface.cpp include/Interface.h
-        src/Map_editor_handler.cpp include/Map_editor_handler.h)
+        src/Map_editor_handler.cpp include/Map_editor_handler.h
+        src/Menu.cpp include/Menu.h)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE map_editor_lib)
 
