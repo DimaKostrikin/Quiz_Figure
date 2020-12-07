@@ -8,68 +8,147 @@
  */
 #include "Interface.h"
 
+const char* vertexShaderSource = R"(
+#version 330 core
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aColor;
+layout (location = 2) in vec2 aTexCoord;
 
-const char* vertexShaderSource = "#version 330 core\n"
-                                 "layout (location = 0) in vec3 aPos;\n"
-                                 "void main()\n"
-                                 "{\n"
-                                 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                 "}\0";
-const char* fragmentShaderSource = "#version 330 core\n"
-                                   "out vec4 FragColor;\n"
-                                   "void main()\n"
-                                   "{\n"
-                                   "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                   "}\n\0";
+out vec3 ourColor;
+out vec2 TexCoord;
 
+void main()
+{
+    gl_Position = vec4(aPos, 1.0);
+    ourColor = aColor;
+    TexCoord = aTexCoord;
+}
+)";
+const char* fragmentShaderSource = R"(
+#version 330 core
+out vec4 FragColor;
 
+in vec3 ourColor;
+in vec2 TexCoord;
+
+uniform sampler2D ourTexture;
+
+void main()
+{
+    FragColor = texture(ourTexture, TexCoord);
+}
+)";
+
+float i = 0.0f;
 void draw_button(unsigned int &VBO, unsigned int &VAO, unsigned int &EBO){
 
 
 };
 
-void draw_triangle(unsigned int &VBO, unsigned int &VAO){
+void draw_triangle(unsigned int &VAO, unsigned int &VBO, unsigned int &EBO){
 
-    // Указывание вершин (и буферов) и настройка вершинных атрибутов
-    float firstTriangle[] = {
-            -0.9f, -0.5f, 0.0f,  // слева
-            -0.0f, -0.5f, 0.0f,  // справа
-            -0.45f, 0.5f, 0.0f,  // вверх
+
+    // задание вершин (и буфера(ов)) и настройка вершинных атрибутов
+    // ------------------------------------------------------------------
+    float vertices[] = {
+            // координаты          // цвета           // текстурные координаты
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // верхняя правая вершина
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // нижняя левая вершина
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // верхняя левая вершина
     };
-    float secondTriangle[] = {
-            0.0f, -0.5f, 0.0f,  // слева
-            0.9f, -0.5f, 0.0f,  // справа
-            0.45f, 0.5f, 0.0f   // вверх
+    unsigned int indices[] = {
+            0, 1, 3, // первый треугольник
+            1, 2, 3  // второй треугольник
     };
 
-
-    // Настройка первого треугольника
     glBindVertexArray(VAO);
+
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(firstTriangle), firstTriangle, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // вершинные атрибуты остаются прежними
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    // координатные атрибуты
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    // цветовые атрибуты
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // атрибуты текстурных координат
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
-    // Рисуем первый треугольник, используя данные из первого VAO
+
+    // загрузка и создание текстуры
+    // -------------------------
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture); // все последующие GL_TEXTURE_2D-операции теперь будут влиять на данный текстурный объект
+    // установка параметров наложения текстуры
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// установка метода наложения текстуры GL_REPEAT (стандартный метод наложения)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // установка параметров фильтрации текстуры
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // загрузка изображения, создание текстуры и генерирование mipmap-уровней
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    // Рендеринг ящика
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 }
 void Interface::start_draw() {
     glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    unsigned int VBO, VAO, EBO;
-    glGenBuffers(1, &EBO);
+    float vertices[] = {
+            // координаты          // цвета           // текстурные координаты
+            0.6f,  0.6f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
+            0.6f, 0.2f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
+            -0.6, 0.2f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0, 0.0f, // нижняя левая вершина
+            -0.6f,  0.6f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
+    };
 
-    glGenVertexArrays(1, &VAO); // мы также можем генерировать несколько VAO или буферов одновременно
-    glGenBuffers(1, &VBO);
-    draw_triangle(VBO, VAO);
+    float vertices2[] = {
+            // координаты          // цвета           // текстурные координаты
+            0.6f,  -0.2f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
+            0.6f, -0.6f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
+            -0.6, -0.6f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0, 0.0f, // нижняя левая вершина
+            -0.6f,  -0.2f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
+    };
+
+    unsigned int VBO[2], VAO[2], EBO[2];
+    glGenVertexArrays(2, VAO); // мы также можем генерировать несколько VAO или буферов одновременно
+    glGenBuffers(2, VBO);
+    glGenBuffers(2, EBO);
+
+    glGenVertexArrays(1, &VAO[0]);
+    glGenBuffers(1, &VBO[0]);
+    glGenBuffers(1, &EBO[0]);
+    //draw_triangle(VAO, VBO, EBO);
+    button_start.draw(vertices, VAO[0], VBO[0], EBO[0]);
+    button_map_editor.draw(vertices2, VAO[1], VBO[1], EBO[1]);
+    glDeleteVertexArrays(2, VAO);
+    glDeleteBuffers(2, VBO);
+    glDeleteBuffers(2, EBO);
 
 
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
 }
 
 void Interface::cycle() {
@@ -82,10 +161,11 @@ void Interface::cycle() {
         processInput();
 
         // Рендеринг
-
         glUseProgram(shaderProgram);
 
+
         draw();
+
 
 
         // glfw: обмен содержимым front- и back- буферов. Отслеживание событий Ввода\Вывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
@@ -105,12 +185,24 @@ void Interface::processInput(){
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
+
         Map_editor_handler map_editor;
-        draw = std::bind(&Map_editor_handler::draw, &map_editor);
+        i+=0.01f;
+        //draw = std::bind(&Map_editor_handler::draw, &map_editor);
     }
-    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-        Map_editor_handler map_editor;
-        draw = std::bind(&Interface::start_draw, this);
+
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        if (!button_start.is_activated()) {
+            button_start.activate();
+            button_map_editor.deactivate();
+        }
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        if (button_start.is_activated()) {
+            button_start.deactivate();
+            button_map_editor.activate();
+        }
     }
 
 }
@@ -126,7 +218,10 @@ Interface::~Interface() {
 
 }
 
-Interface::Interface() {
+Interface::Interface(): button_start("textures/button8.jpg", "textures/button8_act.jpg"),
+button_map_editor("textures/button9.jpg", "textures/button9_act.jpg"){
+
+    button_start.activate();
     // glfw: инициализация и конфигурирование
     draw = std::bind(&Interface::start_draw, this);
     glfwInit();

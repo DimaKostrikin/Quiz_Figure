@@ -21,3 +21,10 @@ shader.fs
 shader.vs
 Objects.cbp
 Objects
+stb
+stb-cmake
+container.jpg
+libglad.a
+lib
+libmap_editor_lib.a
+textures

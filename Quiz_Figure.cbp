@@ -17,6 +17,16 @@
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="install/local">
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
 				<Option type="4"/>
@@ -37,35 +47,31 @@
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="glad">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/libglad.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="list_install_components">
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="2"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
+				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad"/>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 list_install_components"/>
 					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="glad/fast">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/libglad.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="rebuild_cache">
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="2"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
+				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 edit_cache"/>
 					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
@@ -105,84 +111,6 @@
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Objects">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/Objects" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Objects"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Objects/fast">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/Objects" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Objects/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Shader">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/Shader" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Shader"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Shader/fast">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/Shader" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Shader/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 			<Target title="map_editor_lib">
 				<Option output="/home/moroz/Desktop/Quiz_Figure/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
@@ -217,75 +145,45 @@
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="glad">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad/fast">
+				<Option output="/home/moroz/Desktop/Quiz_Figure/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
+					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="test">
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
 				<Option type="4"/>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 test"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Object">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/Object" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Object"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Object/fast">
-				<Option output="/home/moroz/Desktop/Quiz_Figure/Object" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
-					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Object/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="install/strip">
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 install/strip"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="list_install_components">
-				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 list_install_components"/>
 					<CompileFile command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 clean"/>
@@ -536,14 +434,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/moroz/Desktop/Quiz_Figure/Objects.cpp">
-			<Option target="Objects"/>
-			<Option target="Object"/>
-		</Unit>
-		<Unit filename="/home/moroz/Desktop/Quiz_Figure/Objects.h">
-			<Option target="Objects"/>
-			<Option target="Object"/>
-		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googlemock/src/gmock-all.cc">
 			<Option target="gmock"/>
 		</Unit>
@@ -564,9 +454,6 @@
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/glad/glad.h">
 			<Option target="glad"/>
-		</Unit>
-		<Unit filename="/home/moroz/Desktop/Quiz_Figure/shader_s.h">
-			<Option target="Shader"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Container_map.cpp">
 			<Option target="gmock_tests_tests"/>
@@ -602,6 +489,12 @@
 			<Option target="glad"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/main.cpp">
+			<Option target="Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/stb_image.cpp">
+			<Option target="Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/stb_image.h">
 			<Option target="Quiz_Figure"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/test/gmock_tests.cpp">
