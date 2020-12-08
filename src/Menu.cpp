@@ -4,8 +4,24 @@
 
 #include "Menu.h"
 
-Menu::Menu(GLFWwindow *window): button_start("textures/button8.jpg", "textures/button8_act.png"),
-        button_map_editor("textures/button9.jpg", "textures/button9_act.jpg"), window(window),
+std::vector<float> vertices{
+        // координаты          // цвета           // текстурные координаты
+        0.6f,  0.6f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
+        0.6f, 0.2f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
+        -0.6, 0.2f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0, 0.0f, // нижняя левая вершина
+        -0.6f,  0.6f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
+};
+
+std::vector<float> vertices2 = {
+        // координаты          // цвета           // текстурные координаты
+        0.6f,  -0.2f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
+        0.6f, -0.6f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
+        -0.6, -0.6f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0, 0.0f, // нижняя левая вершина
+        -0.6f,  -0.2f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
+};
+
+Menu::Menu(GLFWwindow *window): button_start("textures/button8.jpg", "textures/button8_act.png", vertices),
+        button_map_editor("textures/button9.jpg", "textures/button9_act.jpg", vertices2), window(window),
         map_editor_handler(nullptr){
     button_start.activate();
     draw = std::bind(&Menu::draw_menu, this);
@@ -35,13 +51,14 @@ void Menu::process_input(){
             button_map_editor.activate();
         }
     }
-
+//
     if(glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS){
         if (button_start.is_activated()) {
             //start game
         } else {
-            map_editor_handler = std::make_shared<Map_editor_handler>();
+            map_editor_handler = std::make_shared<Map_editor_handler>(window);
             draw = std::bind(&Map_editor_handler::draw, map_editor_handler);
+            processInput = std::bind(&Map_editor_handler::processInput, map_editor_handler);
         }
     }
 
@@ -50,22 +67,6 @@ void Menu::process_input(){
 void Menu::draw_menu() {
     glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-
-    float vertices[] = {
-            // координаты          // цвета           // текстурные координаты
-            0.6f,  0.6f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
-            0.6f, 0.2f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
-            -0.6, 0.2f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0, 0.0f, // нижняя левая вершина
-            -0.6f,  0.6f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
-    };
-
-    float vertices2[] = {
-            // координаты          // цвета           // текстурные координаты
-            0.6f,  -0.2f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
-            0.6f, -0.6f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
-            -0.6, -0.6f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0, 0.0f, // нижняя левая вершина
-            -0.6f,  -0.2f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
-    };
 
     unsigned int VBO[2], VAO[2], EBO[2];
     glGenVertexArrays(2, VAO); // мы также можем генерировать несколько VAO или буферов одновременно
@@ -76,8 +77,8 @@ void Menu::draw_menu() {
     glGenBuffers(1, &VBO[0]);
     glGenBuffers(1, &EBO[0]);
     //draw_triangle(VAO, VBO, EBO);
-    button_start.draw(vertices, VAO[0], VBO[0], EBO[0]);
-    button_map_editor.draw(vertices2, VAO[1], VBO[1], EBO[1]);
+    button_start.draw(VAO[0], VBO[0], EBO[0]);
+    button_map_editor.draw(VAO[1], VBO[1], EBO[1]);
     glDeleteVertexArrays(2, VAO);
     glDeleteBuffers(2, VBO);
     glDeleteBuffers(2, EBO);

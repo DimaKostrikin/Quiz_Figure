@@ -1,18 +1,27 @@
 #ifndef QUIZ_FIGURE_MAP_EDITOR_HANDLER_H
 #define QUIZ_FIGURE_MAP_EDITOR_HANDLER_H
 //#include "Map_parser.h"
-//#include "Scene.h"
+#include "Scene.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
+#include <vector>
+#include "Button_entry.h"
+#include "Container_map.h"
 
 
 class Map_editor_handler {
 
 public:
+    size_t cur_elem;
+    size_t cur_container;
     Map_editor_handler();
     Map_editor_handler(GLFWwindow *window);
     ~Map_editor_handler();
+    std::vector<Button_toolbar<32>> toolbar_buttons;
+    std::shared_ptr<Container_map> container_map;
+    std::shared_ptr<Scene> scene;
+
+    void processInput();
 
     void on_mouse_click();
     void on_key_click();

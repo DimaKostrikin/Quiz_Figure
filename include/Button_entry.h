@@ -8,10 +8,12 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "../Objects.h"
 
 #include <iostream>
 #include <memory>
 #include <functional>
+#include <utility>
 
 #include "../stb_image.h"
 
@@ -19,7 +21,9 @@ template<std::size_t N>
 class Button_entry{
 public:
 
-    void texture_gen(unsigned int &texture, std::string filename){
+    std::vector<float> vertices;
+
+    void texture_gen(unsigned int &texture, const std::string& filename){
         stbi_set_flip_vertically_on_load(true);
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture); // все последующие GL_TEXTURE_2D-операции теперь будут влиять на данный текстурный объект
@@ -44,12 +48,12 @@ public:
         stbi_image_free(data);
     }
 
-    void draw(float (&vertices)[N], unsigned int &VAO, unsigned int &VBO, unsigned int &EBO);
+    void draw(unsigned int &VAO, unsigned int &VBO, unsigned int &EBO);
     void set_texture(unsigned int texture);
 
-    Button_entry(std::string f1, std::string f2):
+    Button_entry(std::string f1, std::string f2, std::vector<float> vertices):
             file_name_passive(std::move(f1)),
-            file_name_active(std::move(f2)), activated(false){
+            file_name_active(std::move(f2)), activated(false), vertices(std::move(vertices)){
         // загрузка и создание текстуры
         // -------------------------
         texture_gen(texture_active, file_name_active);
@@ -89,7 +93,7 @@ void Button_entry<N>::deactivate(){
 }
 
 template<std::size_t N>
-void Button_entry<N>::draw(float (&vertices)[N], unsigned int &VAO, unsigned int &VBO, unsigned int &EBO){
+void Button_entry<N>::draw(unsigned int &VAO, unsigned int &VBO, unsigned int &EBO){
     unsigned int indices[] = {
             0, 1, 3, // первый треугольник
             1, 2, 3  // второй треугольник
@@ -97,7 +101,12 @@ void Button_entry<N>::draw(float (&vertices)[N], unsigned int &VAO, unsigned int
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    float new_vertices[N];
+
+    for ( size_t i = 0; i < N; ++i )
+        new_vertices[i] = vertices[i];
+    glBufferData(GL_ARRAY_BUFFER, sizeof(new_vertices), new_vertices, GL_STATIC_DRAW);
+
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -118,11 +127,63 @@ void Button_entry<N>::draw(float (&vertices)[N], unsigned int &VAO, unsigned int
     // Рендеринг ящика
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
 }
 
 template<std::size_t N>
 void Button_entry<N>::set_texture(unsigned int texture){
     texture_cur = texture;
 }
+
+template<std::size_t N>
+class Button_toolbar : public Button_entry<N>{
+
+
+public:
+    Button_toolbar(std::string f1, std::string f2, std::vector<float> vertices, type_elem type): Button_entry<N>(f1, f2, vertices), type(type){
+
+    }
+    type_elem type;
+};
+
+template<std::size_t N>
+class Map_object: public Button_entry<N>{
+public:
+    Map_object(std::string f1, std::string f2, std::vector<float> vertices):
+            Button_entry<N>(f1, f2, vertices){}
+    void up(){
+        if (this->vertices[1] < 1.0f) {
+            this->vertices[1] += 0.01f;
+            this->vertices[9] += 0.01f;
+            this->vertices[17] += 0.01f;
+            this->vertices[25] += 0.01f;
+        }
+    }
+    void down(){
+        if (this->vertices[17] > -1.0f) {
+            this->vertices[1] -= 0.01f;
+            this->vertices[9] -= 0.01f;
+            this->vertices[17] -= 0.01f;
+            this->vertices[25] -= 0.01f;
+        }
+    }
+
+    void right(){
+        if (this->vertices[0] < 1.0f) {
+            this->vertices[0] += 0.01f;
+            this->vertices[8] += 0.01f;
+            this->vertices[16] += 0.01f;
+            this->vertices[24] += 0.01f;
+        }
+    }
+    void left(){
+        if (this->vertices[16] > -1.0f) {
+            this->vertices[0] -= 0.01f;
+            this->vertices[8] -= 0.01f;
+            this->vertices[16] -= 0.01f;
+            this->vertices[24] -= 0.01f;
+        }
+    }
+};
 
 #endif //QUIZ_FIGURE_BUTTON_ENTRY_H

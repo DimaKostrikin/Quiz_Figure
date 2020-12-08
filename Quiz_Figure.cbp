@@ -446,7 +446,10 @@
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/googletest/src/gtest_main.cc">
 			<Option target="gtest_main"/>
 		</Unit>
-		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/GUI.h">
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Button_entry.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Container_map.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Interface.h">
@@ -458,14 +461,19 @@
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Menu.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Scene.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/glad/glad.h">
 			<Option target="glad"/>
 		</Unit>
-		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Container_map.cpp">
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Button_entry.cpp">
+			<Option target="Quiz_Figure"/>
+			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
 		</Unit>
-		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/GUI.cpp">
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Container_map.cpp">
 			<Option target="Quiz_Figure"/>
 			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
@@ -498,6 +506,8 @@
 			<Option target="gtests_tests"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Scene.cpp">
+			<Option target="Quiz_Figure"/>
+			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
 		</Unit>

@@ -36,6 +36,8 @@ enum type_elem {
     HINT,
     PLATFORM,
     STAIRS,
+    START,
+    FINISH,
 
     CUBE,  // Динамические объекты
     BALL,
