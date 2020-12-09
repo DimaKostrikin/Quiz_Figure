@@ -41,7 +41,7 @@ void main()
 
 void Interface::cycle() {
     Shader shader("shader.vs", "shader.fs");
-
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     // Цикл рендеринга
     while (!glfwWindowShouldClose(window))
     {

@@ -18,10 +18,10 @@ public:
     Map_editor_handler(GLFWwindow *window);
     ~Map_editor_handler();
     std::vector<Button_toolbar<32>> toolbar_buttons;
-    std::shared_ptr<Container_map> container_map;
     std::shared_ptr<Scene> scene;
 
     void processInput();
+    std::shared_ptr<Container_map> create_map();
 
     void on_mouse_click();
     void on_key_click();

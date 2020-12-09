@@ -3,9 +3,9 @@
 #include <iostream>
 
 struct Point {
-    int x;
-    int y;
-    int z;
+    float x;
+    float y;
+    float z;
     friend std::ostream& operator<< (std::ostream &out, const Point &point) {
         out << "Center: (" << point.x << ", " << point.y << ", " << point.z << ")"<< std::endl;
     }
@@ -21,15 +21,16 @@ struct Speed {
 };
 
 struct Size {
-    int height;
-    int length;
-    int width;
+    float height;
+    float length;
+    float width;
     friend std::ostream& operator<< (std::ostream &out, const Size &size) {
         out << "Speed: (" << size.height << ", " << size.length << ", " << size.width << ")"<< std::endl;
     }
 };
 
 enum type_elem {
+    SAVE, // для тулбара, сорян
     PLAYER,  // Игрок
 
     WALL,  // Статические объекты

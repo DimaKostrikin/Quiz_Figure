@@ -21,6 +21,15 @@ template<std::size_t N>
 class Button_entry{
 public:
 
+    //Button_entry( Button_entry<N>&& o) = default;
+    //Button_entry(const Button_entry<N>& o) = default;
+
+    /*Button_entry(const Button_entry<N> &button_entry) :
+            file_name_passive(button_entry.file_name_passive),
+            file_name_active(button_entry.file_name_active),
+            vertices(std::move(button_entry.vertices)){}*/
+
+
     std::vector<float> vertices;
 
     void texture_gen(unsigned int &texture, const std::string& filename){
@@ -66,7 +75,7 @@ public:
 
     void deactivate();
 
-    ~Button_entry(){}
+    ~Button_entry()= default;
 
     bool is_activated(){
         return activated;
@@ -149,8 +158,11 @@ public:
 template<std::size_t N>
 class Map_object: public Button_entry<N>{
 public:
-    Map_object(std::string f1, std::string f2, std::vector<float> vertices):
-            Button_entry<N>(f1, f2, vertices){}
+    type_elem type;
+   // Map_object(Map_object<N>&& o) = default;
+    //Map_object(const Map_object<N>& o) = default;
+    Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type):
+            Button_entry<N>(f1, f2, vertices), type(type){}
     void up(){
         if (this->vertices[1] < 1.0f) {
             this->vertices[1] += 0.01f;
@@ -184,6 +196,10 @@ public:
             this->vertices[24] -= 0.01f;
         }
     }
+
+    ~Map_object(){}
+    /*Map_object(const Map_object<N> &elem) : Button_entry<N>(elem){}*/
+
 };
 
 #endif //QUIZ_FIGURE_BUTTON_ENTRY_H

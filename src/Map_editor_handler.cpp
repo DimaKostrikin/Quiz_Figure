@@ -1,5 +1,7 @@
 #include "Map_editor_handler.h"
 
+const unsigned int SCR_WIDTH = 1280;
+const unsigned int SCR_HEIGHT = 1024;
 
 Map_editor_handler::Map_editor_handler() {
     cur_container = 0;
@@ -13,7 +15,6 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
     this->window = window;
     scene_init();
     cur_elem=0;
-    container_map = std::make_shared<Container_map>();
     scene = std::make_shared<Scene>();
     std::vector<float> vertices_button {
             // координаты
@@ -27,7 +28,6 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
 
     std::vector<float> vertices_button2 {
             // координаты
-
             -0.75f,  0.65f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
             -0.75f, 0.45f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
             -0.95f, 0.45f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
@@ -35,14 +35,27 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
 
     };
 
+    std::vector<float> vertices_button3 {
+            // координаты
+            -0.65f,  0.35f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.65f, 0.25f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.95f, 0.25f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.95f, 0.35f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+
+    };
+
+
+
     Button_toolbar<32> button("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button, START);
 
     Button_toolbar<32> button2("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button2, FINISH);
 
+    Button_toolbar<32> button3("textures/finish_text.jpg", "textures/finish_text_act.jpg", vertices_button3, SAVE);
 
 
     toolbar_buttons.push_back(button);
     toolbar_buttons.push_back(button2);
+    toolbar_buttons.push_back(button3);
 
     toolbar_buttons[cur_elem].activate();
 }
@@ -166,7 +179,38 @@ void Map_editor_handler::draw() {
 
 }
 
+double get_d(float f){
+    double d;
+    if (f <= 0){
+        f += 1.0f;
+    } else {
+        f -= 1.0f;
+    }
+    d = f * (SCR_WIDTH / 2);
+    return d;
+}
+
 void Map_editor_handler::processInput() {
+
+    double x, y;
+
+    glfwGetCursorPos ( window, &x, &y );
+    int j = 0;
+    for (auto &i: toolbar_buttons){
+        double x1 = (i.vertices[16]+1.0f) * (SCR_WIDTH / 2);
+        double x2 = (i.vertices[0]+1.0f) * (SCR_WIDTH / 2);
+        double y1 = (1.0f-i.vertices[1]) * (SCR_HEIGHT / 2);
+        double y2 = (1.0f-i.vertices[9]) * (SCR_HEIGHT / 2);
+        if ((x1 < x) && (x<x2)
+                && (y1 < y) && (y<y2)){
+                double z = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+                toolbar_buttons[cur_elem].deactivate();
+                cur_elem = j;
+                i.activate();
+                ++j;
+        } else { i.deactivate();}
+    }
+    //GLFW_MOUSE_BUTTON_LEFT
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
@@ -179,9 +223,9 @@ void Map_editor_handler::processInput() {
             }
         } else {
             if (scene->cur_elem != 0){
-                scene->container[cur_elem].deactivate();
+                scene->container[scene->cur_elem].deactivate();
                 --scene->cur_elem;
-                scene->container[cur_elem].activate();
+                scene->container[scene->cur_elem].activate();
             }
         }
 
@@ -196,9 +240,9 @@ void Map_editor_handler::processInput() {
                 }
         } else {
             if (scene->cur_elem < scene->container.size()-1){
-                scene->container[cur_elem].deactivate();
+                scene->container[scene->cur_elem].deactivate();
                 ++scene->cur_elem;
-                scene->container[cur_elem].activate();
+                scene->container[scene->cur_elem].activate();
             }
         }
     }
@@ -207,19 +251,19 @@ void Map_editor_handler::processInput() {
         std::vector<float> vertices_button3 {
                 // координаты
 
-                1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-                1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+                0.2f,  0.2f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+                0.2f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
                 0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-                0.0f, 1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+                0.0f, 0.2f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
         };
         switch ( toolbar_buttons[cur_elem].type ) {
             case START:{
-                Map_object<32> elem("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button3);
+                Map_object<32> elem("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button3, START);
                 scene->container.push_back(elem);
                 break;}
             case FINISH:{
-                Map_object<32> elem("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button3);
+                Map_object<32> elem("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button3, FINISH);
                 scene->container.push_back(elem);}
                 break;
             default:
@@ -269,8 +313,18 @@ void Map_editor_handler::processInput() {
     if(glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS) {
         if (cur_container==1){
             scene->container.erase(scene->container.begin()+scene->cur_elem)[scene->cur_elem];
-            scene->container.resize(scene->container.size()-1);
+            std::vector<Map_object<32>> new_container;
+            for (auto &i: scene->container){
+                new_container.push_back(i);
+            }
+            scene->container=std::move(new_container);
+            new_container.clear();
         }
     }
 
+}
+
+std::shared_ptr<Container_map> Map_editor_handler::create_map() {
+    std::shared_ptr<Container_map>(scene);
+    return std::shared_ptr<Container_map>();
 }

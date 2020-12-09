@@ -1,9 +1,6 @@
 #include "Container_map.h"
 #include "../include/Container_map.h"
 
-Container_map::Container_map() {
-    cur_elem_id = 0;
-}
 
 void Container_map::add_object(std::shared_ptr<Object>) {
     //смотрит тип и добавляет в соответствующий контейнер
@@ -29,6 +26,21 @@ size_t Container_map::get_unique_id() {
 
 Container_map::~Container_map() {
 
+}
+
+Container_map::Container_map(std::shared_ptr<Scene> scene) {
+    cur_id=0;
+    for (auto &i: scene->container){
+        float x = abs(i.vertices[0] - i.vertices[16]);
+        float y = abs(i.vertices[1] - i.vertices[17]);
+        float z = abs(i.vertices[3] - i.vertices[20]);
+        switch(i.type){
+            case START:
+            case FINISH:
+                //static_elems.push_back(Object_static obj());
+                break;
+        }
+    }
 }
 
 
