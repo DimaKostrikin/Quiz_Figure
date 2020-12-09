@@ -126,3 +126,14 @@ Map_object &Map_object::operator=(const Map_object &elem) {
     return *this;
 }
 
+bool Map_object::is_activator() {
+    return ((type == HOLE) || (type == STEP));
+}
+
+bool Map_object::is_activated() {
+    return ((type == DOOR) || (type == BUTTON) || (type == FINISH) );
+}
+
+bool Map_object::is_dynamic() {
+    return ((type == CUBE) || (type == BALL));
+}

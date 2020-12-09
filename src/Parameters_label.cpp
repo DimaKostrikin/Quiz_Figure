@@ -6,9 +6,9 @@ const unsigned int SCR_HEIGHT = 1024;
 
 
 
-Parameters_label::Parameters_label() : x(0), y(0), z(0){
+Parameters_label::Parameters_label() {
 
-
+    obj = nullptr;
     // FreeType
     // --------
     FT_Library ft;
@@ -149,11 +149,21 @@ void Parameters_label::draw() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    //внимание! здесь считаем от левого нижнего угла
-    RenderText(VAO, VBO, shader, "X: " + std::to_string(x), 1150.0f, 1000.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
-    RenderText(VAO, VBO, shader, "Y: "+ std::to_string(y), 1150.0f, 970.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
-    RenderText(VAO, VBO, shader, "Z: "+ std::to_string(z), 1150.0f, 940.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
-    RenderText(VAO, VBO, shader, "X: ", 0.1f, 0.3f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    //внимание! здесь считаем от левого нижнего угла. убрать хардкод
+    if (obj) {
+        double x1 = (obj->vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+        double x2 = (obj->vertices[0] + 1.0f) * (SCR_WIDTH / 2);
+        double y1 = (1.0f - obj->vertices[1]) * (SCR_HEIGHT / 2);
+        double y2 = (1.0f - obj->vertices[9]) * (SCR_HEIGHT / 2);
+        // осторожно !1!!1
+        double x = x1+(x2 - x1)/2;
+        double y = y1+(y2 - y1)/2;
+
+        RenderText(VAO, VBO, shader, "ID: " + std::to_string(obj->id), 1150.0f, 1000.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "X: " + std::to_string(x), 1150.0f, 970.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "Y: " + std::to_string(y), 1150.0f, 940.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "Z: " , 1150.0f, 910.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    }
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
@@ -210,8 +220,4 @@ void Parameters_label::RenderText(unsigned int &VAO, unsigned int &VBO, Shader& 
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Parameters_label::clear() {
-    x=0;
-    y=0;
-    z=0;
-}
+

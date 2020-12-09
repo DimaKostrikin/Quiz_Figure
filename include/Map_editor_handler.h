@@ -21,6 +21,7 @@ public:
     std::vector<Button_toolbar> toolbar_buttons;
     std::shared_ptr<Scene> scene;
     std::shared_ptr<Parameters_label> label;
+    void connect(size_t i, size_t j);
 
     void processInput();
     std::shared_ptr<Container_map> create_map();
@@ -37,7 +38,9 @@ private:
     void scene_init();
     //Map_parser parser;
     //std::shared_ptr<Scene>scene;
-    //std::shared_ptr<Container_map>map;
+    //
+    size_t n; //считать
+    size_t save; //хелпа
 
 };
 

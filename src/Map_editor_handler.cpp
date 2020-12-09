@@ -8,16 +8,17 @@ Map_editor_handler::Map_editor_handler() {
     scene_init();
     toolbar_init();
     window = nullptr;
+    n = 0;
 }
 
 Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
-
+    n = 0;
     cur_container = 0;
     this->window = window;
     scene_init();
     cur_elem=0;
     scene = std::make_shared<Scene>();
-    label = std::make_shared<Parameters_label>();
+    //label = std::make_shared<Parameters_label>();
     std::vector<float> vertices_button {
             // координаты
 
@@ -36,28 +37,47 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
             -0.95f, 0.65f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
-
     std::vector<float> vertices_button3 {
             // координаты
-            -0.65f,  0.35f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.65f, 0.25f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, 0.25f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.75f,  0.35f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.75f, 0.15f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.95f, 0.15f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
             -0.95f, 0.35f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
     std::vector<float> vertices_button4 {
             // координаты
-            -0.65f,  0.15f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.65f, 0.05f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, 0.05f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-            -0.95f, 0.15f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+            -0.75f,  0.05f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.75f, -0.15f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.95f, -0.15f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.95f, 0.05f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
 
+    std::vector<float> vertices_button5 {
+            // координаты
+            -0.65f,  -0.25f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.65f, -0.35f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.95f, -0.35f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.95f, -0.25f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+
+    };
+    std::vector<float> vertices_button6 {
+            // координаты
+            -0.65f,  -0.55f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.65f, -0.65f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.95f, -0.65f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.95f, -0.55f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+
+    };
+
+
     toolbar_buttons.emplace_back("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button, START);
     toolbar_buttons.emplace_back("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button2, FINISH);
-    toolbar_buttons.emplace_back("textures/connect_text.jpg", "textures/connect_text_act.jpg", vertices_button3, CONNECT);
-    toolbar_buttons.emplace_back("textures/finish_text.jpg", "textures/finish_text_act.jpg", vertices_button4, SAVE);
+    toolbar_buttons.emplace_back("textures/cube_hole_icon.jpg", "textures/cube_hole_icon_act.jpg", vertices_button3, HOLE);
+    toolbar_buttons.emplace_back("textures/cube_icon.jpg", "textures/cube_icon_act.jpg", vertices_button4, CUBE);
+    toolbar_buttons.emplace_back("textures/connect_text.jpg", "textures/connect_text_act.jpg", vertices_button5, CONNECT);
+    toolbar_buttons.emplace_back("textures/finish_text.jpg", "textures/finish_text_act.jpg", vertices_button6, SAVE);
 
     toolbar_buttons[cur_elem].activate();
 }
@@ -163,11 +183,11 @@ void Map_editor_handler::draw() {
             double y2 = (1.0f - scene->container[scene->cur_elem].vertices[9]) * (SCR_HEIGHT / 2);
             // осторожно !1!!1
             double x = abs(x2 - x1);
-            label->x = x1+(x2 - x1)/2;
-            label->y = y1+(y2 - y1)/2;
-        } else label->clear();
+            //label->x = x1+(x2 - x1)/2;
+            //label->y = y1+(y2 - y1)/2;
+        } //else label->clear();
     }
-    label->draw();
+    //label->draw();
 
 }
 
@@ -191,25 +211,27 @@ void Map_editor_handler::processInput() {
 
     glfwGetCursorPos(window, &x, &y);
     int j = 0;
-    for (auto &i: toolbar_buttons) {
-        double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
-        double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
-        double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
-        double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
-        i.deactivate();
-        if ((x1 < x) && (x < x2)
-            && (y1 < y) && (y < y2)) {
-            cur_elem = j;
-            i.activate();
+    if (!scene->connection_mode) {
+        for (auto &i: toolbar_buttons) {
+            double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+            double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
+            double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
+            double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
+            i.deactivate();
+            if ((x1 < x) && (x < x2)
+                && (y1 < y) && (y < y2)) {
+                cur_elem = j;
+                i.activate();
+            }
+            ++j;
         }
-        ++j;
     }
     //GLFW_MOUSE_BUTTON_LEFT
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-        std::vector<float> vertices_button3{
+        std::vector<float> vertices_button{
                 // координаты
 
                 0.2f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
@@ -221,15 +243,33 @@ void Map_editor_handler::processInput() {
         if (toolbar_buttons[cur_elem].is_activated()) {
             switch (toolbar_buttons[cur_elem].type) {
                 case START: {
-                    Map_object elem("textures/start.jpg", "textures/start_act.jpg", vertices_button3,
-                                        START, ++scene->id);
-                    scene->container.push_back(elem);
+                    scene->container.emplace_back(Map_object
+                    ("textures/start.jpg", "textures/start_act.jpg", vertices_button,
+                                                                  START, ++scene->id));
                     break;
                 }
                 case FINISH: {
-                    Map_object elem("textures/exit.jpg", "textures/exit_act.jpg", vertices_button3,
-                                        FINISH, ++scene->id);
-                    scene->container.push_back(elem);
+                    scene->container.emplace_back(Map_object
+                    ("textures/exit.jpg", "textures/exit_act.jpg", vertices_button,
+                                                                  FINISH, ++scene->id));
+                }
+                    break;
+                case HOLE: {
+                    scene->container.emplace_back(Map_object
+                    ("textures/cube_hole.jpg", "textures/cube_hole_act.jpg", vertices_button,
+                                                               HOLE, ++scene->id));
+                }
+                    break;
+                case CUBE: {
+                    scene->container.emplace_back(Map_object
+                    ("textures/blue.jpg", "textures/dark_blue.jpg", vertices_button,
+                                                               CUBE, ++scene->id));
+                }
+                    break;
+                case CONNECT: {
+                    if (scene->container.size() >= 2)
+                        scene->connection_mode=true;
+
                 }
                     break;
                 default:
@@ -238,27 +278,54 @@ void Map_editor_handler::processInput() {
         }
         j = 0;
         bool is_not_activated=true;
-        for (auto &i: scene->container) {
-            i.deactivate();
-            double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
-            double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
-            double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
-            double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
-            if (is_not_activated){
-                if ((x1 < x) && (x < x2)
-                    && (y1 < y) && (y < y2)) {
-                    scene->cur_elem = j;
-                    i.activate();
-                    is_not_activated=false;
+        if (!scene->connection_mode) {
+            for (auto &i: scene->container) {
+                i.deactivate();
+                double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+                double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
+                double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
+                double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
+                if (is_not_activated) {
+                    if ((x1 < x) && (x < x2)
+                        && (y1 < y) && (y < y2)) {
+                        scene->cur_elem = j;
+                        i.activate();
+                        is_not_activated = false;
+                    }
+                    ++j;
+                }
+            }
+        } else{
+            if (!scene->container.empty())
+                scene->container[scene->cur_elem].deactivate();
+            j=0;
+            for (auto &i: scene->container) {
+                double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+                double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
+                double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
+                double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
+                if (n < 2) {
+                    if ((x1 < x) && (x < x2)
+                        && (y1 < y) && (y < y2)) {
+                        i.activate();
+                        n++;
+                        if (n <= 1) save = j;
+                        else {
+                            connect(save, j);
+                            scene->container[save].deactivate();
+                            scene->container[j].deactivate();
+                            scene->connection_mode=false;
+                            n = 0;
+                        }
+                    }
                 }
                 ++j;
-            }
+                }
         }
 
     }
 
 //
-
 
     if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         if (!scene->container.empty()) {
@@ -306,3 +373,20 @@ std::shared_ptr<Container_map> Map_editor_handler::create_map() {
     std::shared_ptr<Container_map>(scene);
     return std::shared_ptr<Container_map>();
 }
+
+
+void Map_editor_handler::connect(size_t i, size_t j) {
+    if (scene->container[i].is_activator()){
+        if (scene->container[j].is_activated())
+            scene->container[j].connect = scene->container[i].id; // финиш открывается из-за дырки
+        if (scene->container[j].is_dynamic())
+            scene->container[i].connect = scene->container[j].id; // дырка открывается из-за куба
+    } else if (scene->container[i].is_activated()){
+        if (scene->container[j].is_activator())
+            scene->container[i].connect = scene->container[j].id; // финиш открывается из-за дырки
+    } else if (scene->container[i].is_dynamic()){
+        if (scene->container[j].is_activator())
+            scene->container[j].connect = scene->container[i].id; // финиш открывается из-за дырки
+    }
+}
+

@@ -16,6 +16,8 @@ class Scene{
 public:
     Scene();
     bool connection_mode;
+    // дичь, исправить
+
     size_t id;
     ~Scene(){};
     void draw();
@@ -31,6 +33,7 @@ public:
 
 private:
     void grid_maker();
+
 };
 
 #endif //QUIZ_FIGURE_SCENE_H

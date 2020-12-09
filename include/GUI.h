@@ -98,6 +98,10 @@ public:
 
     Map_object& operator= (const Map_object &elem);
 
+    bool is_activator();
+    bool is_activated();
+    bool is_dynamic();
+
     ~Map_object()=default;
     /*Map_object(const Map_object<N> &elem) : Button_entry<N>(elem){}*/
 private:

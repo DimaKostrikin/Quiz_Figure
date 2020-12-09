@@ -18,6 +18,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "GUI.h"
+
 
 struct Character {
     unsigned int TextureID; // ID текстуры глифа
@@ -34,18 +36,16 @@ public:
     ~Parameters_label();
     void init();
     void changed();
-    int x, y, z;
-    void clear();
     void close();
     void draw();
     void RenderText(unsigned int &VAO, unsigned int &VBO,Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
-
+    std::shared_ptr<Map_object> obj;
 private:
     std::string label;
     int obj_id;
     std::map <std::string, int> parameters_num;
     std::map<std::string, bool> parameters_bool;
-    std::shared_ptr<Object> obj;
+
 };
 
 #endif //QUIZ_FIGURE_PARAMETERS_LABEL_H
