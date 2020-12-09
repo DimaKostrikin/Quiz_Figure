@@ -11,7 +11,7 @@ std::vector<float> vertices_paper = {
 };
 
 
-Scene::Scene(): paper("textures/white.jpg", vertices_paper) {
+Scene::Scene(): paper("textures/white.jpg", vertices_paper), id(0) {
 
     cur_elem = 0;
     connection_mode = false;

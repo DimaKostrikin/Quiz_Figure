@@ -82,11 +82,14 @@ private:
 
 class Map_object: public Button_entry{
 public:
+    size_t id;
+    size_t connect;
     type_elem type;
    // Map_object(Map_object<N>&& o) = default;
     //Map_object(const Map_object<N>& o) = default;
-    Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type):
-            Button_entry(std::move(f1), std::move(f2), std::move(vertices)), type(type){};
+    Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id):
+            Button_entry(std::move(f1), std::move(f2), std::move(vertices)),
+            id(id), connect(0),type(type){};
 
     void up();
     void down();

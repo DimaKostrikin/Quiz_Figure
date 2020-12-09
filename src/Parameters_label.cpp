@@ -6,7 +6,7 @@ const unsigned int SCR_HEIGHT = 1024;
 
 
 
-Parameters_label::Parameters_label() {
+Parameters_label::Parameters_label() : x(0), y(0), z(0){
 
 
     // FreeType
@@ -143,15 +143,17 @@ void Parameters_label::draw() {
     glGenBuffers(1, &VBO);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
     //внимание! здесь считаем от левого нижнего угла
-    RenderText(VAO, VBO, shader, "(C) OpenGL for Ravesli.com", 1000.0f, 200.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-
+    RenderText(VAO, VBO, shader, "X: " + std::to_string(x), 1150.0f, 1000.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    RenderText(VAO, VBO, shader, "Y: "+ std::to_string(y), 1150.0f, 970.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    RenderText(VAO, VBO, shader, "Z: "+ std::to_string(z), 1150.0f, 940.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+    RenderText(VAO, VBO, shader, "X: ", 0.1f, 0.3f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
@@ -162,7 +164,8 @@ void Parameters_label::draw() {
 
 // рендер строки текста
 // -------------------
-void Parameters_label::RenderText(unsigned int &VAO, unsigned int &VBO, Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color)
+void Parameters_label::RenderText(unsigned int &VAO, unsigned int &VBO, Shader& shader, std::string text,
+                                  float x, float y, float scale, glm::vec3 color)
 {
     // активируем соответствующее состояние рендеринга
     shader.use();
@@ -205,4 +208,10 @@ void Parameters_label::RenderText(unsigned int &VAO, unsigned int &VBO, Shader& 
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Parameters_label::clear() {
+    x=0;
+    y=0;
+    z=0;
 }

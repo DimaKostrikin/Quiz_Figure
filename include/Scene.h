@@ -16,6 +16,7 @@ class Scene{
 public:
     Scene();
     bool connection_mode;
+    size_t id;
     ~Scene(){};
     void draw();
     std::vector<Map_object> container;

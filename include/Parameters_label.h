@@ -34,6 +34,8 @@ public:
     ~Parameters_label();
     void init();
     void changed();
+    int x, y, z;
+    void clear();
     void close();
     void draw();
     void RenderText(unsigned int &VAO, unsigned int &VBO,Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);

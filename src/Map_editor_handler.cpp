@@ -155,8 +155,19 @@ void Map_editor_handler::draw() {
         glDeleteBuffers(1, &VBO);
         glDeleteBuffers(1, &EBO);
     }
+    if (!scene->container.empty()){
+        if (scene->container[scene->cur_elem].is_activated()) {
+            double x1 = (scene->container[scene->cur_elem].vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+            double x2 = (scene->container[scene->cur_elem].vertices[0] + 1.0f) * (SCR_WIDTH / 2);
+            double y1 = (1.0f - scene->container[scene->cur_elem].vertices[1]) * (SCR_HEIGHT / 2);
+            double y2 = (1.0f - scene->container[scene->cur_elem].vertices[9]) * (SCR_HEIGHT / 2);
+            // осторожно !1!!1
+            double x = abs(x2 - x1);
+            label->x = x1+(x2 - x1)/2;
+            label->y = y1+(y2 - y1)/2;
+        } else label->clear();
+    }
     label->draw();
-    shader.use();
 
 }
 
@@ -211,13 +222,13 @@ void Map_editor_handler::processInput() {
             switch (toolbar_buttons[cur_elem].type) {
                 case START: {
                     Map_object elem("textures/start.jpg", "textures/start_act.jpg", vertices_button3,
-                                        START);
+                                        START, ++scene->id);
                     scene->container.push_back(elem);
                     break;
                 }
                 case FINISH: {
                     Map_object elem("textures/exit.jpg", "textures/exit_act.jpg", vertices_button3,
-                                        FINISH);
+                                        FINISH, ++scene->id);
                     scene->container.push_back(elem);
                 }
                     break;
