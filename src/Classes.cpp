@@ -189,39 +189,53 @@ bool Handler::collision(Object_dynamic &first, Object_dynamic &second) {
 }
 
 int Handler::player_collision(Object_dynamic &dyn) {
-    unsigned int range = abs(dyn_elems[0].get_center().x - dyn.get_center().x);
-    unsigned int characteristics = abs((dyn_elems[0].get_size().length + dyn.get_size().length)/2);//Длина всегда по x
-    if(range < characteristics) {
-        return X_COLLISION;
-    }
-    range = abs(dyn_elems[0].get_center().y - dyn.get_center().y);
-    characteristics = abs((dyn_elems[0].get_size().width + dyn.get_size().width)/2);//Ширина всегда по y
-    if(range < characteristics) {
-        return Y_COLLISION;
-    }
-    range = abs(dyn_elems[0].get_center().z - dyn.get_center().z);
-    characteristics = abs((dyn_elems[0].get_size().height + dyn.get_size().height)/2);//Высота всегда по z
-    if(range < characteristics) {
-        return Z_COLLISION;
+    if(dyn.get_center().x - dyn.get_size().length / 2 < player.get_center().x + player.get_size().length / 2 &&
+       dyn.get_center().x + dyn.get_size().length / 2 > player.get_center().x - player.get_size().length / 2 &&
+       dyn.get_center().y - dyn.get_size().width / 2 < player.get_center().y + player.get_size().width / 2 &&
+       dyn.get_center().y + dyn.get_size().width / 2 > player.get_center().y - player.get_size().width / 2 &&
+       dyn.get_center().z - dyn.get_size().height / 2 < player.get_center().z + player.get_size().height / 2 &&
+       dyn.get_center().z + dyn.get_size().height / 2 > player.get_center().z - player.get_size().height / 2) {
+        unsigned int range = abs(dyn.get_center().x - player.get_center().x);
+        unsigned int characteristics = player.get_size().length / 2;//Длина всегда по x
+        if (range > characteristics) {
+            return X_COLLISION;
+        }
+        range = abs(dyn.get_center().y - player.get_center().y);
+        characteristics = player.get_size().width / 2;//Ширина всегда по y
+        if (range > characteristics) {
+            return Y_COLLISION;
+        }
+        range = abs(dyn.get_center().z - player.get_center().z);
+        characteristics = player.get_size().height / 2;//Высота всегда по z
+        if (range > characteristics) {
+            return Z_COLLISION;
+        }
     }
     return false;
 }
 
 int Handler::collision(Object_dynamic &first, Object_static &second) {
-    unsigned int range = abs(first.get_center().x - second.get_center().x);
-    unsigned int characteristics = abs((first.get_size().length + second.get_size().length)/2);//Длина всегда по x
-    if(range < characteristics) {
-        return X_COLLISION;
-    }
-    range = abs(first.get_center().y - second.get_center().y);
-    characteristics = abs((first.get_size().width + second.get_size().width)/2);//Ширина всегда по y
-    if(range < characteristics) {
-        return Y_COLLISION;
-    }
-    range = abs(first.get_center().z - second.get_center().z);
-    characteristics = abs((first.get_size().height + second.get_size().height)/2);//Высота всегда по z
-    if(range < characteristics) {
-        return Z_COLLISION;
+    if(first.get_center().x - first.get_size().length / 2 < second.get_center().x + second.get_size().length / 2 &&
+    first.get_center().x + first.get_size().length / 2 > second.get_center().x - second.get_size().length / 2 &&
+    first.get_center().y - first.get_size().width / 2 < second.get_center().y + second.get_size().width / 2 &&
+    first.get_center().y + first.get_size().width / 2 > second.get_center().y - second.get_size().width / 2 &&
+    first.get_center().z - first.get_size().height / 2 < second.get_center().z + second.get_size().height / 2 &&
+    first.get_center().z + first.get_size().height / 2 > second.get_center().z - second.get_size().height / 2) {
+        unsigned int range = abs(first.get_center().x - second.get_center().x);
+        unsigned int characteristics = second.get_size().length / 2;//Длина всегда по x
+        if (range > characteristics) {
+            return X_COLLISION;
+        }
+        range = abs(first.get_center().y - second.get_center().y);
+        characteristics = second.get_size().width / 2;//Ширина всегда по y
+        if (range > characteristics) {
+            return Y_COLLISION;
+        }
+        range = abs(first.get_center().z - second.get_center().z);
+        characteristics = second.get_size().height / 2;//Высота всегда по z
+        if (range > characteristics) {
+            return Z_COLLISION;
+        }
     }
     return false;
 }
@@ -250,43 +264,42 @@ void Handler::position_change(Object_dynamic &dyn, size_t i) {
 //Пока что всегда на полу
 void Handler::player_update() {
     Speed new_speed = {0,0,0};
-    Point old_center = dyn_elems[0].get_center();
+    Point old_center = player.get_center();
     Point new_center;
-    new_center.x = dyn_elems[0].get_speed().dx * passed_time + dyn_elems[0].get_center().x;
-    new_center.y = dyn_elems[0].get_speed().dy * passed_time + dyn_elems[0].get_center().y;
-    new_center.z = dyn_elems[0].get_speed().dz * passed_time + dyn_elems[0].get_center().z;
-    dyn_elems[0].set_center(new_center);
+    new_center.x = player.get_speed().dx * passed_time + player.get_center().x;
+    new_center.y = player.get_speed().dy * passed_time + player.get_center().y;
+    new_center.z = player.get_speed().dz * passed_time + player.get_center().z;
+    player.set_center(new_center);
     if(1) {//Кнопка не нажата, необходимо реализовать
-        dyn_elems[0].set_speed(new_speed);
+        player.set_speed(new_speed);
     }
     else {
         new_speed = new_speed; //Необходима реализация камеры для задания скоростей в определенных направлениях
     }
     int coll_type = 0;
-    for(size_t i = 1; i < dyn_elems.size(); ++i) {
+    for(size_t i = 0; i < dyn_elems.size(); ++i) {
         coll_type = player_collision(dyn_elems[i]);
         if(coll_type) {
             coll_speed_player(dyn_elems[i], coll_type);
         }
     }
     for(size_t j = 0; j < stat_elems.size(); ++j) {
-        coll_type = collision(dyn_elems[0], stat_elems[j]);
+        coll_type = collision(player, stat_elems[j]);
         if(coll_type == X_COLLISION) {
-            dyn_elems[0].get_center().x = old_center.x;
+            player.get_center().x = old_center.x;
         }
         if(coll_type == Y_COLLISION) {
-            dyn_elems[0].get_center().y = old_center.y;
+            player.get_center().y = old_center.y;
         }
         if(coll_type == Z_COLLISION) {
-            dyn_elems[0].get_center().z = old_center.z;
+            player.get_center().z = old_center.z;
         }
     }
 }
 
-//Игрок всегда 0ой в векторе элементов
 void Handler::updater() {
     player_update();
-    for(size_t i = 1; i < dyn_elems.size(); ++i) {
+    for(size_t i = 0; i < dyn_elems.size(); ++i) {
             position_change(dyn_elems[i], i);
         }
     }
