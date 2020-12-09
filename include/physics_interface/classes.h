@@ -63,65 +63,54 @@ enum type_elem {
     JUMPER
 };
 
-class Object {
-public:
-    Object(int e_type);
-    Object(int e_type, Point &p);
-    ~Object();
-
-    int get_elem_type();
-    Point get_center();
-    void set_center(Point &p);
-
-private:
-    int elem_type;
+class Object {  // Базовый класс объектов
     Point center;
-};
-
-class Object_dynamic : public Object {
+    unsigned int elem_type;
 public:
-    Object_dynamic(int e_type, unsigned int r);
-    Object_dynamic(int e_type, unsigned int r, Point &p);
-    Object_dynamic(int e_type, unsigned int r, Speed &s);
-    Object_dynamic(int e_type, unsigned int r, Point &p, Speed &s);
-    ~Object_dynamic();
+    Object(unsigned int elem_type, Point& c);
+    virtual ~Object() = default;
+    unsigned int get_elem_type();
+    Point get_center() const;
+    Point& get_center();
 
-    Speed get_speed();
-    void set_speed(Speed &s);
-    void set_radius(unsigned int r);
-    unsigned int get_radius();
-
-private:
-    Speed speed;
-    unsigned int radius;
-};
-
-class Player : public Object_dynamic {
-public:
-    Player(int e_type, unsigned int h, unsigned int r, Point &p);
-    ~Player();
-
-    void take_elem(Object_dynamic &obj);
-
-private:
-    //В дальнейшем необходимо сделать const или же объявлять глобальную переменную
-    unsigned int height;
+    void set_center(Point& c);
 };
 
 class Object_static : public Object {
+    Size size; // CONST????
 public:
-    Object_static(int e_type, Point &p, unsigned int h, unsigned int l, unsigned int w);
-    ~Object_static();
+    Object_static(const int& elem_type, Point& c, Size& sz);
+    ~Object_static() = default;
+    Size get_size() const;
+    Size& get_size();
+    void set_size(Size& sz);
+};
 
-    unsigned int get_height();
-    unsigned int get_length();
-    unsigned int get_width();
+class Object_dynamic : public Object_static {
+    Speed speed = {0, 0, 0};
+    bool on_floor = false;
+public:
+    Object_dynamic(const int& elem_type, Point& c, Size& sz);
+    Object_dynamic(const int& elem_type, Point& c, Size& sz, bool on_floor);
+    Object_dynamic(const int& elem_type, Point& c, Size& sz, Speed& sd);
+    Object_dynamic(const int& elem_type, Point& c, Size& sz, Speed& sd, bool on_floor);
+    ~Object_dynamic() = default;
 
-private:
-    //Можно сделать const в дальнейшем
-    unsigned int height;
-    unsigned int length;
-    unsigned int width;
+    Speed get_speed() const;
+    Speed& get_speed();
+    void set_speed(Speed& sd);
+    bool get_on_floor();
+    void set_on_floor(bool on);
+};
+
+class Player : public Object_dynamic {
+    int hp = 100;
+public:
+    Player(Point& c, Size& sz);
+    ~Player() = default;
+    void take_object(Object_dynamic &taked_object);
+    int get_hp() const;
+    int& get_hp();
 };
 
 //Реализация Дмитрия
@@ -130,14 +119,17 @@ class Object_activated : public Object {};
 class Handler {
 public:
     Handler(std::vector<Object_dynamic> &d, std::vector<Object_static> &s, std::vector<Object_activated> &a, Player &p);
-    ~Handler();
+    ~Handler() = default;
 
     void default_speed_change(Object_dynamic &dyn);
     void coll_speed_change(Object_dynamic &dyn1, Object_dynamic &dyn2);
-    void coll_speed_change(Object_dynamic &dyn, Object_static &stat);
+    void coll_speed_player(Object_dynamic &dyn, int coll_type);
+    void coll_speed_change(Object_dynamic &dyn, Object_static &stat, int coll_type);
     bool collision(Object_dynamic &first, Object_dynamic &second);
-    bool collision(Object_dynamic &first, Object_static &second);
+    int player_collision(Object_dynamic &dyn);
+    int collision(Object_dynamic &first, Object_static &second);
     void position_change(Object_dynamic &dyn, size_t i);
+    void player_update();
     void updater();
 
 private:
@@ -146,7 +138,6 @@ private:
     std::vector<Object_static> stat_elems;
     std::vector<Object_activated> act_elems;
 };
-
 
 
 #endif
