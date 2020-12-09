@@ -87,6 +87,7 @@
         dyn.set_speed(new_speed);
         return;
     }
+    // TODO Обработка для игрока
     void Handler::coll_speed_change(Object_dynamic &dyn1, Object_dynamic &dyn2){}//TODO *HARD Возможно поможет пакет математики буста
     void Handler::coll_speed_change(Object_dynamic &dyn, Object_static &stat){//разложение неверное, нужно учитывать скорость относительно стены
         Speed new_speed;

@@ -10,21 +10,57 @@
 #define FRICTION 100 //Достаточно ли?
 #define LOSS_RATE 0.7
 
-#define WALL 105
-#define FLOOR 205
-
-int time;//???
-
 struct Point {
     int x;
     int y;
     int z;
+    friend std::ostream& operator<< (std::ostream &out, const Point &point) {
+        out << "Center: (" << point.x << ", " << point.y << ", " << point.z << ")"<< std::endl;
+        return out;
+    }
 };
 
 struct Speed {
-    int dx;//mm/sec
+    int dx; // mm/sec
     int dy;
     int dz;
+    friend std::ostream& operator<< (std::ostream &out, const Speed &speed) {
+        out << "Speed: (" << speed.dx << ", " << speed.dy << ", " << speed.dz << ")"<< std::endl;
+        return out;
+    }
+};
+
+struct Size {
+    int height; //mm
+    int length;
+    int width;
+    friend std::ostream& operator<< (std::ostream &out, const Size &size) {
+        out << "Size: (" << size.height << ", " << size.length << ", " << size.width << ")"<< std::endl;
+        return out;
+    }
+};
+
+enum type_elem {
+    PLAYER,  // Игрок
+
+    WALL,  // Статические объекты
+    FLOOR,
+    HINT,
+    PLATFORM,
+    STAIRS,
+
+    CUBE,  // Динамические объекты
+    BALL,
+
+    DOOR,  // Активируемые объекты
+    BUTTON,
+
+    STEP,  // Активаторы
+    HOLE,
+
+    TELEPORT,  // Взаимодействие с параметрами игрока
+    LASER,
+    JUMPER
 };
 
 class Object {
@@ -110,5 +146,7 @@ private:
     std::vector<Object_static> stat_elems;
     std::vector<Object_activated> act_elems;
 };
+
+
 
 #endif
