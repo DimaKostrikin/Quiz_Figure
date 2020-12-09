@@ -65,6 +65,8 @@ void Menu::process_input(){
 }
 
 void Menu::draw_menu() {
+    Shader shader("shader.vs", "shader.fs");
+    shader.use();
     glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 

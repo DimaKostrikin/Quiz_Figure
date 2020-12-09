@@ -8,17 +8,20 @@
 #include "../Objects.h"
 #include <iostream>
 #include "memory"
-#include "Button_entry.h"
+#include "GUI.h"
 //#include "Parameters_label.h"
+
 
 class Scene{
 public:
     Scene();
+    bool connection_mode;
     ~Scene(){};
     void draw();
-    std::vector<Map_object<32>> container;
+    std::vector<Map_object> container;
     size_t cur_elem;
 
+    Elem paper;
     void draw_object(std::shared_ptr<Object> obj);
     void change_object(std::shared_ptr<Object> obj);
     void clear_object(std::shared_ptr<Object> obj);

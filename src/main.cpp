@@ -3,10 +3,10 @@
 //
 
 #include "Interface.h"
-#include "../shader_s.h"
 
 
-int main() {
+
+int main(int argc, char **argv) {
     Interface app;
     app.cycle();
 }

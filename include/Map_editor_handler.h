@@ -5,8 +5,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
-#include "Button_entry.h"
+#include "GUI.h"
 #include "Container_map.h"
+#include "Parameters_label.h"
 
 
 class Map_editor_handler {
@@ -17,8 +18,9 @@ public:
     Map_editor_handler();
     Map_editor_handler(GLFWwindow *window);
     ~Map_editor_handler();
-    std::vector<Button_toolbar<32>> toolbar_buttons;
+    std::vector<Button_toolbar> toolbar_buttons;
     std::shared_ptr<Scene> scene;
+    std::shared_ptr<Parameters_label> label;
 
     void processInput();
     std::shared_ptr<Container_map> create_map();

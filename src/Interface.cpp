@@ -8,39 +8,7 @@
  */
 #include "Interface.h"
 
-const char* vertexShaderSource = R"(
-#version 330 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aColor;
-layout (location = 2) in vec2 aTexCoord;
-
-out vec3 ourColor;
-out vec2 TexCoord;
-
-void main()
-{
-    gl_Position = vec4(aPos, 1.0);
-    ourColor = aColor;
-    TexCoord = aTexCoord;
-}
-)";
-const char* fragmentShaderSource = R"(
-#version 330 core
-out vec4 FragColor;
-
-in vec3 ourColor;
-in vec2 TexCoord;
-
-uniform sampler2D ourTexture;
-
-void main()
-{
-    FragColor = texture(ourTexture, TexCoord);
-}
-)";
-
 void Interface::cycle() {
-    Shader shader("shader.vs", "shader.fs");
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     // Цикл рендеринга
     while (!glfwWindowShouldClose(window))
@@ -51,7 +19,6 @@ void Interface::cycle() {
         processInput();
 
         // Рендеринг
-        shader.use();
 
 
         draw();
@@ -100,49 +67,6 @@ Interface::Interface() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
-
-    // Вершинный шейдер
-    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    // Проверка на наличие ошибок компилирования вершинного шейдера
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    // Фрагментный шейдер
-    int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    // Проверка на наличие ошибок компилирования фрагментного шейдера
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    // Связывание шейдеров
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    // Проверка на наличие ошибок компилирования связывания шейдеров
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    }
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
 
 
     menu = std::make_shared<Menu>(window);

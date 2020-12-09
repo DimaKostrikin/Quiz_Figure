@@ -11,11 +11,13 @@ Map_editor_handler::Map_editor_handler() {
 }
 
 Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
+
     cur_container = 0;
     this->window = window;
     scene_init();
     cur_elem=0;
     scene = std::make_shared<Scene>();
+    label = std::make_shared<Parameters_label>();
     std::vector<float> vertices_button {
             // координаты
 
@@ -43,45 +45,21 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
             -0.95f, 0.35f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
+    std::vector<float> vertices_button4 {
+            // координаты
+            -0.65f,  0.15f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.65f, 0.05f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.95f, 0.05f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.95f, 0.15f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
+    };
 
-
-    Button_toolbar<32> button("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button, START);
-
-    Button_toolbar<32> button2("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button2, FINISH);
-
-    Button_toolbar<32> button3("textures/finish_text.jpg", "textures/finish_text_act.jpg", vertices_button3, SAVE);
-
-
-    toolbar_buttons.push_back(button);
-    toolbar_buttons.push_back(button2);
-    toolbar_buttons.push_back(button3);
+    toolbar_buttons.emplace_back("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button, START);
+    toolbar_buttons.emplace_back("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button2, FINISH);
+    toolbar_buttons.emplace_back("textures/connect_text.jpg", "textures/connect_text_act.jpg", vertices_button3, CONNECT);
+    toolbar_buttons.emplace_back("textures/finish_text.jpg", "textures/finish_text_act.jpg", vertices_button4, SAVE);
 
     toolbar_buttons[cur_elem].activate();
-}
-
-void Map_editor_handler::on_mouse_click() {
-    //нажатие на объект
-/*
-    //если объект существующий
-    //тут еще айди объекта передает
-    scene->init_label();
-
-    //нажатие на тулбар элемент
-    //по кейсу создаем элемент
-    std::shared_ptr<Object> obj;
-    map->add_object(obj);
-    scene->draw_object(obj);
-
-    //нажатие на label
-    //принимает новое состояние
-    scene->label->changed();
-
-    //нажатие save
-    parser.create_json(map);*/
-
-
-
 }
 
 void Map_editor_handler::scene_init() {
@@ -101,8 +79,6 @@ void Map_editor_handler::toolbar_init() {
             -0.5f, 0.9f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
-
-
 
 
     unsigned int indices[] = {  // помните, что мы начинаем с 0!
@@ -157,8 +133,11 @@ Map_editor_handler::~Map_editor_handler() {
 }
 
 void Map_editor_handler::draw() {
+    Shader shader("shader.vs", "shader.fs");
+    shader.use();
     toolbar_init();
     scene->draw();
+
 
     for(auto &i: toolbar_buttons)
     {
@@ -176,6 +155,8 @@ void Map_editor_handler::draw() {
         glDeleteBuffers(1, &VBO);
         glDeleteBuffers(1, &EBO);
     }
+    label->draw();
+    shader.use();
 
 }
 
@@ -190,130 +171,116 @@ double get_d(float f){
     return d;
 }
 
+
+
+
 void Map_editor_handler::processInput() {
 
     double x, y;
 
-    glfwGetCursorPos ( window, &x, &y );
+    glfwGetCursorPos(window, &x, &y);
     int j = 0;
-    for (auto &i: toolbar_buttons){
-        double x1 = (i.vertices[16]+1.0f) * (SCR_WIDTH / 2);
-        double x2 = (i.vertices[0]+1.0f) * (SCR_WIDTH / 2);
-        double y1 = (1.0f-i.vertices[1]) * (SCR_HEIGHT / 2);
-        double y2 = (1.0f-i.vertices[9]) * (SCR_HEIGHT / 2);
-        if ((x1 < x) && (x<x2)
-                && (y1 < y) && (y<y2)){
-                double z = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
-                toolbar_buttons[cur_elem].deactivate();
-                cur_elem = j;
-                i.activate();
-                ++j;
-        } else { i.deactivate();}
+    for (auto &i: toolbar_buttons) {
+        double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+        double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
+        double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
+        double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
+        i.deactivate();
+        if ((x1 < x) && (x < x2)
+            && (y1 < y) && (y < y2)) {
+            cur_elem = j;
+            i.activate();
+        }
+        ++j;
     }
     //GLFW_MOUSE_BUTTON_LEFT
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-        if (cur_container==0){
-            if (cur_elem != 0){
-                toolbar_buttons[cur_elem].deactivate();
-                --cur_elem;
-                toolbar_buttons[cur_elem].activate();
-            }
-        } else {
-            if (scene->cur_elem != 0){
-                scene->container[scene->cur_elem].deactivate();
-                --scene->cur_elem;
-                scene->container[scene->cur_elem].activate();
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        std::vector<float> vertices_button3{
+                // координаты
+
+                0.2f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
+                0.2f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
+                0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
+                0.0f, 0.2f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+
+        };
+        if (toolbar_buttons[cur_elem].is_activated()) {
+            switch (toolbar_buttons[cur_elem].type) {
+                case START: {
+                    Map_object elem("textures/start.jpg", "textures/start_act.jpg", vertices_button3,
+                                        START);
+                    scene->container.push_back(elem);
+                    break;
+                }
+                case FINISH: {
+                    Map_object elem("textures/exit.jpg", "textures/exit_act.jpg", vertices_button3,
+                                        FINISH);
+                    scene->container.push_back(elem);
+                }
+                    break;
+                default:
+                    break;
+            };
+        }
+        j = 0;
+        bool is_not_activated=true;
+        for (auto &i: scene->container) {
+            i.deactivate();
+            double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+            double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
+            double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
+            double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
+            if (is_not_activated){
+                if ((x1 < x) && (x < x2)
+                    && (y1 < y) && (y < y2)) {
+                    scene->cur_elem = j;
+                    i.activate();
+                    is_not_activated=false;
+                }
+                ++j;
             }
         }
 
+    }
+
+//
+
+
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_activated())
+                scene->container[scene->cur_elem].up();
+        }
     }
 
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        if (cur_container==0){
-            if (cur_elem < toolbar_buttons.size()-1){
-                    toolbar_buttons[cur_elem].deactivate();
-                    ++cur_elem;
-                    toolbar_buttons[cur_elem].activate();
-                }
-        } else {
-            if (scene->cur_elem < scene->container.size()-1){
-                scene->container[scene->cur_elem].deactivate();
-                ++scene->cur_elem;
-                scene->container[scene->cur_elem].activate();
-            }
-        }
-    }
-//
-    if(glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS){
-        std::vector<float> vertices_button3 {
-                // координаты
-
-                0.2f,  0.2f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-                0.2f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-                0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-                0.0f, 0.2f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
-
-        };
-        switch ( toolbar_buttons[cur_elem].type ) {
-            case START:{
-                Map_object<32> elem("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button3, START);
-                scene->container.push_back(elem);
-                break;}
-            case FINISH:{
-                Map_object<32> elem("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button3, FINISH);
-                scene->container.push_back(elem);}
-                break;
-            default:
-                break;
-        }
-    }
-    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        if ((cur_container==0) && (!scene->container.empty())){
-            cur_container=1;
-            toolbar_buttons[cur_elem].deactivate();
-            scene->container[scene->cur_elem].activate();
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_activated())
+                scene->container[scene->cur_elem].down();
         }
     }
 
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        if (cur_container==1){
-            cur_container=0;
-            toolbar_buttons[cur_elem].activate();
-            scene->container[scene->cur_elem].deactivate();
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_activated())
+                scene->container[scene->cur_elem].left();
         }
     }
 
-    if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-        if (cur_container==1){
-            scene->container[scene->cur_elem].up();
-        }
-    }
-
-    if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-        if (cur_container==1){
-            scene->container[scene->cur_elem].down();
-        }
-    }
-
-    if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-        if (cur_container==1){
-            scene->container[scene->cur_elem].left();
-        }
-    }
-
-    if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-        if (cur_container==1){
-            scene->container[scene->cur_elem].right();
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_activated())
+                scene->container[scene->cur_elem].right();
         }
     }
 
     if(glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS) {
         if (cur_container==1){
             scene->container.erase(scene->container.begin()+scene->cur_elem)[scene->cur_elem];
-            std::vector<Map_object<32>> new_container;
+            std::vector<Map_object> new_container;
             for (auto &i: scene->container){
                 new_container.push_back(i);
             }

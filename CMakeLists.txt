@@ -20,11 +20,12 @@ include_directories(${SOURCE_DIR})
 set(SOURCE_FILES src/main.cpp
         src/Interface.cpp
         src/Map_editor_handler.cpp
-        src/Button_entry.cpp
+        src/GUI.cpp
         stb_image.cpp
         src/Menu.cpp
         src/Scene.cpp
-        src/Container_map.cpp)
+        src/Container_map.cpp
+        src/Parameters_label.cpp)
 
 #src/Container_map.cpp
 #src/glad.c src/Map_parser.cpp src/Parameters_label.cpp src/Scene.cpp
@@ -84,20 +85,30 @@ target_include_directories(glad PUBLIC ${INCLUDE_DIR})
 #for glfw:
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
-INCLUDE_DIRECTORIES(${GLFW_INCLUDE_DIRS})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC glad ${GLFW_STATIC_LIBRARIES})
+find_package(Freetype REQUIRED)
 
+find_package(ASSIMP REQUIRED)
 
+find_package(glm REQUIRED)
+
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC glad ${GLFW_STATIC_LIBRARIES}
+        ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLM_LIBRARIES})
+
+INCLUDE_DIRECTORIES(${GLFW_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS}
+        ${ASSIMP_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS})
 
 
 ####################
 
 add_library(map_editor_lib STATIC src/Interface.cpp include/Interface.h
         src/Map_editor_handler.cpp include/Map_editor_handler.h
-        src/Button_entry.cpp include/Button_entry.h
+        src/GUI.cpp include/GUI.h
         src/Menu.cpp include/Menu.h
         src/Scene.cpp include/Scene.h
-        src/Container_map.cpp include/Container_map.h)
+        src/Container_map.cpp include/Container_map.h
+        src/Parameters_label.cpp include/Parameters_label.h)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE map_editor_lib)
+
+

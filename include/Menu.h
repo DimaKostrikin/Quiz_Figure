@@ -14,15 +14,15 @@
 #include <utility>
 #include "Map_editor_handler.h"
 
-#include "Button_entry.h"
+#include "GUI.h"
 
 class Menu {
 public:
     Menu(GLFWwindow *window);
     ~Menu(){};
     void draw_menu();
-    Button_entry<32> button_start;
-    Button_entry<32> button_map_editor;
+    Button_entry button_start;
+    Button_entry button_map_editor;
     std::shared_ptr<Map_editor_handler> map_editor_handler;
     std::function<void()> draw;
     std::function<void()> processInput;

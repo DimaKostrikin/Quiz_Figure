@@ -1,5 +1,4 @@
 #include "Container_map.h"
-#include "../include/Container_map.h"
 
 
 void Container_map::add_object(std::shared_ptr<Object>) {

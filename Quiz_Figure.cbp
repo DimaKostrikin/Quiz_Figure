@@ -5,7 +5,7 @@
 		<Option title="Quiz_Figure"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\googletest-src\;CMake Files\googletest-src\googlemock\;CMake Files\googletest-src\googlemock\cmake\;CMake Files\googletest-src\googletest\;CMake Files\googletest-src\googletest\cmake\;CMake Files\test\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\;CMake Files\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\usr\lib\cmake\glm\;CMake Files\googletest-src\;CMake Files\googletest-src\googlemock\;CMake Files\googletest-src\googlemock\cmake\;CMake Files\googletest-src\googletest\;CMake Files\googletest-src\googletest\cmake\;CMake Files\test\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
@@ -86,6 +86,8 @@
 				<Compiler>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Quiz_Figure"/>
@@ -103,6 +105,8 @@
 				<Compiler>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 Quiz_Figure/fast"/>
@@ -120,6 +124,8 @@
 				<Compiler>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad"/>
@@ -137,6 +143,8 @@
 				<Compiler>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 glad/fast"/>
@@ -154,6 +162,8 @@
 				<Compiler>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib"/>
@@ -171,6 +181,8 @@
 				<Compiler>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/include"/>
 					<Add directory="/home/moroz/Desktop/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/moroz/Desktop/Quiz_Figure/Makefile&quot;  VERBOSE=1 map_editor_lib/fast"/>
@@ -461,6 +473,9 @@
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Menu.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Parameters_label.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Scene.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
@@ -502,6 +517,8 @@
 			<Option target="gtests_tests"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Parameters_label.cpp">
+			<Option target="Quiz_Figure"/>
+			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
 		</Unit>
@@ -538,6 +555,24 @@
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/CMakeLists.txt.in">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimp-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimp-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimpTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimpTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/cmake/glm/glmConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\cmake\glm\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/cmake/glm/glmConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\cmake\glm\"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/googletest-src/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\googletest-src\"/>
