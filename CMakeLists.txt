@@ -25,7 +25,8 @@ set(SOURCE_FILES src/main.cpp
         src/Menu.cpp
         src/Scene.cpp
         src/Container_map.cpp
-        src/Parameters_label.cpp)
+        src/Parameters_label.cpp
+        src/Map_parser.cpp)
 
 #src/Container_map.cpp
 #src/glad.c src/Map_parser.cpp src/Parameters_label.cpp src/Scene.cpp
@@ -92,11 +93,14 @@ find_package(ASSIMP REQUIRED)
 
 find_package(glm REQUIRED)
 
+find_package(Boost REQUIRED)
+
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC glad ${GLFW_STATIC_LIBRARIES}
-        ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLM_LIBRARIES})
+        ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLM_LIBRARIES}
+        ${BOOST_LIBRARIES})
 
 INCLUDE_DIRECTORIES(${GLFW_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS}
-        ${ASSIMP_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS})
+        ${ASSIMP_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${BOOST_INCLUDE_DIRS})
 
 
 ####################
@@ -107,7 +111,8 @@ add_library(map_editor_lib STATIC src/Interface.cpp include/Interface.h
         src/Menu.cpp include/Menu.h
         src/Scene.cpp include/Scene.h
         src/Container_map.cpp include/Container_map.h
-        src/Parameters_label.cpp include/Parameters_label.h)
+        src/Parameters_label.cpp include/Parameters_label.h
+        src/Map_parser.cpp include/Map_parser.h)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE map_editor_lib)
 

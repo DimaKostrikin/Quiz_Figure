@@ -8,6 +8,7 @@
 #include "GUI.h"
 #include "Container_map.h"
 #include "Parameters_label.h"
+#include "Map_parser.h"
 
 
 class Map_editor_handler {
@@ -36,7 +37,7 @@ public:
 private:
     void toolbar_init();
     void scene_init();
-    //Map_parser parser;
+    Map_parser parser;
     //std::shared_ptr<Scene>scene;
     //
     size_t n; //считать

@@ -18,7 +18,7 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
     scene_init();
     cur_elem=0;
     scene = std::make_shared<Scene>();
-    //label = std::make_shared<Parameters_label>();
+    label = std::make_shared<Parameters_label>();
     std::vector<float> vertices_button {
             // координаты
 
@@ -270,6 +270,11 @@ void Map_editor_handler::processInput() {
                     if (scene->container.size() >= 2)
                         scene->connection_mode=true;
 
+                }
+                    break;
+                case SAVE: {
+                    if (scene->container.size() > 0)
+                        parser.create_json(); //(scene->container)
                 }
                     break;
                 default:

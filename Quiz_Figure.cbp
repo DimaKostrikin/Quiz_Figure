@@ -5,7 +5,7 @@
 		<Option title="Quiz_Figure"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\;CMake Files\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\usr\lib\cmake\glm\;CMake Files\googletest-src\;CMake Files\googletest-src\googlemock\;CMake Files\googletest-src\googlemock\cmake\;CMake Files\googletest-src\googletest\;CMake Files\googletest-src\googletest\cmake\;CMake Files\test\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\;CMake Files\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\usr\lib\cmake\glm\;CMake Files\googletest-src\;CMake Files\googletest-src\googlemock\;CMake Files\googletest-src\googlemock\cmake\;CMake Files\googletest-src\googletest\;CMake Files\googletest-src\googletest\cmake\;CMake Files\test\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/moroz/Desktop/Quiz_Figure"/>
@@ -470,6 +470,9 @@
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Map_editor_handler.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Map_parser.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/include/Menu.h">
 			<Option target="map_editor_lib"/>
 		</Unit>
@@ -507,6 +510,8 @@
 			<Option target="gtests_tests"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/src/Map_parser.cpp">
+			<Option target="Quiz_Figure"/>
+			<Option target="map_editor_lib"/>
 			<Option target="gmock_tests_tests"/>
 			<Option target="gtests_tests"/>
 		</Unit>
@@ -567,6 +572,18 @@
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimpTargets.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
 		</Unit>
 		<Unit filename="/home/moroz/Desktop/Quiz_Figure/../../../../usr/lib/cmake/glm/glmConfig-version.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\cmake\glm\"/>
