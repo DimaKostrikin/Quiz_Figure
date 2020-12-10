@@ -31,11 +31,11 @@ struct Speed {
 };
 
 struct Size {
-    int height; //mm
     int length;
     int width;
+    int height; //mm
     friend std::ostream& operator<< (std::ostream &out, const Size &size) {
-        out << "Size: (" << size.height << ", " << size.length << ", " << size.width << ")"<< std::endl;
+        out << "Size: (" << size.length << ", " << size.width  << ", " <<  size.height << ")"<< std::endl;
         return out;
     }
 };
@@ -134,9 +134,9 @@ public:
 
 private:
     Player player;
-    std::vector<Object_dynamic> dyn_elems;
-    std::vector<Object_static> stat_elems;
-    std::vector<Object_activated> act_elems;
+    std::vector<Object_dynamic>& dyn_elems;
+    std::vector<Object_static>& stat_elems;
+    std::vector<Object_activated>& act_elems;
 };
 
 

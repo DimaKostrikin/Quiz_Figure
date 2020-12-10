@@ -1,4 +1,4 @@
-#include "../include/physics_interface/classes.h"
+#include "physics_interface/classes.h"
 
 #define passed_time 1 // Временная затычка вместо прошедшего времени
 #define SPEED_ERROR 100
@@ -99,7 +99,7 @@ int& Player::get_hp() {
 //Рассматриваются идеальные кубы и шары, для них рассматривается радиус как основная хар-ка. Дальнейшая "фича" - связать
 //с кубом углы поворота граней для более детальной обработки коллизий
 Handler::Handler(std::vector<Object_dynamic> &d, std::vector<Object_static> &s, std::vector<Object_activated> &a, Player &p) :
-   player(p), dyn_elems(d), stat_elems(s), act_elems(a) {}
+        player(p), dyn_elems(d), stat_elems(s), act_elems(a) {}
 
 void Handler::default_speed_change(Object_dynamic &dyn) {
     Speed new_speed = {0,0,0};
@@ -111,13 +111,33 @@ void Handler::default_speed_change(Object_dynamic &dyn) {
             dyn.set_speed(new_speed);
             return;
         }
-        new_speed.dx = dyn.get_speed().dx - WINDAGE * passed_time;
-        new_speed.dy = dyn.get_speed().dy - WINDAGE * passed_time;
+        if(WINDAGE * passed_time > abs(dyn.get_speed().dx)) {
+            new_speed.dx = 0;
+        }
+        else {
+            new_speed.dx = dyn.get_speed().dx - WINDAGE * passed_time * dyn.get_speed().dx / abs(dyn.get_speed().dx);
+        }
+        if(WINDAGE * passed_time > abs(dyn.get_speed().dy)) {
+            new_speed.dy = 0;
+        }
+        else {
+            new_speed.dy = dyn.get_speed().dy - WINDAGE * passed_time * dyn.get_speed().dy / abs(dyn.get_speed().dy);
+        }
         dyn.set_speed(new_speed);
         return;
     }
-    new_speed.dx = dyn.get_speed().dx - FRICTION * passed_time;
-    new_speed.dy = dyn.get_speed().dy - FRICTION * passed_time;
+    if(FRICTION * passed_time > abs(dyn.get_speed().dx)) {
+        new_speed.dx = 0;
+    }
+    else {
+        new_speed.dx = dyn.get_speed().dx - FRICTION * passed_time * dyn.get_speed().dx / abs(dyn.get_speed().dx);
+    }
+    if(FRICTION * passed_time > abs(dyn.get_speed().dy)) {
+        new_speed.dy = 0;
+    }
+    else {
+        new_speed.dy = dyn.get_speed().dy - FRICTION * passed_time * dyn.get_speed().dy / abs(dyn.get_speed().dy);
+    }
     dyn.set_speed(new_speed);
 }
 
@@ -136,12 +156,14 @@ void Handler::coll_speed_change(Object_dynamic &dyn, Object_static &stat, int co
             new_speed.dz = dyn.get_speed().dz;
             new_speed.dx = -LOSS_RATE * dyn.get_speed().dx;
             new_speed.dy = dyn.get_speed().dy;
+            dyn.set_speed(new_speed);
             return;
         }
         if(coll_type == Y_COLLISION) {
             new_speed.dz = dyn.get_speed().dz;
             new_speed.dx = dyn.get_speed().dx;
             new_speed.dy = -LOSS_RATE * dyn.get_speed().dy;
+            dyn.set_speed(new_speed);
             return;
         }
     }
@@ -153,9 +175,10 @@ void Handler::coll_speed_change(Object_dynamic &dyn, Object_static &stat, int co
         }
         new_speed.dx = dyn.get_speed().dx;
         new_speed.dy = dyn.get_speed().dy;
+        dyn.set_speed(new_speed);
         return;
     }
- }
+}
 
 void Handler::coll_speed_player(Object_dynamic &dyn, int coll_type) {
     Speed new_speed = {0,0,0};
@@ -182,7 +205,7 @@ void Handler::coll_speed_player(Object_dynamic &dyn, int coll_type) {
 bool Handler::collision(Object_dynamic &first, Object_dynamic &second) {
     unsigned int range = first.get_size().height + second.get_size().height;
     if(sqrt(pow(first.get_center().x - second.get_center().x, 2) + pow(first.get_center().y - second.get_center().y, 2)
-    + pow(first.get_center().z - second.get_center().z, 2)) < range) {
+            + pow(first.get_center().z - second.get_center().z, 2)) < range) {
         return true;
     }
     return false;
@@ -216,11 +239,11 @@ int Handler::player_collision(Object_dynamic &dyn) {
 
 int Handler::collision(Object_dynamic &first, Object_static &second) {
     if(first.get_center().x - first.get_size().length / 2 < second.get_center().x + second.get_size().length / 2 &&
-    first.get_center().x + first.get_size().length / 2 > second.get_center().x - second.get_size().length / 2 &&
-    first.get_center().y - first.get_size().width / 2 < second.get_center().y + second.get_size().width / 2 &&
-    first.get_center().y + first.get_size().width / 2 > second.get_center().y - second.get_size().width / 2 &&
-    first.get_center().z - first.get_size().height / 2 < second.get_center().z + second.get_size().height / 2 &&
-    first.get_center().z + first.get_size().height / 2 > second.get_center().z - second.get_size().height / 2) {
+       first.get_center().x + first.get_size().length / 2 > second.get_center().x - second.get_size().length / 2 &&
+       first.get_center().y - first.get_size().width / 2 < second.get_center().y + second.get_size().width / 2 &&
+       first.get_center().y + first.get_size().width / 2 > second.get_center().y - second.get_size().width / 2 &&
+       first.get_center().z - first.get_size().height / 2 < second.get_center().z + second.get_size().height / 2 &&
+       first.get_center().z + first.get_size().height / 2 > second.get_center().z - second.get_size().height / 2) {
         unsigned int range = abs(first.get_center().x - second.get_center().x);
         unsigned int characteristics = second.get_size().length / 2;//Длина всегда по x
         if (range > characteristics) {
@@ -241,7 +264,6 @@ int Handler::collision(Object_dynamic &first, Object_static &second) {
 }
 
 void Handler::position_change(Object_dynamic &dyn, size_t i) {
-    default_speed_change(dyn);
     int col_type = 0;
     for(size_t j = i + 1; j < dyn_elems.size(); ++j) {
         if(collision(dyn, dyn_elems[j])) {
@@ -254,11 +276,12 @@ void Handler::position_change(Object_dynamic &dyn, size_t i) {
             coll_speed_change(dyn, stat_elems[k], col_type);
         }
     }
-    Point new_center;
+    Point new_center = {0,0,0};
     new_center.x = dyn.get_center().x + dyn.get_speed().dx * passed_time;
     new_center.y = dyn.get_center().y + dyn.get_speed().dy * passed_time;
     new_center.z = dyn.get_center().z + dyn.get_speed().dz * passed_time;
     dyn.set_center(new_center);
+    default_speed_change(dyn);
 }
 
 //Пока что всегда на полу
@@ -300,6 +323,6 @@ void Handler::player_update() {
 void Handler::updater() {
     player_update();
     for(size_t i = 0; i < dyn_elems.size(); ++i) {
-            position_change(dyn_elems[i], i);
-        }
+        position_change(dyn_elems[i], i);
     }
+}
