@@ -4,11 +4,18 @@ const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 1024;
 
 //std::vector<Map_object> map
-std::string Map_parser::create_json() {
+std::string Map_parser::create_json(std::vector<Map_object> map) {
     std::string file_name="../new.json";
     pt::ptree tree;
+    std::ofstream out;
+    out.open(file_name);
+    if (out.is_open())
 
-    std::vector<float> vertices_button{
+
+
+
+
+    /*std::vector<float> vertices_button{
             // координаты
 
             0.2f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
@@ -27,10 +34,11 @@ std::string Map_parser::create_json() {
     Map_object c ("textures/start.jpg", "textures/start_act.jpg", vertices_button,
                   CUBE, 3);
 
+
     std::vector<Map_object> map;
     map.push_back(a);
     map.push_back(b);
-    map.push_back(c);
+    map.push_back(c);*/
     for (auto &i: map){
         double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
         double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
@@ -40,8 +48,8 @@ std::string Map_parser::create_json() {
         switch (i.type){
             case HOLE:
             case CUBE:{
-                double x = x2-x1;
-                double y = y2-y1;
+                double x = x1+(x2 - x1)/2;
+                double y = y1+(y2 - y1)/2;
                 child1.put("id", i.id);
                 child1.put("x", x);
                 child1.put("y", y);
@@ -57,8 +65,8 @@ std::string Map_parser::create_json() {
             case FINISH:
                 child1.put("act_id", i.connect);
             case START:{
-                double x = x2-x1;
-                double y = y2-y1;
+                double x = x1+(x2 - x1)/2;
+                double y = y1+(y2 - y1)/2;
                 child1.put("x", x);
                 child1.put("y", y);
                 child1.put("z", 0);
@@ -70,14 +78,18 @@ std::string Map_parser::create_json() {
         }
     }
 
+
+
     // Сохранение дерева в JSON файл
-    pt::write_json(file_name, tree);
+    pt::write_json(out, tree);
+    pt::write_json(std::cout, tree);
+    out.close();
 
     // если так не стакается, то делаем вектор для каждого типа, пушим, проходимся
     return file_name;
 }
 
-bool Map_parser::parser(std::shared_ptr<Map_object> map, std::string file_name) {
+void Map_parser::create_map() {
     //парсинг объектов
 
 }

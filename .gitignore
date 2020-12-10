@@ -16,9 +16,6 @@ glfw-build
 googletest-build
 googletest-download
 googletest-src
-shader_s.h
-shader.fs
-shader.vs
 Objects.cbp
 Objects
 stb
@@ -27,4 +24,3 @@ container.jpg
 libglad.a
 lib
 libmap_editor_lib.a
-new.json

@@ -159,10 +159,11 @@ void Parameters_label::draw() {
         double x = x1+(x2 - x1)/2;
         double y = y1+(y2 - y1)/2;
 
-        RenderText(VAO, VBO, shader, "ID: " + std::to_string(obj->id), 1150.0f, 1000.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
-        RenderText(VAO, VBO, shader, "X: " + std::to_string(x), 1150.0f, 970.0f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
-        RenderText(VAO, VBO, shader, "Y: " + std::to_string(y), 1150.0f, 940.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
-        RenderText(VAO, VBO, shader, "Z: " , 1150.0f, 910.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "ID: " + std::to_string(obj->id), 1150.0f, 1000.0f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "X: " + std::to_string(x), 1150.0f, 970.0f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "Y: " + std::to_string(y), 1150.0f, 940.f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "Z: 0" , 1150.0f, 910.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "Connect: " + std::to_string(obj->connect), 1150.0f, 880.f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
     }
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);

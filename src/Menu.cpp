@@ -38,7 +38,7 @@ void Menu::process_input(){
 
     if((glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) ||
        (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)){
-        if (!button_start.is_activated()) {
+        if (!button_start.is_active()) {
             button_start.activate();
             button_map_editor.deactivate();
         }
@@ -46,14 +46,14 @@ void Menu::process_input(){
 
     if((glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) ||
        (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)) {
-        if (button_start.is_activated()) {
+        if (button_start.is_active()) {
             button_start.deactivate();
             button_map_editor.activate();
         }
     }
 //
     if(glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS){
-        if (button_start.is_activated()) {
+        if (button_start.is_active()) {
             //start game
         } else {
             map_editor_handler = std::make_shared<Map_editor_handler>(window);

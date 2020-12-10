@@ -58,13 +58,16 @@ public:
 
     ~Button_entry()= default;
 
-    bool is_activated() const{
+    bool is_active() {
         return activated;
     }
+
 
 protected:
     unsigned int texture_active;
     bool activated;
+
+
 };
 
 

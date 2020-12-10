@@ -27,11 +27,14 @@ public:
     void processInput();
     std::shared_ptr<Container_map> create_map();
 
-    void on_mouse_click();
-    void on_key_click();
+    float last_frame;
+    float delta;
 
     GLFWwindow *window;
     void draw();
+    // унести отдельно, сцену точн
+    void toolbar_left_action(double &x, double &y);
+    void scene_action(double &x, double &y);
 
 
 private:
