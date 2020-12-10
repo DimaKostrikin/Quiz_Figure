@@ -5,6 +5,12 @@
 #define X_COLLISION 1
 #define Y_COLLISION 2
 #define Z_COLLISION 3
+
+void print_speed(glm::vec3& speed) {
+    std::cout << "Speed: (" << speed.x << ", " << speed.y << ", " << speed.z << ")"<< std::endl;
+    return;
+}
+
 // Тупа объект
 
 Object::Object(unsigned int elem_type, Point &c) : elem_type(elem_type), center(c) {}
@@ -50,21 +56,21 @@ Object_dynamic::Object_dynamic(const int& elem_type, Point& c, Size &sz)
 Object_dynamic::Object_dynamic(const int& elem_type, Point& c, Size &sz, bool on)
         : Object_static(elem_type, c, sz), on_floor(on) {}
 
-Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, Speed &sd)
+Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, glm::vec3 &sd)
         : Object_static(elem_type, c, sz), speed(sd) {}
 
-Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, Speed &sd, bool on)
+Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, glm::vec3 &sd, bool on)
         : Object_static(elem_type, c, sz), speed(sd), on_floor(on) {}
 
-Speed Object_dynamic::get_speed() const {
+glm::vec3 Object_dynamic::get_speed() const {
     return speed;
 }
 
-Speed &Object_dynamic::get_speed() {
+glm::vec3 &Object_dynamic::get_speed() {
     return speed;
 }
 
-void Object_dynamic::set_speed(Speed &sd) {
+void Object_dynamic::set_speed(glm::vec3 &sd) {
     speed = sd;
 }
 
@@ -102,41 +108,41 @@ Handler::Handler(std::vector<Object_dynamic> &d, std::vector<Object_static> &s, 
         player(p), dyn_elems(d), stat_elems(s), act_elems(a) {}
 
 void Handler::default_speed_change(Object_dynamic &dyn) {
-    Speed new_speed = {0,0,0};
+    glm::vec3 new_speed = {0,0,0};
     if(!dyn.get_on_floor()) {//элемент не на поверхности
-        new_speed.dz = dyn.get_speed().dz - Z_ACCELERATION * passed_time;
-        if (sqrt(pow(dyn.get_speed().dx, 2) + pow(dyn.get_speed().dy, 2)) <= SPEED_ERROR) {
-            new_speed.dx = 0;
-            new_speed.dy = 0;
+        new_speed.z = dyn.get_speed().z - Z_ACCELERATION * passed_time;
+        if (sqrt(pow(dyn.get_speed().x, 2) + pow(dyn.get_speed().y, 2)) <= SPEED_ERROR) {
+            new_speed.x = 0;
+            new_speed.y = 0;
             dyn.set_speed(new_speed);
             return;
         }
-        if(WINDAGE * passed_time > abs(dyn.get_speed().dx)) {
-            new_speed.dx = 0;
+        if(WINDAGE * passed_time > abs(dyn.get_speed().x)) {
+            new_speed.x = 0;
         }
         else {
-            new_speed.dx = dyn.get_speed().dx - WINDAGE * passed_time * dyn.get_speed().dx / abs(dyn.get_speed().dx);
+            new_speed.x = dyn.get_speed().x - WINDAGE * passed_time * dyn.get_speed().x / abs(dyn.get_speed().x);
         }
-        if(WINDAGE * passed_time > abs(dyn.get_speed().dy)) {
-            new_speed.dy = 0;
+        if(WINDAGE * passed_time > abs(dyn.get_speed().y)) {
+            new_speed.y = 0;
         }
         else {
-            new_speed.dy = dyn.get_speed().dy - WINDAGE * passed_time * dyn.get_speed().dy / abs(dyn.get_speed().dy);
+            new_speed.y = dyn.get_speed().y - WINDAGE * passed_time * dyn.get_speed().y / abs(dyn.get_speed().y);
         }
         dyn.set_speed(new_speed);
         return;
     }
-    if(FRICTION * passed_time > abs(dyn.get_speed().dx)) {
-        new_speed.dx = 0;
+    if(FRICTION * passed_time > abs(dyn.get_speed().x)) {
+        new_speed.x = 0;
     }
     else {
-        new_speed.dx = dyn.get_speed().dx - FRICTION * passed_time * dyn.get_speed().dx / abs(dyn.get_speed().dx);
+        new_speed.x = dyn.get_speed().x - FRICTION * passed_time * dyn.get_speed().x / abs(dyn.get_speed().x);
     }
-    if(FRICTION * passed_time > abs(dyn.get_speed().dy)) {
-        new_speed.dy = 0;
+    if(FRICTION * passed_time > abs(dyn.get_speed().y)) {
+        new_speed.y = 0;
     }
     else {
-        new_speed.dy = dyn.get_speed().dy - FRICTION * passed_time * dyn.get_speed().dy / abs(dyn.get_speed().dy);
+        new_speed.y = dyn.get_speed().y - FRICTION * passed_time * dyn.get_speed().y / abs(dyn.get_speed().y);
     }
     dyn.set_speed(new_speed);
 }
@@ -150,56 +156,56 @@ void Handler::coll_speed_change(Object_dynamic &dyn1, Object_dynamic &dyn2) {
 }//TODO *HARD Возможно поможет пакет математики буста
 
 void Handler::coll_speed_change(Object_dynamic &dyn, Object_static &stat, int coll_type) {
-    Speed new_speed = {0,0,0};
+    glm::vec3 new_speed = {0,0,0};
     if(stat.get_elem_type() == WALL) {//стена
         if(coll_type == X_COLLISION) {
-            new_speed.dz = dyn.get_speed().dz;
-            new_speed.dx = -LOSS_RATE * dyn.get_speed().dx;
-            new_speed.dy = dyn.get_speed().dy;
+            new_speed.z = dyn.get_speed().z;
+            new_speed.x = -LOSS_RATE * dyn.get_speed().x;
+            new_speed.y = dyn.get_speed().y;
             dyn.set_speed(new_speed);
             return;
         }
         if(coll_type == Y_COLLISION) {
-            new_speed.dz = dyn.get_speed().dz;
-            new_speed.dx = dyn.get_speed().dx;
-            new_speed.dy = -LOSS_RATE * dyn.get_speed().dy;
+            new_speed.z = dyn.get_speed().z;
+            new_speed.x = dyn.get_speed().x;
+            new_speed.y = -LOSS_RATE * dyn.get_speed().y;
             dyn.set_speed(new_speed);
             return;
         }
     }
     if(stat.get_elem_type() == FLOOR) {//пол
-        new_speed.dz = -LOSS_RATE * dyn.get_speed().dz;
-        if(abs(dyn.get_speed().dz) <= SPEED_ERROR) {
-            new_speed.dz = 0;
+        new_speed.z = -LOSS_RATE * dyn.get_speed().z;
+        if(abs(dyn.get_speed().z) <= SPEED_ERROR) {
+            new_speed.z = 0;
             dyn.set_on_floor(true);
         }
-        new_speed.dx = dyn.get_speed().dx;
-        new_speed.dy = dyn.get_speed().dy;
+        new_speed.x = dyn.get_speed().x;
+        new_speed.y = dyn.get_speed().y;
         dyn.set_speed(new_speed);
         return;
     }
 }
 
 void Handler::coll_speed_player(Object_dynamic &dyn, int coll_type) {
-    Speed new_speed = {0,0,0};
+    glm::vec3 new_speed = {0,0,0};
     if(coll_type == X_COLLISION) {
-        new_speed.dz = dyn.get_speed().dz;
-        new_speed.dx = -LOSS_RATE * dyn.get_speed().dx;
-        new_speed.dy = dyn.get_speed().dy;
+        new_speed.z = dyn.get_speed().z;
+        new_speed.x = -LOSS_RATE * dyn.get_speed().x;
+        new_speed.y = dyn.get_speed().y;
         dyn.set_speed(new_speed);
         return;
     }
     if(coll_type == Y_COLLISION) {
-        new_speed.dz = dyn.get_speed().dz;
-        new_speed.dx = dyn.get_speed().dx;
-        new_speed.dy = -LOSS_RATE * dyn.get_speed().dy;
+        new_speed.z = dyn.get_speed().z;
+        new_speed.x = dyn.get_speed().x;
+        new_speed.y = -LOSS_RATE * dyn.get_speed().y;
         dyn.set_speed(new_speed);
         return;
     }
     if(coll_type == Z_COLLISION) {
-        new_speed.dz = -LOSS_RATE * dyn.get_speed().dz;
-        new_speed.dx = dyn.get_speed().dx;
-        new_speed.dy = dyn.get_speed().dy;
+        new_speed.z = -LOSS_RATE * dyn.get_speed().z;
+        new_speed.x = dyn.get_speed().x;
+        new_speed.y = dyn.get_speed().y;
         dyn.set_speed(new_speed);
         return;
     }
@@ -276,21 +282,21 @@ void Handler::position_change(Object_dynamic &dyn, size_t i) {
         }
     }
     Point new_center = {0,0,0};
-    new_center.x = dyn.get_center().x + dyn.get_speed().dx * passed_time;
-    new_center.y = dyn.get_center().y + dyn.get_speed().dy * passed_time;
-    new_center.z = dyn.get_center().z + dyn.get_speed().dz * passed_time;
+    new_center.x = dyn.get_center().x + dyn.get_speed().x * passed_time;
+    new_center.y = dyn.get_center().y + dyn.get_speed().y * passed_time;
+    new_center.z = dyn.get_center().z + dyn.get_speed().z * passed_time;
     dyn.set_center(new_center);
     default_speed_change(dyn);
 }
 
 //Пока что всегда на полу
 void Handler::player_update() {
-    Speed new_speed = {0,0,0};
+    glm::vec3 new_speed = {0,0,0};
     Point old_center = player.get_center();
     Point new_center;
-    new_center.x = player.get_speed().dx * passed_time + player.get_center().x;
-    new_center.y = player.get_speed().dy * passed_time + player.get_center().y;
-    new_center.z = player.get_speed().dz * passed_time + player.get_center().z;
+    new_center.x = player.get_speed().x * passed_time + player.get_center().x;
+    new_center.y = player.get_speed().y * passed_time + player.get_center().y;
+    new_center.z = player.get_speed().z * passed_time + player.get_center().z;
     player.set_center(new_center);
     if(1) {//Кнопка не нажата, необходимо реализовать
         player.set_speed(new_speed);
