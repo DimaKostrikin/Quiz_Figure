@@ -9,7 +9,10 @@ std::string Map_parser::create_json(std::vector<Map_object> map) {
     pt::ptree tree;
     std::ofstream out;
     out.open(file_name);
-    if (out.is_open())
+    if (!out.is_open()){
+        std::cout << "error";
+    }
+
 
 
 
@@ -82,6 +85,7 @@ std::string Map_parser::create_json(std::vector<Map_object> map) {
 
     // Сохранение дерева в JSON файл
     pt::write_json(out, tree);
+    pt::write_json("filename.json", tree);
     pt::write_json(std::cout, tree);
     out.close();
 

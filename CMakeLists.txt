@@ -42,8 +42,10 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 SET_TARGET_PROPERTIES(Quiz_Figure PROPERTIES LINKER_LANGUAGE C)
 
+
+
 SET(CMAKE_C_FLAGS " -pthread  -Wall -Werror  -fPIC ")
-#SET(CMAKE_C_FLAGS " -pthread -lX11  -lXrandr -lXi -ldl  -lglfw3    ")
+#SET(CMAKE_C_FLAGS " -pthread  -lX11  -lXrandr -lXi -ldl  -lglfw3   -lGL ")
 # SET(CMAKE_CXX_FLAGS "-lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl")
 # SET(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -fPIC")
 
@@ -86,6 +88,10 @@ target_include_directories(glad PUBLIC ${INCLUDE_DIR})
 #for glfw:
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
+
+
+
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC glad ${GLFW_STATIC_LIBRARIES})
 
 find_package(Freetype REQUIRED)
 
