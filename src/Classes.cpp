@@ -215,12 +215,10 @@ bool Handler::collision(Object_dynamic &first, Object_dynamic &second) {
 }
 
 int Handler::player_collision(Object_dynamic &dyn) {
-    if(dyn.get_center().x - dyn.get_size().length / 2 < player.get_center().x + player.get_size().length / 2 &&
-       dyn.get_center().x + dyn.get_size().length / 2 > player.get_center().x - player.get_size().length / 2 &&
-       dyn.get_center().y - dyn.get_size().width / 2 < player.get_center().y + player.get_size().width / 2 &&
-       dyn.get_center().y + dyn.get_size().width / 2 > player.get_center().y - player.get_size().width / 2 &&
-       dyn.get_center().z - dyn.get_size().height / 2 < player.get_center().z + player.get_size().height / 2 &&
-       dyn.get_center().z + dyn.get_size().height / 2 > player.get_center().z - player.get_size().height / 2) {
+    auto cmp = [](int x, int y, int a, int b) {return (x - y / 2 < a + b / 2) && (x + y / 2 > a - b / 2);};
+    if(cmp(dyn.get_center().x, dyn.get_size().length, player.get_center().x, player.get_size().length) &&
+       cmp(dyn.get_center().y, dyn.get_size().width, player.get_center().y, player.get_size().width) &&
+       cmp(dyn.get_center().z, dyn.get_size().height, player.get_center().z, player.get_size().height)) {
         unsigned int range = abs(dyn.get_center().x - player.get_center().x);
         unsigned int characteristics = player.get_size().length / 2;//Длина всегда по x
         if (range > characteristics) {
@@ -241,12 +239,10 @@ int Handler::player_collision(Object_dynamic &dyn) {
 }
 
 int Handler::collision(Object_dynamic &first, Object_static &second) {
-    if(first.get_center().x - first.get_size().length / 2 < second.get_center().x + second.get_size().length / 2 &&
-       first.get_center().x + first.get_size().length / 2 > second.get_center().x - second.get_size().length / 2 &&
-       first.get_center().y - first.get_size().width / 2 < second.get_center().y + second.get_size().width / 2 &&
-       first.get_center().y + first.get_size().width / 2 > second.get_center().y - second.get_size().width / 2 &&
-       first.get_center().z - first.get_size().height / 2 < second.get_center().z + second.get_size().height / 2 &&
-       first.get_center().z + first.get_size().height / 2 > second.get_center().z - second.get_size().height / 2) {
+    auto cmp = [](int x, int y, int a, int b) {return (x - y / 2 < a + b / 2) && (x + y / 2 > a - b / 2);};
+    if(cmp(first.get_center().x, first.get_size().length, second.get_center().x, second.get_size().length) &&
+       cmp(first.get_center().y, first.get_size().width, second.get_center().y, second.get_size().width) &&
+       cmp(first.get_center().z, first.get_size().height, second.get_center().z, second.get_size().height)) {
         unsigned int range = abs(first.get_center().x - second.get_center().x);
         unsigned int characteristics = second.get_size().length / 2;//Длина всегда по x
         if (range > characteristics) {
