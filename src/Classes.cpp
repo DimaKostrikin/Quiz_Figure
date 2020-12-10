@@ -186,18 +186,21 @@ void Handler::coll_speed_player(Object_dynamic &dyn, int coll_type) {
         new_speed.dz = dyn.get_speed().dz;
         new_speed.dx = -LOSS_RATE * dyn.get_speed().dx;
         new_speed.dy = dyn.get_speed().dy;
+        dyn.set_speed(new_speed);
         return;
     }
     if(coll_type == Y_COLLISION) {
         new_speed.dz = dyn.get_speed().dz;
         new_speed.dx = dyn.get_speed().dx;
         new_speed.dy = -LOSS_RATE * dyn.get_speed().dy;
+        dyn.set_speed(new_speed);
         return;
     }
     if(coll_type == Z_COLLISION) {
         new_speed.dz = -LOSS_RATE * dyn.get_speed().dz;
         new_speed.dx = dyn.get_speed().dx;
         new_speed.dy = dyn.get_speed().dy;
+        dyn.set_speed(new_speed);
         return;
     }
 }
