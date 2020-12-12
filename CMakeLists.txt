@@ -8,7 +8,7 @@ set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
 include_directories(${INCLUDE_DIR})
-add_executable(${PROJECT_NAME} ${SOURCE_DIR}/main.cpp)
+add_executable(${PROJECT_NAME} ${SOURCE_DIR}/main.cpp ${SOURCE_DIR}/stb_image.cpp)
 
 #for glad
 add_library(glad "${INCLUDE_DIR}/glad/glad.h" "${SOURCE_DIR}/glad.c")

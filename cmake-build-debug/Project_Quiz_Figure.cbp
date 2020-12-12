@@ -143,6 +143,9 @@
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/main.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/stb_image.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

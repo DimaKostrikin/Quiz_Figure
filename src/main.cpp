@@ -5,51 +5,33 @@
 #include <GLFW/glfw3.h>
 #include <cmath>
 
+#include "stb_image.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "Shader.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 int moveInput(GLFWwindow *window);
 
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-// // Для прямоугольника
-//const char* vertexShaderSource = "#version 330 core\n"
-//                                 "layout (location = 0) in vec3 aPos;\n"
-//                                 "uniform vec2 coord_delta;\n"
-//                                 "void main()\n"
-//                                 "{\n"
-//                                 "   gl_Position = vec4(aPos.x + coord_delta.x, aPos.y + coord_delta.y, aPos.z, 1.0);\n"
-//                                 "}\0";
 
 const char* vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"  // позиция атрибута, содержащего переменные координат, устанавливается в 0
                                  "layout (location = 1) in vec3 aColor;\n"  // позиция атрибута, содержащего переменные цвета, устанавливается в 1
                                  "  \n"
                                  "out vec3 ourColor;\n"  // на выходе – значение цвета, передаваемое во фрагментный шейдер
-                                 " \n"
+//                                 "uniform mat4 transform;\n"
                                  "void main()\n"
                                  "{\n"
+//                                 "    gl_Position = transform * vec4(aPos, 1.0);\n"
                                  "    gl_Position = vec4(aPos, 1.0);\n"
                                  "    ourColor = aColor;\n"  // присваиваем переменной ourColor значение цвета, которое мы получили из данных вершины
                                  "}";
-
-//const char* fragmentShaderSource = "#version 330 core\n"
-//                                   "out vec4 FragColor;\n"
-//                                   "void main()\n"
-//                                   "{\n"
-//                                   "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-//                                   "}\n\0";
-
-// // Для прямоугольника
-//const char* fragmentShaderSource = "#version 330 core\n"
-//                                   "out vec4 FragColor;\n"
-//                                   "  \n"
-//                                   "uniform vec4 ourColor;"
-//                                   " \n"
-//                                   "void main()\n"
-//                                   "{\n"
-//                                   "    FragColor = ourColor;\n"
-//                                   "} ";
-
 
 const char* fragmentShaderSource = "#version 330 core\n"
                                    "out vec4 FragColor;  \n"
@@ -61,6 +43,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
                                    "}";
 
 int main() {
+    // glfw: инициализация и конфигурирование
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -83,79 +66,26 @@ int main() {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-
     // Компилирование нашей шейдерной программы
-
-    // Вершинный шейдер
-    int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    // Проверка на наличие ошибок компилирования вершинного шейдера
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    // Фрагментный шейдер
-    int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    // Проверка на наличие ошибок компилирования фрагментного шейдера
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    // Связывание шейдеров
-    int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    // Проверка на наличие ошибок компилирования связывания шейдеров
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    }
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    // Указывание вершин (и буферов) и настройка вершинных атрибутов
-
-//    // Вершины для прямоугольника
-//    float vertices[] = {
-//            0.5f,  0.5f, 0.0f,  // верхняя правая
-//            0.5f, -0.5f, 0.0f,  // нижняя правая
-//            -0.5f, -0.5f, 0.0f,  // нижняя левая
-//            -0.5f,  0.5f, 0.0f   // верхняя левая
-//    };
+    Shader ourShader("../Shader_files/shader.vs", "../Shader_files/shader.fs");
 
     float vertices[] = {
-            // координаты         // цвета
-            0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // нижняя правая вершина
-            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // нижняя левая вершина
-            0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // верхняя вершина
+            // координаты          // цвета           // текстурные координаты
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // верхняя правая вершина
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // нижняя правая вершина
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // нижняя левая вершина
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // верхняя левая вершина
     };
 
-//    unsigned int indices[] = {  // помните, что мы начинаем с 0!
-//            0, 1, 3,   // первый треугольник
-//            1, 2, 3    // второй треугольник
-//    };
+    unsigned int indices[] = {
+            0, 1, 3, // первый треугольник
+            1, 2, 3  // второй треугольник
+    };
 
-    unsigned int VBO, VAO;
-//    unsigned int EBO;
+    unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
-//    glGenBuffers(1, &EBO);
+    glGenBuffers(1, &EBO);
 
     // Сначала связываем объект вершинного массива, затем связываем и устанавливаем вершинный буфер(ы), и затем конфигурируем вершинный атрибут(ы)
     // Шаг №0: Связывание объекта вершинного массива
@@ -165,18 +95,20 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-//    // Шаг №2: Копируем наш индексный массив в элементный буфер
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    // Шаг №2: Копируем наш индексный массив в элементный буфер
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Шаг №3: Устанавливаем указатели вершинных атрибутов
-    // Координатный атрибут
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    // координатные атрибуты
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-
-    // Цветовой атрибут
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
+    // цветовые атрибуты
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    // атрибуты текстурных координат
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
 //    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 //    glEnableVertexAttribArray(0);
@@ -184,11 +116,11 @@ int main() {
     // Обратите внимание, что данное действие разрешено, вызов glVertexAttribPointer() зарегистрировал
     // VBO как привязанный вершинный буферный объект для вершинного атрибута, так что после этого мы можем спокойно
     // выполнить отвязку
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Вы можете отменить привязку VАО после этого, чтобы другие вызовы VАО случайно не изменили этот VAO (но подобное довольно редко случается)
     // Модификация других VAO требует вызов glBindVertexArray(), поэтому мы обычно не снимаем привязку VAO (или VBO), когда это не требуется напрямую
-    glBindVertexArray(0);
+    //glBindVertexArray(0);
 
 //    // Поскольку у нас есть только один шейдер, мы также можем просто активировать наш шейдер заранее, если нужно
 //    glUseProgram(shaderProgram);
@@ -197,32 +129,88 @@ int main() {
     // Раскомментируйте строчку ниже для отрисовки полигонов в режиме каркаса
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    // загрузка и создание текстуры
+    // -------------------------
+    unsigned int texture1, texture2;
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1); // все последующие GL_TEXTURE_2D-операции теперь будут влиять на данный текстурный объект
+    // установка параметров наложения текстуры
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// установка метода наложения текстуры GL_REPEAT (стандартный метод наложения)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // установка параметров фильтрации текстуры
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // загрузка изображения, создание текстуры и генерирование mipmap-уровней
+    int width, height, nrChannels;
+    //первая текстура
+    unsigned char* data = stbi_load("../textures/wooden_box.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+
+    stbi_image_free(data);
+
+    //вторая текстура
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    // установка параметров наложения текстуры
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// установка метода наложения текстуры GL_REPEAT (стандартный метод наложения)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // установка параметров фильтрации текстуры
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // загрузка изображения, создание текстуры и генерирование mipmap-уровней
+    stbi_set_flip_vertically_on_load(true);
+    data = stbi_load("../textures/smile.png", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        // файл smile.png имеет альфа-канал(прозрачность), поэтому необходимо использовать пераметр GL_RGBA
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+
+    stbi_image_free(data);
+
     // Цикл рендеринга
 
-//    // Для движения прямоугольника
-//    float x_delta = 0;
-//    float y_delta = 0;
+    glm::mat4 trans = glm::mat4(1.0f);
+    //trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+//    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+
+    ourShader.use();
+    unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+    glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0); // устанавливаем вручную…
+    ourShader.setInt("texture2", 1); // …или с помощью шейдерного класса
+
+    //матрица модели
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    //матрица вида
+    glm::mat4 view = glm::mat4(1.0f);
+    //мы перемещаем сцену в направлении, обратном направлению предполагаемого движения
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+    //матрица проекции
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+
     while(!glfwWindowShouldClose(window))
     {
         // Обработка ввода
         processInput(window);
-//        moveInput(window);
-//        switch (moveInput(window)) {
-//            case 1:
-//                y_delta += 0.1f;
-//                break;
-//            case 2:
-//                y_delta -= 0.1f;
-//                break;
-//            case 3:
-//                x_delta -= 0.1f;
-//                break;
-//            case 4:
-//                x_delta += 0.1f;
-//                break;
-//            default:
-//                break;
-//        }
 
         // Выполнение рендеринга
         //Очищаем цветовой буфер
@@ -230,25 +218,41 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Убеждаемся, что активировали шейдер
-        glUseProgram(shaderProgram);
+//        glUseProgram(shaderProgram);
 
-//        // Для движения прямоугольника
-//        // Обновляем для uniform-переменной значение color
-//        float timeValue = glfwGetTime();
-//        float greenValue = sin(timeValue) / 2.0f + 0.5f;
-//        float redValue = sin(2 * timeValue) / 2.0f + 0.5f;
-//        float blueValue = sin(3 * timeValue) / 2.0f + 0.5f;
-//        int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-//        glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
-//
-//        // Обновляем положение прямоугольника
-//        int vertexCoordDelta = glGetUniformLocation(shaderProgram, "coord_delta");
-//        glUniform2f(vertexCoordDelta, x_delta, y_delta);
+        // Связывание текстуры
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
+
+        // создаем преобразование
+        glm::mat4 trans = glm::mat4(1.0f);
+        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+        // получаем location uniform-переменной матрицы и настраиваем её
+        ourShader.use();
+        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
+        int modelLoc = glGetUniformLocation(ourShader.ID, "model");
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        int projectionLoc = glGetUniformLocation(ourShader.ID, "projection");
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+        // Рендеринг ящика
+        ourShader.use();
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // Отрисовка
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO); // поскольку у нас есть только один VАО, то нет необходимости связывать его каждый раз (но мы сделаем это, чтобы всё было немного организованнее)
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+//        glUseProgram(shaderProgram);
+//        ourShader.use();
+//        glBindVertexArray(VAO); // поскольку у нас есть только один VАО, то нет необходимости связывать его каждый раз (но мы сделаем это, чтобы всё было немного организованнее)
+//        glDrawArrays(GL_TRIANGLES, 0, 3);
         //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         // glBindVertexArray(0); // не нужно каждый раз его отвязывать
 
@@ -260,6 +264,7 @@ int main() {
     // Опционально: освобождаем все ресурсы, как только они выполнили своё предназначение
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
 
     // glfw: завершение, освобождение всех ранее задействованных GLFW-ресурсов
     glfwTerminate();
