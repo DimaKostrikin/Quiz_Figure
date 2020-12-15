@@ -323,10 +323,19 @@ int main() {
     glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0); // устанавливаем вручную…
     ourShader.setInt("texture2", 1); // …или с помощью шейдерного класса
 
-    ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-    ourShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+//    ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+//    ourShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
     ourShader.setVec3("lightPos", lightPos);
     ourShader.setVec3("viewPos", camera.Position);
+
+    ourShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+    ourShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+    ourShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    ourShader.setFloat("material.shininess", 32.0f);
+
+//    ourShader.setVec3("light.ambient",  0.2f, 0.2f, 0.2f);
+//    ourShader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // немного затемним рассеянный свет
+//    ourShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
     //включаем Z-буфер
     glEnable(GL_DEPTH_TEST);
@@ -372,6 +381,20 @@ int main() {
         ourShader.use();
         ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+        //меняем цвет света с течением времени
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
+
+        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+
+        ourShader.setVec3("light.ambient", ambientColor);
+        ourShader.setVec3("light.diffuse", diffuseColor);
+        ourShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
 
         // Связывание текстуры
         glActiveTexture(GL_TEXTURE0);
