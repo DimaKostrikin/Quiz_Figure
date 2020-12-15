@@ -63,6 +63,9 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 
+//положение источника света
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
 int main() {
     // glfw: инициализация и конфигурирование
     glfwInit();
@@ -89,51 +92,97 @@ int main() {
     }
     // Компилирование нашей шейдерной программы
     Shader ourShader("../Shader_files/shader.vs", "../Shader_files/shader.fs");
+    Shader lampShader("../Shader_files/lampShader.vs", "../Shader_files/lampShader.fs");
 
+    //координаты вершин и координаты текстур
+//    float vertices[] = {
+//            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+//            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+//            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+//            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+//
+//            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+//            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+//            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+//            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+//            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//
+//            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//
+//            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//
+//            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//            0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+//            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+//            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+//            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+//            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+//
+//            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+//            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+//            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+//            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+//            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+//    };
+
+//координат вершин и нормали к ним(захардкожены для статического куба)
     float vertices[] = {
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+            0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+            0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+            0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
     };
-
     // Мировые координаты наших кубиков
     glm::vec3 cubePositions[] = {
             glm::vec3(0.0f,  0.0f,  0.0f),
@@ -153,52 +202,61 @@ int main() {
             1, 2, 3  // второй треугольник
     };
 
-    unsigned int VBO, VAO, EBO;
+    unsigned int VBO, VAO, EBO, lightVAO;
+
+    // 1. настраиваем VAO (и VBO)
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    // Сначала связываем объект вершинного массива, затем связываем и устанавливаем вершинный буфер(ы), и затем конфигурируем вершинный атрибут(ы)
-    // Шаг №0: Связывание объекта вершинного массива
-    glBindVertexArray(VAO);
-
-    // Шаг №1: Копируем наш массив вершин в вершинный буфер
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // Шаг №2: Копируем наш индексный массив в элементный буфер
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // Шаг №3: Устанавливаем указатели вершинных атрибутов
-    // координатные атрибуты
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glBindVertexArray(VAO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    // цветовые атрибуты
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    // атрибуты текстурных координат
-//    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-//    glEnableVertexAttribArray(2);
 
+    //2. настраиваем VAO света (VBO остается неизменным; вершины те же и для светового объекта, который также является 3D-кубом)
+    glGenVertexArrays(1, &lightVAO);
+
+    //объект освещения
+    glBindVertexArray(lightVAO);
+
+    //нам нужно только привязаться к VBO (чтобы связать его с glVertexAttribPointer), не нужно заполнять его; данные VBO уже содержат все, что нам нужно(они уже привязаны, но мы делаем это снова в образовательных целях)
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+
+//    glGenBuffers(1, &VBO);
+//    glGenBuffers(1, &EBO);
+
+//    // Нам нужно только привязаться к VBO. VBO контейнера уже содержат нужные данные
+//    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+//    // Устанавливаем атрибуты вершин (только данные о местоположении для нашей лампы)
 //    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 //    glEnableVertexAttribArray(0);
-
-    // Обратите внимание, что данное действие разрешено, вызов glVertexAttribPointer() зарегистрировал
-    // VBO как привязанный вершинный буферный объект для вершинного атрибута, так что после этого мы можем спокойно
-    // выполнить отвязку
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    // Вы можете отменить привязку VАО после этого, чтобы другие вызовы VАО случайно не изменили этот VAO (но подобное довольно редко случается)
-    // Модификация других VAO требует вызов glBindVertexArray(), поэтому мы обычно не снимаем привязку VAO (или VBO), когда это не требуется напрямую
-    //glBindVertexArray(0);
-
-//    // Поскольку у нас есть только один шейдер, мы также можем просто активировать наш шейдер заранее, если нужно
-//    glUseProgram(shaderProgram);
-
-
-    // Раскомментируйте строчку ниже для отрисовки полигонов в режиме каркаса
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//
+//    // Сначала связываем объект вершинного массива, затем связываем и устанавливаем вершинный буфер(ы), и затем конфигурируем вершинный атрибут(ы)
+//    // Шаг №0: Связывание объекта вершинного массива
+//    glBindVertexArray(VAO);
+//
+//    // Шаг №1: Копируем наш массив вершин в вершинный буфер
+//    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+//
+//    // Шаг №2: Копируем наш индексный массив в элементный буфер
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+//
+//    // Шаг №3: Устанавливаем указатели вершинных атрибутов
+//    // координатные атрибуты
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+//    glEnableVertexAttribArray(0);
+//    // атрибуты текстурных координат
+//    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+//    glEnableVertexAttribArray(1);
 
     // загрузка и создание текстуры
     // -------------------------
@@ -261,8 +319,14 @@ int main() {
     ourShader.use();
 //    unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
 //    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
     glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0); // устанавливаем вручную…
     ourShader.setInt("texture2", 1); // …или с помощью шейдерного класса
+
+    ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+    ourShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+    ourShader.setVec3("lightPos", lightPos);
+    ourShader.setVec3("viewPos", camera.Position);
 
     //включаем Z-буфер
     glEnable(GL_DEPTH_TEST);
@@ -303,6 +367,11 @@ int main() {
 
         // Убеждаемся, что активировали шейдер
 //        glUseProgram(shaderProgram);
+
+        // убеждаемся, что активировали шейдер прежде, чем настраивать uniform-переменные/объекты_рисования
+        ourShader.use();
+        ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+        ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
         // Связывание текстуры
         glActiveTexture(GL_TEXTURE0);
@@ -350,6 +419,7 @@ int main() {
 
         unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+
         unsigned int projectionLoc = glGetUniformLocation(ourShader.ID, "projection");
         glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 //        ourShader.setMat4("projection", projection);
@@ -369,6 +439,18 @@ int main() {
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+        // также отрисовываем наш объект-"лампочку"
+        lampShader.use();
+        lampShader.setMat4("projection", projection);
+        lampShader.setMat4("view", view);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, lightPos);
+        model = glm::scale(model, glm::vec3(0.2f)); // куб, меньшего размера
+        lampShader.setMat4("model", model);
+
+        glBindVertexArray(lightVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
 //        glDrawArrays(GL_TRIANGLES, 0, 36);
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -400,19 +482,6 @@ int main() {
 // Обработка всех событий ввода: запрос GLFW о нажатии/отпускании клавиш на клавиатуре в данном кадре и соответствующая обработка данных событий
 void processInput(GLFWwindow *window)
 {
-//    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-//        glfwSetWindowShouldClose(window, true);
-//
-//    float cameraSpeed = 2.5f * deltaTime;
-//
-//    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-//        cameraPos += cameraSpeed * cameraFront;
-//    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-//        cameraPos -= cameraSpeed * cameraFront;
-//    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-//        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-//    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-//        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
@@ -461,35 +530,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-//    float sensitivity = 0.04;
-//    xoffset *= sensitivity;
-//    yoffset *= sensitivity;
-//
-//    yaw   += xoffset;
-//    pitch += yoffset;
-//
-//    if(pitch > 89.0f)
-//        pitch = 89.0f;
-//    if(pitch < -89.0f)
-//        pitch = -89.0f;
-//
-//    glm::vec3 direction;
-//    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-//    direction.y = sin(glm::radians(pitch));
-//    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-//    cameraFront = glm::normalize(direction);
-
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-//    if(fov >= 1.0f && fov <= 45.0f)
-//        fov -= yoffset;
-//    else if(fov < 1.0f)
-//        fov = 1.0f;
-//    else if(fov > 45.0f)
-//        fov = 45.0f;
-
     camera.ProcessMouseScroll(yoffset);
 }
