@@ -5,6 +5,10 @@
 #include <GLFW/glfw3.h>
 #include <cmath>
 
+#include <assimp/Importer.hpp>      // C++ importer interface
+#include <assimp/scene.h>           // Output data structure
+#include <assimp/postprocess.h>     // Post processing flags
+
 #include "stb_image.h"
 
 #include <glm/glm.hpp>
@@ -199,6 +203,13 @@ int main() {
             glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 
+    glm::vec3 pointLightPositions[] = {
+            glm::vec3( 0.7f,  0.2f,  2.0f),
+            glm::vec3( 2.3f, -3.3f, -4.0f),
+            glm::vec3(-4.0f,  2.0f, -12.0f),
+            glm::vec3( 0.0f,  0.0f, -3.0f)
+    };
+
     unsigned int indices[] = {
             0, 1, 3, // первый треугольник
             1, 2, 3  // второй треугольник
@@ -336,25 +347,24 @@ int main() {
 //    ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
 //    ourShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
 //    ourShader.setVec3("lightPos", lightPos);
-    ourShader.setVec3("viewPos", camera.Position);
+//    ourShader.setVec3("viewPos", camera.Position);
 
-    ourShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+//    ourShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
 //    ourShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-    ourShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-    ourShader.setFloat("material.shininess", 32.0f);
+//    ourShader.setFloat("material.shininess", 32.0f);
+    ourShader.setInt("material.diffuse", 0);
+    ourShader.setInt("material.specular", 1);
 
 //    ourShader.setInt("texture1", 0);
 
-    ourShader.setInt("material.diffuse", 0);
-    // Связывание текстуры
-    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, texture1);
-    glBindTexture(GL_TEXTURE_2D, diffuseMap);
-
-    ourShader.setInt("material.specular", 1);
-    glActiveTexture(GL_TEXTURE1);
-//    glBindTexture(GL_TEXTURE_2D, texture1);
-    glBindTexture(GL_TEXTURE_2D, specularMap);
+//    // Связывание текстуры
+//    glActiveTexture(GL_TEXTURE0);
+////    glBindTexture(GL_TEXTURE_2D, texture1);
+//    glBindTexture(GL_TEXTURE_2D, diffuseMap);
+//
+//    glActiveTexture(GL_TEXTURE1);
+////    glBindTexture(GL_TEXTURE_2D, texture1);
+//    glBindTexture(GL_TEXTURE_2D, specularMap);
 
     ourShader.setVec3("light.ambient",  0.2f, 0.2f, 0.2f);
     ourShader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // немного затемним рассеянный свет
@@ -415,14 +425,63 @@ int main() {
 
         // убеждаемся, что активировали шейдер прежде, чем настраивать uniform-переменные/объекты_рисования
         ourShader.use();
-        ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-        ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        ourShader.setVec3("viewPos", camera.Position);
+        ourShader.setFloat("material.shininess", 32.0f);
 
-        //для прожектора
-        ourShader.setVec3("light.position",  camera.Position);
-        ourShader.setVec3("light.direction", camera.Front);
-        ourShader.setFloat("light.cutOff",   glm::cos(glm::radians(12.5f)));
-        ourShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+        // направленный свет
+        ourShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
+        ourShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+        ourShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+        ourShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+        // точечный источник света 1
+        ourShader.setVec3("pointLights[0].position", pointLightPositions[0]);
+        ourShader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+        ourShader.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+        ourShader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+        ourShader.setFloat("pointLights[0].constant", 1.0f);
+        ourShader.setFloat("pointLights[0].linear", 0.09);
+        ourShader.setFloat("pointLights[0].quadratic", 0.032);
+        // точечный источник света 2
+        ourShader.setVec3("pointLights[1].position", pointLightPositions[1]);
+        ourShader.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
+        ourShader.setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
+        ourShader.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+        ourShader.setFloat("pointLights[1].constant", 1.0f);
+        ourShader.setFloat("pointLights[1].linear", 0.09);
+        ourShader.setFloat("pointLights[1].quadratic", 0.032);
+        // точечный источник света 3
+        ourShader.setVec3("pointLights[2].position", pointLightPositions[2]);
+        ourShader.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
+        ourShader.setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
+        ourShader.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
+        ourShader.setFloat("pointLights[2].constant", 1.0f);
+        ourShader.setFloat("pointLights[2].linear", 0.09);
+        ourShader.setFloat("pointLights[2].quadratic", 0.032);
+        // точечный источник света 4
+        ourShader.setVec3("pointLights[3].position", pointLightPositions[3]);
+        ourShader.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
+        ourShader.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
+        ourShader.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
+        ourShader.setFloat("pointLights[3].constant", 1.0f);
+        ourShader.setFloat("pointLights[3].linear", 0.09);
+        ourShader.setFloat("pointLights[3].quadratic", 0.032);
+        // прожектор
+        ourShader.setVec3("spotLight.position", camera.Position);
+        ourShader.setVec3("spotLight.direction", camera.Front);
+        ourShader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
+        ourShader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+        ourShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+        ourShader.setFloat("spotLight.constant", 1.0f);
+        ourShader.setFloat("spotLight.linear", 0.09);
+        ourShader.setFloat("spotLight.quadratic", 0.032);
+        ourShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+        ourShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+
+//        //для прожектора
+//        ourShader.setVec3("light.position",  camera.Position);
+//        ourShader.setVec3("light.direction", camera.Front);
+//        ourShader.setFloat("light.cutOff",   glm::cos(glm::radians(12.5f)));
+//        ourShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 
 //        //меняем цвет света с течением времени
 //        glm::vec3 lightColor;
@@ -449,10 +508,29 @@ int main() {
 //        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
 //        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
-        //матрица модели
+        // преобразования Вида/Проекции
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        ourShader.setMat4("projection", projection);
+        ourShader.setMat4("view", view);
+
+        // мировое преобразование
         glm::mat4 model = glm::mat4(1.0f);
+        ourShader.setMat4("model", model);
+
+        // Связывание текстуры (диффузной карты)
+        glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, texture1);
+        glBindTexture(GL_TEXTURE_2D, diffuseMap);
+
+        glActiveTexture(GL_TEXTURE1);
+//    glBindTexture(GL_TEXTURE_2D, texture1);
+        glBindTexture(GL_TEXTURE_2D, specularMap);
+
+        //матрица модели
+//        glm::mat4 model = glm::mat4(1.0f);
 //        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+//        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 
         //матрица вида
@@ -465,28 +543,28 @@ int main() {
 //        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         //мы перемещаем сцену в направлении, обратном направлению предполагаемого движения
 //        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        glm::mat4 view = camera.GetViewMatrix();
-        ourShader.setMat4("view", view);
+//        glm::mat4 view = camera.GetViewMatrix();
+//        ourShader.setMat4("view", view);
 
         //матрица проекции
-        glm::mat4 projection;
+//        glm::mat4 projection;
 //        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-        projection = glm::perspective(glm::radians(camera.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
+//        projection = glm::perspective(glm::radians(camera.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
 
 
         // получаем location uniform-переменной матрицы и настраиваем её
-        ourShader.use();
-        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
-
-        unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-        unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-        unsigned int projectionLoc = glGetUniformLocation(ourShader.ID, "projection");
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+//        ourShader.use();
+//        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+//        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+//
+//        unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
+//        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+//
+//        unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+//        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+//
+//        unsigned int projectionLoc = glGetUniformLocation(ourShader.ID, "projection");
+//        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 //        ourShader.setMat4("projection", projection);
 
 
@@ -496,6 +574,7 @@ int main() {
 
         for(unsigned int i = 0; i < 10; i++)
         {
+            // вычисляем матриц модели для каждого объекта и передаём её в шейдер
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * (i + 1);
@@ -509,13 +588,25 @@ int main() {
         lampShader.use();
         lampShader.setMat4("projection", projection);
         lampShader.setMat4("view", view);
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, lightPos);
-        model = glm::scale(model, glm::vec3(0.2f)); // куб, меньшего размера
-        lampShader.setMat4("model", model);
 
+        // а теперь мы отрисовывает столько ламп, сколько у нас есть точечных источников света
         glBindVertexArray(lightVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        for (unsigned int i = 0; i < 4; i++)
+        {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, pointLightPositions[i]);
+            model = glm::scale(model, glm::vec3(0.2f)); // меньший куб
+            lampShader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
+//        model = glm::mat4(1.0f);
+//        model = glm::translate(model, lightPos);
+//        model = glm::scale(model, glm::vec3(0.2f)); // куб, меньшего размера
+//        lampShader.setMat4("model", model);
+//
+//        glBindVertexArray(lightVAO);
+//        glDrawArrays(GL_TRIANGLES, 0, 36);
 
 //        glDrawArrays(GL_TRIANGLES, 0, 36);
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -535,6 +626,7 @@ int main() {
 
     // Опционально: освобождаем все ресурсы, как только они выполнили своё предназначение
     glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &lightVAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
 

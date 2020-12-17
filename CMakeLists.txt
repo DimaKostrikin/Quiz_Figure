@@ -19,5 +19,33 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 INCLUDE_DIRECTORIES(${GLFW_INCLUDE_DIRS})
 
+#for assimp:
+find_package(assimp 5.0.1 QUIET)
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC glad ${GLFW_STATIC_LIBRARIES})
+if (NOT assimp_FOUND)
+    include(FetchContent)
+
+    FetchContent_Declare(
+            assimp
+            URL https://github.com/assimp/assimp/archive/master.tar.gz
+    )
+
+    FetchContent_GetProperties(raylib)
+    if (NOT assimp_POPULATED)
+        set(FETCHCONTENT_QUIET NO)
+        FetchContent_Populate(assimp)
+
+        set(CMAKE_BUILD_TYPE release CACHE STRING "" FORCE)
+        set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+
+        add_subdirectory(${assimp_SOURCE_DIR} ${assimp_BINARY_DIR})
+
+    endif()
+
+endif()
+
+
+#target_link_libraries(${PROJECT_NAME} assimp)
+
+
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC glad assimp ${GLFW_STATIC_LIBRARIES})
