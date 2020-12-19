@@ -7,8 +7,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
+#file(GLOB_RECURSE SOURCE_FILES RELATIVE ${PROJECT_SOURCE_DIR} "/*.cpp")
+
+
 include_directories(${INCLUDE_DIR})
-add_executable(${PROJECT_NAME} ${SOURCE_DIR}/main.cpp ${SOURCE_DIR}/stb_image.cpp)
+set(SOURCE_FILES src/stb_image.cpp src/Model.cpp src/Mesh_class.cpp src/Camera_class.cpp src/main.cpp)
+
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+
+#add_executable(${PROJECT_NAME} ${SOURCE_DIR}/main.cpp ${SOURCE_DIR}/stb_image.cpp)
 
 #for glad
 add_library(glad "${INCLUDE_DIR}/glad/glad.h" "${SOURCE_DIR}/glad.c")

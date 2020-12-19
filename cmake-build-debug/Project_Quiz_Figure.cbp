@@ -2014,6 +2014,15 @@
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/include/glad/glad.h">
 			<Option target="glad"/>
 		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Camera_class.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Mesh_class.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Model.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/glad.c">
 			<Option target="glad"/>
 		</Unit>
