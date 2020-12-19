@@ -127,7 +127,7 @@ int main() {
     Model ourModel("../resources/objects/test/test_cube.obj");
 
     // отрисовка в режиме каркаса
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glm::vec3 pointLightPositions[] = {
             glm::vec3( -3.0f,  1.0f,  5.0f),
@@ -162,20 +162,6 @@ int main() {
 
     ourShader.setInt("material.diffuse", 0);
     ourShader.setInt("material.specular", 1);
-
-//    ourShader.setVec3("light.ambient",  0.2f, 0.2f, 0.2f);
-//    ourShader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // немного затемним рассеянный свет
-//    ourShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-//
-//    ourShader.setFloat("light.constant", 1.0f);
-//    ourShader.setFloat("light.linear", 0.09f);
-//    ourShader.setFloat("light.quadratic", 0.032f);
-
-//    //камера
-//    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-//    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-//    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-//    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
 
     //матрица вида
     glm::mat4 view;

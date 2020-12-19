@@ -2020,7 +2020,7 @@
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Mesh_class.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Model.cpp">
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Model_class.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/glad.c">

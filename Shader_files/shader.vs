@@ -19,7 +19,6 @@ uniform mat4 projection;
 
 void main()
 {
-
     //Normal = mat3(transpose(inverse(model))) * aNormal;
 
     //мы читаем умножение справа налево

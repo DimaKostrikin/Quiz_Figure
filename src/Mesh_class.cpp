@@ -114,6 +114,7 @@ void Mesh::Draw(Shader shader, Camera camera)
         shader.setFloat("spotLight.quadratic", 0.032);
         shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
         shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
     glActiveTexture(GL_TEXTURE0);
