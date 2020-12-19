@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "Model_class.h"
 
 
 Model::Model(char *path)

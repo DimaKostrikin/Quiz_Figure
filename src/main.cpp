@@ -13,7 +13,7 @@
 
 #include "Camera_class.h"
 
-#include "Model.h"
+#include "Model_class.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -22,8 +22,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int loadTexture(const char* path);
 int moveInput(GLFWwindow *window);
 
-//const unsigned int SCR_WIDTH = 800;
-//const unsigned int SCR_HEIGHT = 600;
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
@@ -126,12 +124,10 @@ int main() {
     Shader lampShader("../Shader_files/lampShader.vs", "../Shader_files/lampShader.fs");
 
     // загрузка моделей
-//    Model ourModel("../resources/objects/wooden_cylinder/wooden_cylinder.obj");
     Model ourModel("../resources/objects/test/test_cube.obj");
 
-
     // отрисовка в режиме каркаса
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glm::vec3 pointLightPositions[] = {
             glm::vec3( -3.0f,  1.0f,  5.0f),

@@ -1,5 +1,5 @@
-#ifndef PROJECT_QUIZ_FIGURE_MODEL_H
-#define PROJECT_QUIZ_FIGURE_MODEL_H
+#ifndef PROJECT_QUIZ_FIGURE_MODEL_CLASS_H
+#define PROJECT_QUIZ_FIGURE_MODEL_CLASS_H
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
@@ -31,4 +31,4 @@ private:
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 };
 
-#endif //PROJECT_QUIZ_FIGURE_MODEL_H
+#endif //PROJECT_QUIZ_FIGURE_MODEL_CLASS_H
