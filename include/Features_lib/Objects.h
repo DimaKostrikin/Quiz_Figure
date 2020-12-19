@@ -33,6 +33,11 @@ struct Size {
 };
 
 enum type_elem {
+    START,
+    FINISH,
+    CONNECT,
+    SAVE,
+
     PLAYER,  // Игрок
 
     WALL,  // Статические объекты

@@ -1,13 +1,14 @@
 #ifndef LOGIC_MANAGER_H
 #define LOGIC_MANAGER_H
-#include "Objects/Objects.h"
-#include "Handler_feature/Handler_feature.h"
+#include "Features_lib/Objects.h"
+#include "Features_lib/Handler_feature.h"
 #include <list>
-#include <GLFW/glfw3.h>
+#include "Map_editor_lib/Interface.h"
+#include "Features_lib/Parser.h"
 // include all features
 
 enum {
-    START,
+    START_GAME,
     REDACTOR,
     EXIT,
     NOTHING
@@ -21,6 +22,7 @@ private:
     Logic_manager() = default;
     ~Logic_manager() = default;
 
+    GLFWwindow *window;
     void start_game();
     void start_redactor();
     void draw_menu();

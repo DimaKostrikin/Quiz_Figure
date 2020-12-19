@@ -1,7 +1,7 @@
 #ifndef HANDLER_FEATURE_H
 #define HANDLER_FEATURE_H
 #include <list>
-#include "Objects/Objects.h"
+#include "Features_lib/Objects.h"
 
 class Handler_feature {
 public:
@@ -26,7 +26,7 @@ private:
     std::list<Object_activated>& obj_acted;
     std::list<Object_activator>& obj_actor;
     std::list<Object_dynamic>& obj_dyn;
-    std::list<Object_influence>& obj_infl,
+    std::list<Object_influence>& obj_infl;
     Player& player;
 };
 
