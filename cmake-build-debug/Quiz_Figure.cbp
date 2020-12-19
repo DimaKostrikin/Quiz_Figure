@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Quiz_Figure"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\;CMake Files\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\usr\lib\cmake\glm\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Quiz_Figure">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/Quiz_Figure" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 Quiz_Figure"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Quiz_Figure/fast">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/Quiz_Figure" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 Quiz_Figure/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 glad"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad/fast">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="map_editor_lib">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 map_editor_lib"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="map_editor_lib/fast">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/libmap_editor_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 map_editor_lib/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="features">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/libfeatures.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 features"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="features/fast">
+				<Option output="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/libfeatures.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/include"/>
+					<Add directory="/home/omfg/test_quiz/Quiz_Figure/src"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/lib/cmake/glm"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 features/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/omfg/test_quiz/Quiz_Figure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Features_lib/Handler_feature.h">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Features_lib/Logic_manager.h">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Features_lib/Objects.h">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Features_lib/Parser.h">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Container_map.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/GUI.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Interface.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Levels.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Map_editor_handler.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Map_parser.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Menu.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Parameters_label.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/Scene.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/shader_s.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/Map_editor_lib/stb_image.h">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/include/glad/glad.h">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Features_lib/Handler_feature.cpp">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Features_lib/Logic_manager.cpp">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Features_lib/Objects.cpp">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Features_lib/Parser.cpp">
+			<Option target="features"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Container_map.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/GUI.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Interface.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Levels.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Map_editor_handler.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Map_parser.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Menu.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Parameters_label.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/Scene.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/Map_editor_lib/stb_image.cpp">
+			<Option target="map_editor_lib"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/glad.c">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/src/main.cpp">
+			<Option target="Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimp-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimp-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimpTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimpTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/cmake/glm/glmConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\cmake\glm\"/>
+		</Unit>
+		<Unit filename="/home/omfg/test_quiz/Quiz_Figure/../../../../usr/lib/cmake/glm/glmConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\cmake\glm\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

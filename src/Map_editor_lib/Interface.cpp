@@ -1,12 +1,6 @@
 #include "Map_editor_lib/Interface.h"
 
 int Interface::cycle() {
-
-    // Цикл рендеринга
-    // Обработка ввода
-    draw = menu->draw;
-    // Обработка ввода
-    processInput = menu->processInput;
     int choose = processInput();
 
     draw();
@@ -54,11 +48,21 @@ Interface::Interface() {
 
 
     menu = std::make_shared<Menu>(window);
-
+    levels = std::make_shared<Levels>(window);
 }
 
 GLFWwindow *Interface::get_window() {
     return window;
+}
+
+void Interface::draw_menu() {
+    draw = menu->draw;
+    processInput = menu->processInput;
+}
+
+void Interface::draw_leves() {
+    draw = levels->draw;
+    processInput = levels->processInput;
 }
 
 

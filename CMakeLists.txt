@@ -91,7 +91,6 @@ add_library(features STATIC ${features_sources})
 
 target_link_libraries(features PUBLIC map_editor_lib)
 
-
 target_link_libraries(${PROJECT_NAME} PUBLIC features)
 
 

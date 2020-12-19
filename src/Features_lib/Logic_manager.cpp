@@ -8,14 +8,14 @@ Logic_manager& Logic_manager::instance() {
 void Logic_manager::initialize() {
     Interface interface;
     glfwSetInputMode(interface.get_window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
+    interface.draw_menu();
     while (!glfwWindowShouldClose(interface.get_window())) {
 
         int item = interface.cycle();
 
-
         if (item == START_GAME) { // ПРоверка нажатия на кнопку начать игру
             std::cout << "Game start" << std::endl;
+            interface.draw_leves();
             //start_game();
         }
         if (item == REDACTOR) { // Проверка нажатия на кнопку редактора

@@ -13,6 +13,7 @@
 #include <functional>
 #include <utility>
 #include "Menu.h"
+#include "Levels.h"
 
 #include "Map_editor_lib/shader_s.h"
 
@@ -29,12 +30,15 @@ public:
     int cycle();
     std::function<void()> draw;
     std::function<int()> processInput;
-    std::shared_ptr<Menu> menu;
     GLFWwindow* get_window();
+    void draw_menu();
+    void draw_leves();
 
 private:
     GLFWwindow *window;
     int shaderProgram;
+    std::shared_ptr<Menu> menu;
+    std::shared_ptr<Levels> levels;
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);

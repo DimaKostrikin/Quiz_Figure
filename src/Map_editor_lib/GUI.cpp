@@ -18,9 +18,13 @@ void Elem::texture_gen(unsigned int &texture, const std::string& filename){
     // загрузка изображения, создание текстуры и генерирование mipmap-уровней
     int width, height, nrChannels;
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrChannels, 0);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
