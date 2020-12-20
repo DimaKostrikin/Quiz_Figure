@@ -8,10 +8,10 @@
 // include all features
 
 enum {
+    NOTHING = 0, // NOTHING должен быть равен 0, не меняйте (!)
     START_GAME,
     REDACTOR,
-    EXIT,
-    NOTHING
+    EXIT
 };
 
 class Logic_manager {
@@ -23,7 +23,7 @@ private:
     ~Logic_manager() = default;
 
     GLFWwindow *window;
-    void start_game();
+    void start_game(const std::string &level_path);
     void start_redactor();
     void draw_menu();
     int cursor_check();

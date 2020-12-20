@@ -7,15 +7,26 @@ Logic_manager& Logic_manager::instance() {
 
 void Logic_manager::initialize() {
     Interface interface;
-    glfwSetInputMode(interface.get_window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    window = interface.get_window();  // Класс inteface создал окно, указатель на окно я присвою классу Logic_manager для удобства, чтобы каждый раз геттер не вызывать.
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     interface.draw_menu();
-    while (!glfwWindowShouldClose(interface.get_window())) {
-
+    while (!glfwWindowShouldClose(window)) {
         int item = interface.cycle();
 
-        if (item == START_GAME) { // ПРоверка нажатия на кнопку начать игру
+        if (item == START_GAME) { // Проверка нажатия на кнопку начать игру
             interface.draw_leves();
-            //start_game();
+            std::string lvl_begin_path = "levels/lvl";
+            std::string lvl_ending_path = ".json";
+
+            std::string level_path;
+            while (!glfwWindowShouldClose(window)) {
+                item = interface.cycle();
+                if (item) {
+                    level_path = lvl_begin_path + std::to_string(item) + lvl_ending_path;
+                    break;
+                }
+            }
+            start_game(level_path);
         }
         if (item == REDACTOR) { // Проверка нажатия на кнопку редактора
             std::cout << "Redactor start" << std::endl;
@@ -28,7 +39,7 @@ void Logic_manager::initialize() {
     //glfwTerminate();  Это нужно зачем-то? Я не понял для чего. Оно работает и без этого.
 }
 
-void Logic_manager::start_game() {
+void Logic_manager::start_game(const std::string &level_path) {
     // Создание списков объектов
     std::list<Object_dynamic> obj_dyn;
     std::list<Object_static> obj_stat;
@@ -40,26 +51,22 @@ void Logic_manager::start_game() {
     Point default_player_center = {1000, 1000, 1000};
     Size default_player_size = {500, 500, 1000};
 
-    Player player(default_player_center, default_player_size);
+    Player player(default_player_center, default_player_size);  // Инициализация игрока
+
+    std::cout << level_path;
+    Parser p(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);  // Создание парсера для загрузки уровня
+    // (!) p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
 
 
-    Parser p(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);
-    p.fill_from("json.json");
-    // Функция выбора уровня
-
-    //std::string(choose_level());
-    //std::string("path");
-
-
-    // Функция инициализации списков из файла json (парсер короче)
-
+    // Хендлер фич, обработка внутриигровых эвентов
     auto &hand_feat = Handler_feature::instance(obj_acted, obj_actor, obj_dyn, obj_infl, player);
 
-    while (true) {
+    /*while (true) {  // TODO main cycle
         hand_feat.do_logic();
         // хендлер физики делает бррр
         // отрисовка объектов делает бррр
     }
+    */
 }
 
 
