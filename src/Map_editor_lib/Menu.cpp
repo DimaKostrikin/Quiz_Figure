@@ -5,6 +5,11 @@
 #include "Map_editor_lib/Menu.h"
 #include "Features_lib/Logic_manager.h"
 
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
 std::vector<float> vertices{
         // координаты          // цвета           // текстурные координаты
         0.6f,  0.6f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
@@ -31,8 +36,10 @@ Menu::Menu(GLFWwindow *window): button_start("textures/button8.jpg", "textures/b
 
 
 int Menu::process_input(){
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
+    }
 
     if(Key_press(GLFW_KEY_Q, window, state_keys.State_Q)){
         Map_editor_handler map_editor;
