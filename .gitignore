@@ -22,3 +22,6 @@ test/*_tests
 *.tcl
 *.a
 cmake-build-debug/
+Quiz_Figure
+*.layout
+*.cbp
