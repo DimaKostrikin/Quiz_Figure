@@ -63,7 +63,7 @@ void Mesh::Draw(Shader shader, Camera camera)
             number = std::to_string(specularNr++);
 
         shader.setFloat(("material." + name + number).c_str(), i);
-        shader.setFloat("material.shininess", 16.0f);
+        shader.setFloat("material.shininess", 128.0f);
         shader.setInt("material.specular", 1);
 
         // направленный свет
@@ -71,6 +71,12 @@ void Mesh::Draw(Shader shader, Camera camera)
         shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
         shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
         shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+
+        shader.setVec3("dirLightLamp.direction", -0.2f, -1.0f, -0.3f);
+        shader.setVec3("dirLightLamp.ambient", 1.0f, 1.0f, 1.0f);
+        shader.setVec3("dirLightLamp.diffuse", 0.4f, 0.4f, 0.4f);
+        shader.setVec3("dirLightLamp.specular", 0.5f, 0.5f, 0.5f);
+
         // точечный источник света 1
         shader.setVec3("pointLights[0].position", pointLightPositions[0]);
         shader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);

@@ -208,3 +208,41 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 
     return textureID;
 }
+
+void Model::set_xpos(float xpos) {
+    _xpos = xpos;
+}
+void Model::set_ypos(float ypos) {
+    _ypos = ypos;
+}
+void Model::set_zpos(float zpos) {
+    _zpos = zpos;
+}
+void Model::set_xscale(float xscale) {
+    _xscale = xscale;
+}
+void Model::set_yscale(float yscale) {
+    _yscale = yscale;
+}
+void Model::set_zscale(float zscale) {
+    _zscale = zscale;
+}
+
+float Model::get_xpos() {
+    return _xpos;
+}
+float Model::get_ypos() {
+    return _ypos;
+}
+float Model::get_zpos() {
+    return _zpos;
+}
+float Model::get_xscale() {
+    return _xscale;
+}
+float Model::get_yscale() {
+    return _yscale;
+}
+float Model::get_zscale() {
+    return _zscale;
+}
