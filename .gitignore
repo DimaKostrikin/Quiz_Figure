@@ -20,4 +20,5 @@ test/*_tests
 *.swp
 *.so
 *.tcl
-
+*.a
+cmake-build-debug/

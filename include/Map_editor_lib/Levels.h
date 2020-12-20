@@ -12,11 +12,7 @@
 #include "Map_editor_handler.h"
 
 #include "GUI.h"
-
-struct State_keys {
-    bool State_D = false;
-    bool State_A = false;
-};
+#include "Map_editor_lib/Key_press.h"
 
 
 class Levels {

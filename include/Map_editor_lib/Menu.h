@@ -15,6 +15,8 @@
 #include "Map_editor_handler.h"
 
 #include "GUI.h"
+#include "Map_editor_lib/Key_press.h"
+
 
 class Menu {
 public:
@@ -30,7 +32,9 @@ public:
 
 private:
     GLFWwindow *window;
+    State_keys state_keys;
 };
+
 
 
 

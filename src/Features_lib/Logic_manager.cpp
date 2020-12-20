@@ -14,7 +14,6 @@ void Logic_manager::initialize() {
         int item = interface.cycle();
 
         if (item == START_GAME) { // ПРоверка нажатия на кнопку начать игру
-            std::cout << "Game start" << std::endl;
             interface.draw_leves();
             //start_game();
         }

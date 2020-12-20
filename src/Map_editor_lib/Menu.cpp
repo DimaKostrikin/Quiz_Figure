@@ -29,31 +29,31 @@ Menu::Menu(GLFWwindow *window): button_start("textures/button8.jpg", "textures/b
     processInput = std::bind(&Menu::process_input, this);
 }
 
+
 int Menu::process_input(){
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
+
+    if(Key_press(GLFW_KEY_Q, window, state_keys.State_Q)){
         Map_editor_handler map_editor;
         //draw = std::bind(&Map_editor_handler::draw, &map_editor);
     }
 
-    if((glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) ||
-       (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)){
+    if(Key_press(GLFW_KEY_W, window, state_keys.State_W)){
         if (!button_start.is_active()) {
             button_start.activate();
             button_map_editor.deactivate();
         }
     }
 
-    if((glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) ||
-       (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)) {
+    if(Key_press(GLFW_KEY_S, window, state_keys.State_S)) {
         if (button_start.is_active()) {
             button_start.deactivate();
             button_map_editor.activate();
         }
     }
 //
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
+    if (Key_press(GLFW_KEY_E, window, state_keys.State_A)){
         if (button_start.is_active()) {
             return START_GAME;
         } else {

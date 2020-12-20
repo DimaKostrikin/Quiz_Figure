@@ -32,4 +32,4 @@ public:
 };
 
 
-#endif PARSER_H
+#endif // PARSER_H
