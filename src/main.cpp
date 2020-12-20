@@ -84,15 +84,8 @@ int main() {
             glm::vec3( -5.0f,  1.0f, 1.0f)
     };
 
-    glm::mat4 trans = glm::mat4(1.0f);
 
     ourShader.use();
-
-    ourShader.setInt("material.diffuse", 0);
-    ourShader.setInt("material.specular", 1);
-
-    //матрица вида
-    glm::mat4 view;
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -123,7 +116,7 @@ int main() {
             white_cube_model.set_xpos(pointLightPositions[i].x);
             white_cube_model.set_ypos(pointLightPositions[i].y);
             white_cube_model.set_zpos(pointLightPositions[i].z);
-            
+
             render(lampShader, white_cube_model);
         }
 

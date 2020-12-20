@@ -11,7 +11,7 @@ set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
 
 include_directories(${INCLUDE_DIR})
-set(SOURCE_FILES src/stb_image.cpp src/Model_class.cpp src/Mesh_class.cpp src/Camera_class.cpp src/main.cpp)
+set(SOURCE_FILES src/stb_image.cpp src/Model_class.cpp src/Mesh_class.cpp src/Camera_class.cpp src/Shader.cpp src/main.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
