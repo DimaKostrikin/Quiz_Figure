@@ -227,6 +227,15 @@ void Model::set_yscale(float yscale) {
 void Model::set_zscale(float zscale) {
     _zscale = zscale;
 }
+void Model::set_xangle(float xangle) {
+    _xangle = xangle;
+}
+void Model::set_yangle(float yangle) {
+    _yangle = yangle;
+}
+void Model::set_zangle(float zangle) {
+    _zangle = zangle;
+}
 
 float Model::get_xpos() {
     return _xpos;
@@ -245,4 +254,13 @@ float Model::get_yscale() {
 }
 float Model::get_zscale() {
     return _zscale;
+}
+float Model::get_xangle() {
+    return _xangle;
+}
+float Model::get_yangle() {
+    return _yangle;
+}
+float Model::get_zangle() {
+    return _zangle;
 }

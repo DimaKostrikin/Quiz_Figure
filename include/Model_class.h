@@ -24,6 +24,9 @@ public:
     void set_xscale(float xscale);
     void set_yscale(float yscale);
     void set_zscale(float zscale);
+    void set_xangle(float xangle);
+    void set_yangle(float yangle);
+    void set_zangle(float zangle);
 
     float get_xpos();
     float get_ypos();
@@ -31,6 +34,9 @@ public:
     float get_xscale();
     float get_yscale();
     float get_zscale();
+    float get_xangle();
+    float get_yangle();
+    float get_zangle();
 
 
 
@@ -49,6 +55,9 @@ private:
     float _xscale = 1.f;
     float _yscale = 1.f;
     float _zscale = 1.f;
+    float _xangle = 0.f;
+    float _yangle = 0.f;
+    float _zangle = 0.f;
 
     void loadModel(std::string const &path);
     void processNode(aiNode *node, const aiScene *scene);

@@ -123,7 +123,7 @@ int main() {
             white_cube_model.set_xpos(pointLightPositions[i].x);
             white_cube_model.set_ypos(pointLightPositions[i].y);
             white_cube_model.set_zpos(pointLightPositions[i].z);
-
+            
             render(lampShader, white_cube_model);
         }
 
@@ -231,7 +231,10 @@ void render(Shader cur_shader_prog, Model cur_model)  {
     // рендеринг загруженной модели
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(cur_model.get_xpos(), cur_model.get_ypos(), cur_model.get_zpos()));
-//    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+    model = glm::rotate(model, glm::radians(cur_model.get_xangle()), glm::vec3(1.0, 0.0, 0.0));
+    model = glm::rotate(model, glm::radians(cur_model.get_yangle()), glm::vec3(0.0, 1.0, 0.0));
+    model = glm::rotate(model, glm::radians(cur_model.get_zangle()), glm::vec3(0.0, 0.0, 1.0));
+
     model = glm::scale(model, glm::vec3(cur_model.get_xscale(), cur_model.get_yscale(), cur_model.get_zscale()));
     cur_shader_prog.setMat4("model", model);
     cur_model.Draw(cur_shader_prog, camera);
