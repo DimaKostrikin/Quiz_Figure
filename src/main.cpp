@@ -20,7 +20,7 @@ void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int loadTexture(const char* path);
-void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager);
+void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager, bool is_light_source = false);
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
@@ -90,9 +90,7 @@ int main() {
             glm::vec3( -5.0f,  1.0f, 1.0f)
     };
 
-
-//    ourShader.use();
-
+    //захват курсорв
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Цикл рендеринга
@@ -127,7 +125,9 @@ int main() {
             white_cube_model.set_ypos(pointLightPositions[i].y);
             white_cube_model.set_zpos(pointLightPositions[i].z);
 
-            render(lampShader, white_cube_model, ev_manager);
+//            render(lampShader, white_cube_model, ev_manager);
+            render(ourShader, white_cube_model, ev_manager, true);
+
         }
 
 
@@ -211,7 +211,7 @@ unsigned int loadTexture(char const* path)
     return textureID;
 }
 
-void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager)  {
+void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager, bool is_light_source)  {
 
     cur_shader_prog.use();
 
@@ -230,5 +230,5 @@ void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager) 
 
     model = glm::scale(model, glm::vec3(cur_model.get_xscale(), cur_model.get_yscale(), cur_model.get_zscale()));
     cur_shader_prog.setMat4("model", model);
-    cur_model.Draw(cur_shader_prog, camera, ev_manager);
+    cur_model.Draw(cur_shader_prog, camera, ev_manager, is_light_source);
 }

@@ -21,7 +21,7 @@ class Model
 {
 public:
     Model(char *path);
-    void Draw(Shader &shader, Camera camera, Events_manager ev_manager);
+    void Draw(Shader &shader, Camera camera, Events_manager ev_manager, bool is_light_source = false);
     void set_xpos(float xpos);
     void set_ypos(float ypos);
     void set_zpos(float zpos);
@@ -41,10 +41,6 @@ public:
     float get_xangle();
     float get_yangle();
     float get_zangle();
-
-
-
-
 
 private:
 

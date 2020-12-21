@@ -39,7 +39,7 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(Shader shader, Camera camera, Events_manager ev_manager)
+void Mesh::Draw(Shader shader, Camera camera, Events_manager ev_manager, bool is_light_source)
 {
 
     glm::vec3 pointLightPositions[] = {
@@ -67,15 +67,18 @@ void Mesh::Draw(Shader shader, Camera camera, Events_manager ev_manager)
         shader.setInt("material.specular", 1);
 
         // направленный свет
+        if (is_light_source) shader.setVec3("dirLight.ambient", 1.0f, 1.0f, 1.0f);
+        else shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+
         shader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-        shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+//        shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
         shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
         shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 
-        shader.setVec3("dirLightLamp.direction", -0.2f, -1.0f, -0.3f);
-        shader.setVec3("dirLightLamp.ambient", 1.0f, 1.0f, 1.0f);
-        shader.setVec3("dirLightLamp.diffuse", 0.4f, 0.4f, 0.4f);
-        shader.setVec3("dirLightLamp.specular", 0.5f, 0.5f, 0.5f);
+//        shader.setVec3("dirLightLamp.direction", -0.2f, -1.0f, -0.3f);
+//        shader.setVec3("dirLightLamp.ambient", 1.0f, 1.0f, 1.0f);
+//        shader.setVec3("dirLightLamp.diffuse", 0.4f, 0.4f, 0.4f);
+//        shader.setVec3("dirLightLamp.specular", 0.5f, 0.5f, 0.5f);
 
         // точечный источник света 1
         shader.setVec3("pointLights[0].position", pointLightPositions[0]);
