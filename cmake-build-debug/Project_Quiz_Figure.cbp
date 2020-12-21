@@ -2017,6 +2017,9 @@
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Camera_class.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Events_manager.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Mesh_class.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>

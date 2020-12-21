@@ -6,10 +6,10 @@ Model::Model(char *path)
     loadModel(path);
 }
 
-void Model::Draw(Shader &shader, Camera camera)
+void Model::Draw(Shader &shader, Camera camera, Events_manager ev_manager)
 {
     for(unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(shader, camera);
+        meshes[i].Draw(shader, camera, ev_manager);
 }
 
 void Model::loadModel(std::string const &path)

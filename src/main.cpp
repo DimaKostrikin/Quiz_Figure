@@ -11,7 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Camera_class.h"
+#include <map>
 
 #include "Model_class.h"
 
@@ -20,7 +20,7 @@ void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int loadTexture(const char* path);
-void render(Shader cur_shader_prog, Model cur_model);
+void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager);
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
@@ -34,6 +34,12 @@ Camera camera(glm::vec3(0.0f, 0.5f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
+
+std::map <std::string, bool> control_tools = {{"Flashlight", 0},
+                             {"Flight", 0},
+                             {"Carcass", 0}};
+
+Events_manager ev_manager;
 
 int main() {
     // glfw: инициализация и конфигурирование
@@ -74,8 +80,8 @@ int main() {
     Model ourModel("../resources/objects/test/test_cube.obj");
     Model white_cube_model("../resources/objects/white_cube/white_cube.obj");
 
-    // отрисовка в режиме каркаса
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//    // отрисовка в режиме каркаса
+//    if (Control_tools["Carcass"]) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glm::vec3 pointLightPositions[] = {
             glm::vec3( -3.0f,  1.0f,  5.0f),
@@ -85,7 +91,7 @@ int main() {
     };
 
 
-    ourShader.use();
+//    ourShader.use();
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -97,9 +103,13 @@ int main() {
         lastFrame = currentFrame;
 
         // Обработка ввода
-        processInput(window);
+        ev_manager.processInput(window, camera, deltaTime);
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetScrollCallback(window, scroll_callback);
+
+        // отрисовка в режиме каркаса
+        if (ev_manager.get("Carcass")) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         // Выполнение рендеринга
         //Очищаем цветовой буфер  и Z-буфер
@@ -107,7 +117,7 @@ int main() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        render(ourShader, ourModel);
+        render(ourShader, ourModel, ev_manager);
 
         // а теперь мы отрисовывает столько ламп, сколько у нас есть точечных источников света
 //        glBindVertexArray(lightVAO);
@@ -117,34 +127,21 @@ int main() {
             white_cube_model.set_ypos(pointLightPositions[i].y);
             white_cube_model.set_zpos(pointLightPositions[i].z);
 
-            render(lampShader, white_cube_model);
+            render(lampShader, white_cube_model, ev_manager);
         }
+
 
         // glfw: обмен содержимым front- и back- буферов. Отслеживание событий Ввода/Ввывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
         glfwSwapBuffers(window);
         glfwPollEvents();
+
     }
+//    ourShader.use();
 
     // glfw: завершение, освобождение всех ранее задействованных GLFW-ресурсов
     glfwTerminate();
 
     return 0;
-}
-
-// Обработка всех событий ввода: запрос GLFW о нажатии/отпускании клавиш на клавиатуре в данном кадре и соответствующая обработка данных событий
-void processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 // glfw: всякий раз, когда изменяются размеры окна (пользователем или оперионной системой), вызывается данная callback-функция
@@ -214,7 +211,10 @@ unsigned int loadTexture(char const* path)
     return textureID;
 }
 
-void render(Shader cur_shader_prog, Model cur_model)  {
+void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager)  {
+
+    cur_shader_prog.use();
+
     // преобразования Вида/Проекции
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
@@ -230,5 +230,5 @@ void render(Shader cur_shader_prog, Model cur_model)  {
 
     model = glm::scale(model, glm::vec3(cur_model.get_xscale(), cur_model.get_yscale(), cur_model.get_zscale()));
     cur_shader_prog.setMat4("model", model);
-    cur_model.Draw(cur_shader_prog, camera);
+    cur_model.Draw(cur_shader_prog, camera, ev_manager);
 }

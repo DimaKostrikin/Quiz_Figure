@@ -39,7 +39,7 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(Shader shader, Camera camera)
+void Mesh::Draw(Shader shader, Camera camera, Events_manager ev_manager)
 {
 
     glm::vec3 pointLightPositions[] = {
@@ -110,6 +110,8 @@ void Mesh::Draw(Shader shader, Camera camera)
         shader.setFloat("pointLights[3].linear", 0.09);
         shader.setFloat("pointLights[3].quadratic", 0.032);
         // прожектор
+        if (ev_manager.get("Flashlight")) shader.setBool("spotLight.active", 1);
+        else shader.setBool("spotLight.active", 0);
         shader.setVec3("spotLight.position", camera.Position);
         shader.setVec3("spotLight.direction", camera.Front);
         shader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);

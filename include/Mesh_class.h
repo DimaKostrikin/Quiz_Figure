@@ -2,9 +2,11 @@
 #define PROJECT_QUIZ_FIGURE_MESH_CLASS_H
 
 #include <cstddef>
+#include <map>
 
 #include "Camera_class.h"
 #include "Shader.h"
+#include "Events_manager.h"
 
 struct Vertex {
 
@@ -35,7 +37,7 @@ public:
     std::vector<Texture> textures;
 
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
-    void Draw(Shader shader, Camera camera);
+    void Draw(Shader shader, Camera camera, Events_manager ev_manager);
 private:
     // Данные для рендеринга
     unsigned int VAO, VBO, EBO;

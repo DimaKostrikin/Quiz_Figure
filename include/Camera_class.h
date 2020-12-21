@@ -1,13 +1,14 @@
 #ifndef PROJECT_QUIZ_FIGURE_CAMERA_CLASS_H
 #define PROJECT_QUIZ_FIGURE_CAMERA_CLASS_H
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glad/glad.h>
 
 #include <vector>
+#include <map>
 
-// Определяет несколько возможных вариантов движения камеры
+// Определяет несколько возможных вариантов движения камеры. Используется в качестве абстракции, чтобы держаться подальше от специфичных для оконной системы методов ввода
 enum Camera_Movement {
     FORWARD,
     BACKWARD,
@@ -23,7 +24,7 @@ const float SENSITIVITY =  0.1f;
 const float ZOOM        =  45.0f;
 
 
-// Класс камеры, который обрабатывает входные данные и вычисляет соответствующие Эйлеровы углы, векторы и матрицы для использования в OpenGL
+// Абстрактный класс камеры, который обрабатывает входные данные и вычисляет соответствующие Эйлеровы углы, векторы и матрицы для использования в OpenGL
 class Camera
 {
 public:
@@ -43,17 +44,19 @@ public:
 
     // Конструктор, использующий векторы
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+            glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW,
+            float pitch = PITCH);
 
     // Конструктор, использующие скаляры
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
+    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw,
+            float pitch);
 
     // Возвращает матрицу вида, вычисленную с использованием углов Эйлера и LookAt-матрицы
     glm::mat4 GetViewMatrix();
 
     //Обрабатываем входные данные, полученные от любой клавиатуроподобной системы ввода. Принимаем входной параметр
     //в виде определенного камерой перечисления (для абстрагирования его от оконных систем)
-    void ProcessKeyboard(Camera_Movement direction, float deltaTime);
+    void ProcessKeyboard(Camera_Movement direction, float deltaTime,  std::map <std::string, bool> control_tools);
 
     //Обрабатываем входные данные, полученные от системы ввода с помощью мыши. Ожидаем в качестве параметров значения
     // смещения как в направлении X, так и в направлении Y.

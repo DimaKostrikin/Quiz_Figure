@@ -5,11 +5,15 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 
+#include <map>
+
 #include "stb_image.h"
 
 #include "Mesh_class.h"
 
 #include "Shader.h"
+
+#include "Events_manager.h"
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
 
@@ -17,7 +21,7 @@ class Model
 {
 public:
     Model(char *path);
-    void Draw(Shader &shader, Camera camera);
+    void Draw(Shader &shader, Camera camera, Events_manager ev_manager);
     void set_xpos(float xpos);
     void set_ypos(float ypos);
     void set_zpos(float zpos);

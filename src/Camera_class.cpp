@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Camera_class.h"
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
@@ -23,21 +24,25 @@ glm::mat4 Camera::GetViewMatrix()
     return glm::lookAt(Position, Position + Front, Up);
 }
 
-void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+void Camera::ProcessKeyboard(Camera_Movement direction, float delta_time,  std::map <std::string, bool> control_tools)
 {
-    float velocity = MovementSpeed * deltaTime;
-    if (direction == FORWARD)
-            Position += Front * velocity;
-//        Position += Front * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
-    if (direction == BACKWARD)
-            Position -= Front * velocity;
-//        Position -= Front * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
-    if (direction == LEFT)
-            Position -= Right * velocity;
-//        Position -= Right * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
-    if (direction == RIGHT)
-            Position += Right * velocity;
-//        Position += Right * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
+    float velocity = MovementSpeed * delta_time;
+    if (direction == FORWARD) {
+        if (control_tools["Flight"]) Position += Front * velocity;
+        else Position += Front * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
+    }
+    if (direction == BACKWARD) {
+        if (control_tools["Flight"]) Position -= Front * velocity;
+        else Position -= Front * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
+    }
+    if (direction == LEFT) {
+        if (control_tools["Flight"]) Position -= Right * velocity;
+        else Position -= Right * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
+    }
+    if (direction == RIGHT) {
+        if (control_tools["Flight"]) Position += Right * velocity;
+        else Position += Right * glm::vec3(1.0f, 0.0f, 1.0f) * velocity;
+    }
 
 
 }
