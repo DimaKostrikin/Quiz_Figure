@@ -3,15 +3,15 @@
 std::vector<float> vertices_paper = {
         // координаты
 
-        0.7f,  0.9f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-        0.7f, -0.9f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-        -0.5, -0.9f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-        -0.5f, 0.9f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+        0.7f,  0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // верхняя правая
+        0.7f, -0.7f, 0.0f,  1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // нижняя правая
+        -0.7f, -0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+        -0.7f, 0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
 
 };
 
 
-Scene::Scene(): paper("textures/white.jpg", vertices_paper), id(0) {
+Scene::Scene(): paper("textures/white.png", vertices_paper), id(0) {
 
     cur_elem = 0;
     connection_mode = false;
@@ -67,5 +67,23 @@ void Scene::draw() {
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
         glDeleteBuffers(1, &EBO);
+    }
+}
+
+void Scene::delete_elem() {
+    if (!container.empty()) {
+        if (container[cur_elem].is_active()) {
+            size_t c = container[cur_elem].connect;
+            container[cur_elem] = container[container.size()-1];
+            container[cur_elem].id = container[container.size()-1].id;
+            container[cur_elem].vertices = container[container.size()-1].vertices;
+            container[cur_elem].type = container[container.size()-1].type;
+            container.pop_back();
+            for (auto &i: container){
+                if (i.connect == c) i.connect = 0;
+            }
+            //std::swap(container[cur_elem], container[container.size() - 1]);
+            //container.pop_back();
+        }
     }
 }

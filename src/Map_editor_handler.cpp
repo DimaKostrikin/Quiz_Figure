@@ -1,87 +1,76 @@
 #include "Map_editor_handler.h"
 
 const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 1024;
+const unsigned int SCR_HEIGHT = 1280;
 
-Map_editor_handler::Map_editor_handler() {
-    cur_container = 0;
+Map_editor_handler::Map_editor_handler() : cur_container(0), window(nullptr),
+                                            SCR_WIDTH(0), SCR_HEIGHT(0){
     scene_init();
     toolbar_init();
-    window = nullptr;
     n = 0;
 }
 
-Map_editor_handler::Map_editor_handler(GLFWwindow *window) {
+Map_editor_handler::Map_editor_handler(GLFWwindow *window, const unsigned int &SCR_HEIGHT,
+                                        const unsigned int &SCR_WIDTH) :
+                                        window(window), SCR_HEIGHT(SCR_HEIGHT),
+                                        SCR_WIDTH(SCR_WIDTH){
     last_frame =0;
     delta=0;
     n = 0;
     cur_container = 0;
-    this->window = window;
     scene_init();
     cur_elem=0;
     scene = std::make_shared<Scene>();
     label = std::make_shared<Parameters_label>();
+    std::vector<std::vector<float>> coordinates_square;
+    std::vector<std::vector<float>> coordinates_rectangle;
+    std::vector<std::vector<float>> texts;
     std::vector<float> vertices_button {
             // координаты
 
-            -0.75f,  0.95f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.75f, 0.75f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, 0.75f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-            -0.95f, 0.95f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+            -0.75f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.75f, 0.8f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.95f, 0.8f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.95f, 1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
-
-    std::vector<float> vertices_button2 {
+    for (int i=0; i < 10; ++i){
+        coordinates_square.push_back(vertices_button);
+        vertices_button[1]-=0.2f;
+        vertices_button[9]-=0.2f;
+        vertices_button[17]-=0.2f;
+        vertices_button[25]-=0.2f;
+    }
+    std::vector<float> vertices_button_rec {
             // координаты
-            -0.75f,  0.65f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.75f, 0.45f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, 0.45f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-            -0.95f, 0.65f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+            -0.35f,  -0.75f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
+            -0.35f, -0.95f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
+            -0.65f, -0.95f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -0.65f, -0.75f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
-    std::vector<float> vertices_button3 {
-            // координаты
-            -0.75f,  0.35f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.75f, 0.15f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, 0.15f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-            -0.95f, 0.35f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+    for (int i=0; i < 3; ++i){
+        coordinates_rectangle.push_back(vertices_button_rec);
+        vertices_button_rec[0]+=0.4f;
+        vertices_button_rec[8]+=0.4f;
+        vertices_button_rec[16]+=0.4f;
+        vertices_button_rec[24]+=0.4f;
+    }
 
-    };
-    std::vector<float> vertices_button4 {
-            // координаты
-            -0.75f,  0.05f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.75f, -0.15f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, -0.15f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-            -0.95f, 0.05f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
+    toolbar_buttons.emplace_back("textures/start_icon.png", "textures/start_icon_act.png",coordinates_square[0], START);
+    toolbar_buttons.emplace_back("textures/finish_icon.png", "textures/finish_icon_act.png", coordinates_square[1], FINISH);
+    toolbar_buttons.emplace_back("textures/static_wall_icon.png", "textures/static_wall_icon_act.png", coordinates_square[2], WALL_STATIC);
+    toolbar_buttons.emplace_back("textures/cube_icon.png", "textures/cube_icon_act.png", coordinates_square[3], CUBE);
+    toolbar_buttons.emplace_back("textures/hole_icon.png", "textures/hole_icon_act.png", coordinates_square[4], HOLE);
+    toolbar_buttons.emplace_back("textures/jumper_icon.png", "textures/jumper_icon_act.png", coordinates_square[5], JUMPER);
+    toolbar_buttons.emplace_back("textures/wall_icon.png", "textures/wall_icon_act.png", coordinates_square[6], WALL);
+    toolbar_buttons.emplace_back("textures/platform_icon.png", "textures/platform_icon_act.png", coordinates_square[7], PLATFORM);
+    toolbar_buttons.emplace_back("textures/teleport_in_icon.png", "textures/teleport_in_icon_act.png", coordinates_square[8], TELEPORT_IN);
+    toolbar_buttons.emplace_back("textures/teleport_out_icon.png", "textures/teleport_out_icon_act.png", coordinates_square[9], TELEPORT_OUT);
+    toolbar_buttons.emplace_back("textures/connect_text.png", "textures/connect_text_act.png", coordinates_rectangle[0], CONNECT);
+    toolbar_buttons.emplace_back("textures/delete_text.png", "textures/delete_text_act.png", coordinates_rectangle[1], DELETE);
+    toolbar_buttons.emplace_back("textures/save_text.png", "textures/save_text_act.png", coordinates_rectangle[2], SAVE);
 
-    };
-
-    std::vector<float> vertices_button5 {
-            // координаты
-            -0.65f,  -0.25f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.65f, -0.35f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, -0.35f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-            -0.95f, -0.25f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
-
-    };
-    std::vector<float> vertices_button6 {
-            // координаты
-            -0.65f,  -0.55f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // верхняя правая
-            -0.65f, -0.65f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // нижняя правая
-            -0.95f, -0.65f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-            -0.95f, -0.55f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
-
-    };
-
-
-    toolbar_buttons.emplace_back("textures/start_icon.jpg", "textures/start_icon_act.jpg", vertices_button, START);
-    toolbar_buttons.emplace_back("textures/exit_icon.jpg", "textures/exit_icon_act.jpg", vertices_button2, FINISH);
-    toolbar_buttons.emplace_back("textures/cube_hole_icon.jpg", "textures/cube_hole_icon_act.jpg", vertices_button3, HOLE);
-    toolbar_buttons.emplace_back("textures/cube_icon.jpg", "textures/cube_icon_act.jpg", vertices_button4, CUBE);
-    toolbar_buttons.emplace_back("textures/connect_text.jpg", "textures/connect_text_act.jpg", vertices_button5, CONNECT);
-    toolbar_buttons.emplace_back("textures/finish_text.jpg", "textures/finish_text_act.jpg", vertices_button6, SAVE);
-
-    toolbar_buttons[cur_elem].activate();
 }
 
 void Map_editor_handler::scene_init() {
@@ -145,10 +134,8 @@ Map_editor_handler::~Map_editor_handler() {
 }
 
 void Map_editor_handler::draw() {
-    /*float current_frame = glfwGetTime();
-    float delta_time = current_frame - last_frame;
-    last_frame = current_frame;
-    delta += delta_time;*/
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     //if (delta > 0.01f) {
         Shader shader("shader.vs", "shader.fs");
@@ -200,6 +187,11 @@ double get_d(float f){
 
 
 void Map_editor_handler::processInput() {
+    float current_frame = glfwGetTime();
+    float delta_time = current_frame - last_frame;
+    last_frame = current_frame;
+    delta += delta_time;
+
 
     double x, y;
 
@@ -230,24 +222,88 @@ void Map_editor_handler::processInput() {
     // Обработчик нажатия
 
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-
-        // нажатие на тулбар слева
-        if (toolbar_buttons[cur_elem].is_active() && (!scene->connection_mode)) {
-            toolbar_left_action(x, y);
-        } else scene_action(x, y); // нажатие на элемент сцены
-
-
+        if (delta > 0.1f) {
+            delta=0;
+            // нажатие на тулбар слева
+            if (toolbar_buttons[cur_elem].is_active() && (!scene->connection_mode)) {
+                toolbar_left_action(x, y);
+            } else scene_action(x, y); // нажатие на элемент сцены
+        }
 
     }
 
 //
 
-    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    if((glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_RELEASE) &&
+                                                         (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_RELEASE)&&
+                                                            (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)) {
         if (!scene->container.empty()) {
             if (scene->container[scene->cur_elem].is_active())
                 scene->container[scene->cur_elem].up();
         }
     }
+
+    if ((glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f)) {
+                delta = 0;
+                scene->container[scene->cur_elem].minus_width();
+            }
+        }
+    }
+
+    if ((glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) &&
+            (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f))
+            {
+                delta=0;
+                scene->container[scene->cur_elem].plus_width();
+            }
+        }
+    }
+
+    if ((glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f)) {
+                delta = 0;
+                scene->container[scene->cur_elem].minus_length();
+            }
+        }
+    }
+
+    if ((glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) &&
+        (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f))
+            {
+                delta=0;
+                scene->container[scene->cur_elem].plus_length();
+            }
+        }
+    }
+
+    if ((glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) &&
+        (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f))
+            {
+                delta=0;
+                scene->container[scene->cur_elem].up_z();
+            }
+        }
+    }
+
+    if ((glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f))
+            {
+                delta=0;
+                scene->container[scene->cur_elem].down_z();
+            }
+        }
+    }
+
 
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         if (!scene->container.empty()) {
@@ -270,17 +326,6 @@ void Map_editor_handler::processInput() {
         }
     }
 
-    if(glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS) {
-        if (cur_container==1){
-            scene->container.erase(scene->container.begin()+scene->cur_elem)[scene->cur_elem];
-            std::vector<Map_object> new_container;
-            for (auto &i: scene->container){
-                new_container.push_back(i);
-            }
-            scene->container=std::move(new_container);
-            new_container.clear();
-        }
-    }
 
 }
 
@@ -309,51 +354,90 @@ void Map_editor_handler::toolbar_left_action(double &x, double &y) {
     std::vector<float> vertices_button{
             // координаты
 
-            0.2f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
-            0.2f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
-            0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
-            0.0f, 0.2f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+            0.2f, 0.2f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
+            0.2f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
+            0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
+            0.0f, 0.2f, 0.0f,   1.0f, 1.0f, 0.0f, 0.0f, 1.0f
 
     };
 
     switch (toolbar_buttons[cur_elem].type) {
         case START: {
             scene->container.emplace_back(Map_object
-                                                  ("textures/start.jpg", "textures/start_act.jpg", vertices_button,
-                                                   START, ++scene->id));
+                                                  ("textures/start.png", "textures/start_act.png", vertices_button,
+                                                   START, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
             break;
         }
         case FINISH: {
             scene->container.emplace_back(Map_object
-                                                  ("textures/exit.jpg", "textures/exit_act.jpg", vertices_button,
-                                                   FINISH, ++scene->id));
-        }
+                                                  ("textures/exit.png", "textures/exit_act.png", vertices_button,
+                                                   FINISH, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
             break;
+        }
         case HOLE: {
             scene->container.emplace_back(Map_object
-                                                  ("textures/cube_hole.jpg", "textures/cube_hole_act.jpg", vertices_button,
-                                                   HOLE, ++scene->id));
-        }
+                                                  ("textures/hole.png", "textures/hole_act.png", vertices_button,
+                                                   HOLE, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
             break;
+        }
         case CUBE: {
             scene->container.emplace_back(Map_object
-                                                  ("textures/blue.jpg", "textures/dark_blue.jpg", vertices_button,
-                                                   CUBE, ++scene->id));
-        }
+                                                  ("textures/cube.png", "textures/cube_act.png", vertices_button,
+                                                   CUBE, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
             break;
+        }
+        case PLATFORM: {
+            scene->container.emplace_back(Map_object
+                                                  ("textures/platform.png", "textures/platform_act.png", vertices_button,
+                                                   PLATFORM, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
+            break;
+        }
+        case JUMPER: {
+            scene->container.emplace_back(Map_object
+                                                  ("textures/jumper.png", "textures/jumper_act.png", vertices_button,
+                                                   JUMPER, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
+            break;
+        }
+        case TELEPORT_IN: {
+            scene->container.emplace_back(Map_object
+                                                  ("textures/teleport_in.png", "textures/teleport_in_act.png", vertices_button,
+                                                   TELEPORT_IN, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
+            break;
+        }
+        case TELEPORT_OUT: {
+            scene->container.emplace_back(Map_object
+                                                  ("textures/teleport_out.png", "textures/teleport_out_act.png", vertices_button,
+                                                   TELEPORT_OUT, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
+            break;
+        }
+        case WALL_STATIC: {
+            scene->container.emplace_back(Map_object
+                                                  ("textures/black.png", "textures/blue.png", vertices_button,
+                                                   WALL_STATIC, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
+            break;
+        }
+        case WALL: {
+            scene->container.emplace_back(Map_object
+                                                  ("textures/wall.png", "textures/wall_act.png", vertices_button,
+                                                   WALL, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
+            break;
+        }
         case CONNECT: {
             if (scene->container.size() >= 2) {
                 scene->connection_mode = true;
                 scene->container[scene->cur_elem].deactivate();
             }
-
-        }
             break;
+        }
         case SAVE: {
             if (scene->container.size() > 0)
                 parser.create_json(scene->container);
-        }
             break;
+        }
+        case DELETE: {
+            scene->delete_elem();
+            break;
+        }
         default:
             break;
     };
@@ -383,19 +467,19 @@ void Map_editor_handler::scene_action(double &x, double &y) {
         }
 
         // если соединяем
-    } else{
+    } else {
         j=0;
         for (auto &i: scene->container) {
             double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
             double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
             double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
             double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
-            if (n < 2) {
+            if (n < 2 ) {
                 if ((x1 < x) && (x < x2)
                     && (y1 < y) && (y < y2)) {
                     i.activate();
                     n++;
-                    if (n < 2) save = j;
+                    if (n == 0) save = j;
                     else {
                         connect(save, j);
                         scene->container[save].deactivate();

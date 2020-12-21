@@ -23,7 +23,7 @@ public:
     void draw();
     std::vector<Map_object> container;
     size_t cur_elem;
-
+    void delete_elem();
     Elem paper;
     void draw_object(std::shared_ptr<Object> obj);
     void change_object(std::shared_ptr<Object> obj);

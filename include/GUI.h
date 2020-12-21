@@ -33,6 +33,8 @@ public:
     }
 
     ~Elem()= default;
+
+
 protected:
     unsigned int texture_cur, texture_passive;
 private:
@@ -52,13 +54,14 @@ public:
         texture_gen(texture_active, f2);
     }
 
+
     void activate();
 
     void deactivate();
 
     ~Button_entry()= default;
 
-    bool is_active() {
+    bool is_active() const {
         return activated;
     }
 
@@ -88,17 +91,40 @@ public:
     size_t id;
     size_t connect;
     type_elem type;
+    int x, y, z;
+    int h, w, l;
    // Map_object(Map_object<N>&& o) = default;
     //Map_object(const Map_object<N>& o) = default;
-    Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id):
+    Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id,
+               const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH):
             Button_entry(std::move(f1), std::move(f2), std::move(vertices)),
-            id(id), connect(0),type(type){};
+            id(id), SCR_HEIGHT(SCR_HEIGHT), SCR_WIDTH(SCR_WIDTH), connect(0),type(type), z(0){change_w(); change_l();};
 
     void up();
     void down();
     void right();
     void left();
+    void up_z();
+    void down_z();
+    void plus_width();
+    void minus_width();
+    void plus_height();
+    void minus_height();
+    void minus_length();
+    void plus_length();
+    bool check_elem();
+    void change_w();
+    void change_l();
+    void change_x();
+    void change_y();
+    void change_z();
 
+
+    bool check_border_right();
+    bool check_border_left();
+    bool check_border_up();
+    bool check_border_down();
+    bool check_border();
     Map_object& operator= (const Map_object &elem);
 
     bool is_activator();
@@ -109,6 +135,8 @@ public:
     /*Map_object(const Map_object<N> &elem) : Button_entry<N>(elem){}*/
 private:
 
+    const unsigned int SCR_HEIGHT;
+    const unsigned int SCR_WIDTH;
 };
 
 #endif //QUIZ_FIGURE_GUI_H

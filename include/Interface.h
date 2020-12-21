@@ -17,10 +17,6 @@
 #include "../shader_s.h"
 
 
-// Константы
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 1024;
-
 
 class Interface {
 public:
@@ -34,6 +30,8 @@ public:
 private:
     GLFWwindow *window;
     int shaderProgram;
+    const unsigned int SCR_WIDTH = 1280;
+    const unsigned int SCR_HEIGHT = 1024;
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);

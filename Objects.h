@@ -32,11 +32,15 @@ struct Size {
 enum type_elem {
     SAVE, // для тулбара, сорян
     CONNECT,
+    DELETE,
+    PLUS,
+    MINUS,
 
     // для тулбара, сорян
     PLAYER,  // Игрок
 
-    WALL,  // Статические объекты
+    WALL,// Статические объекты
+    WALL_STATIC, // Статические объекты
     HINT,
     PLATFORM,
     STAIRS,
@@ -52,7 +56,8 @@ enum type_elem {
     STEP,  // Активаторы
     HOLE,
 
-    TELEPORT,  // Взаимодействие с параметрами игрока
+    TELEPORT_IN,
+    TELEPORT_OUT,// Взаимодействие с параметрами игрока
     LASER,
     JUMPER
 };

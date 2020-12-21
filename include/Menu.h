@@ -18,7 +18,7 @@
 
 class Menu {
 public:
-    Menu(GLFWwindow *window);
+    Menu(GLFWwindow *window, const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH);
     ~Menu(){};
     void draw_menu();
     Button_entry button_start;
@@ -30,6 +30,8 @@ public:
 
 private:
     GLFWwindow *window;
+    const unsigned int SCR_HEIGHT;
+    const unsigned int SCR_WIDTH;
 
 };
 

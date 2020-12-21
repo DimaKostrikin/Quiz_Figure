@@ -33,9 +33,6 @@ void Interface::cycle() {
     glfwTerminate();
 }
 
-// Обработка всех событий ввода: запрос GLFW о нажатии/отпускании клавиш на клавиатуре в данном кадре и соответствующая обработка данных событий
-
-
 // glfw: всякий раз, когда изменяются размеры окна (пользователем или оперионной системой), вызывается данная callback-функция
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
     // Убеждаемся, что окно просмотра соответствует новым размерам окна
@@ -69,7 +66,7 @@ Interface::Interface() {
     }
 
 
-    menu = std::make_shared<Menu>(window);
+    menu = std::make_shared<Menu>(window, SCR_HEIGHT, SCR_WIDTH);
 
 }
 

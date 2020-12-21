@@ -20,9 +20,12 @@ std::vector<float> vertices2 = {
         -0.6f,  -0.2f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
 };
 
-Menu::Menu(GLFWwindow *window): button_start("textures/button8.jpg", "textures/button8_act.png", vertices),
-        button_map_editor("textures/button9.jpg", "textures/button9_act.jpg", vertices2), window(window),
-        map_editor_handler(nullptr){
+Menu::Menu(GLFWwindow *window, const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH):
+        button_start("textures/start_text.png", "textures/start_text_act.png", vertices),
+        button_map_editor("textures/map_editor_text.png", "textures/map_editor_text_act.png", vertices2),
+        window(window),
+        map_editor_handler(nullptr),
+        SCR_WIDTH(SCR_WIDTH), SCR_HEIGHT(SCR_HEIGHT){
     button_start.activate();
     draw = std::bind(&Menu::draw_menu, this);
     processInput = std::bind(&Menu::process_input, this);
@@ -32,7 +35,7 @@ void Menu::process_input(){
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
-        Map_editor_handler map_editor;
+        Map_editor_handler map_editor();
         //draw = std::bind(&Map_editor_handler::draw, &map_editor);
     }
 
@@ -56,7 +59,7 @@ void Menu::process_input(){
         if (button_start.is_active()) {
             //start game
         } else {
-            map_editor_handler = std::make_shared<Map_editor_handler>(window);
+            map_editor_handler = std::make_shared<Map_editor_handler>(window, SCR_HEIGHT, SCR_WIDTH);
             draw = std::bind(&Map_editor_handler::draw, map_editor_handler);
             processInput = std::bind(&Map_editor_handler::processInput, map_editor_handler);
         }

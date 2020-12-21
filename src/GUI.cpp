@@ -2,7 +2,17 @@
 // Created by moroz on 07.12.2020.
 //
 
+#include <Interface.h>
 #include "GUI.h"
+std::vector<float> vertices_paper2 = {
+        // координаты
+
+        0.7f,  0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // верхняя правая
+        0.7f, -0.7f, 0.0f,  1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // нижняя правая
+        -0.7f, -0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+        -0.7f, 0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
+
+};
 
 //генерация текстуры
 void Elem::texture_gen(unsigned int &texture, const std::string& filename){
@@ -17,10 +27,12 @@ void Elem::texture_gen(unsigned int &texture, const std::string& filename){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // загрузка изображения, создание текстуры и генерирование mipmap-уровней
     int width, height, nrChannels;
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -85,19 +97,21 @@ void Button_entry::deactivate(){
 
 
 void Map_object::up(){
-    if (this->vertices[1] < 0.9f) {
+    if (this->vertices[1] < 0.7f) {
         this->vertices[1] += 0.01f;
         this->vertices[9] += 0.01f;
         this->vertices[17] += 0.01f;
         this->vertices[25] += 0.01f;
+        change_y();
     }
 }
 void Map_object::down(){
-    if (this->vertices[17] > -0.9f) {
+    if (this->vertices[17] > -0.7f) {
         this->vertices[1] -= 0.01f;
         this->vertices[9] -= 0.01f;
         this->vertices[17] -= 0.01f;
         this->vertices[25] -= 0.01f;
+        change_y();
     }
 }
 
@@ -107,14 +121,16 @@ void Map_object::right(){
         this->vertices[8] += 0.01f;
         this->vertices[16] += 0.01f;
         this->vertices[24] += 0.01f;
+        change_x();
     }
 }
 void Map_object::left(){
-    if (this->vertices[16] > -0.5f) {
+    if (this->vertices[16] > -0.7f) {
         this->vertices[0] -= 0.01f;
         this->vertices[8] -= 0.01f;
         this->vertices[16] -= 0.01f;
         this->vertices[24] -= 0.01f;
+        change_x();
     }
 }
 
@@ -137,3 +153,161 @@ bool Map_object::is_activated() {
 bool Map_object::is_dynamic() {
     return ((type == CUBE) || (type == BALL));
 }
+
+void Map_object::up_z() {
+    vertices[2] += 0.01f;
+    vertices[10] += 0.01f;
+    vertices[18] += 0.01f;
+    vertices[26] += 0.01f;
+    change_z();
+}
+
+void Map_object::down_z() {
+    if (vertices[2]>0.0f) {
+        vertices[2] -= 0.01f;
+        vertices[10] -= 0.01f;
+        vertices[18] -= 0.01f;
+        vertices[26] -= 0.01f;
+        change_z();
+    }
+}
+/*
+ std::vector<float> vertices_button{
+            // координаты
+
+            0.2f, 0.2f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
+            0.2f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
+            0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
+            0.0f, 0.2f, 0.0f,   1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+
+    };
+ */
+
+
+
+void Map_object::plus_width() {
+    if (check_border()) {
+        vertices[0] += 0.01f;
+        vertices[8] += 0.01f;
+        vertices[16] -= 0.01f;
+        vertices[24] -= 0.01f;
+    } else if (!check_border_right() && check_border_left()){
+        vertices[16] -= 0.01f;
+        vertices[24] -= 0.01f;
+    } else if (!check_border_left() && check_border_right()){
+        vertices[0] += 0.01f;
+        vertices[8] += 0.01f;
+    }
+    change_w();
+
+}
+
+void Map_object::minus_width() {
+    if (check_elem()) {
+        vertices[0] -= 0.01f;
+        vertices[8] -= 0.01f;
+        vertices[16] += 0.01f;
+        vertices[24] += 0.01f;
+        change_w();
+    }
+}
+
+void Map_object::plus_length() {
+    if (check_border()) {
+        vertices[1] += 0.01f;
+        vertices[9] -= 0.01f;
+        vertices[17] -= 0.01f;
+        vertices[25] += 0.01f;
+    } else if (!check_border_up() && check_border_down()){
+        vertices[9] -= 0.01f;
+        vertices[17] -= 0.01f;
+    } else if (!check_border_down() && check_border_up()){
+        vertices[1] += 0.01f;
+        vertices[25] += 0.01f;
+    }
+    change_l();
+
+}
+
+void Map_object::minus_length() {
+    if (check_elem()) {
+        vertices[1] -= 0.01f;
+        vertices[9] += 0.01f;
+        vertices[17] += 0.01f;
+        vertices[25] -= 0.01f;
+        change_l();
+    }
+}
+bool Map_object::check_elem() {
+    return ((vertices[0] - vertices[16]) >= 0.05f && (vertices[1] - vertices[9])>=0.05f);
+}
+
+bool Map_object::check_border_right() {
+    return vertices[0] < vertices_paper2[0];
+}
+
+bool Map_object::check_border_left() {
+    return vertices[16] > vertices_paper2[16];
+}
+
+bool Map_object::check_border_up() {
+    return vertices[1] < vertices_paper2[1];
+}
+
+bool Map_object::check_border_down() {
+    return vertices[9] > vertices_paper2[9];
+}
+
+bool Map_object::check_border() {
+    return (check_border_left() && check_border_down() && check_border_right() && check_border_up());
+}
+
+void Map_object::change_w() {
+    double x1 = (vertices[16] + 1.0f) * (SCR_WIDTH / 2);
+    double x2 = (vertices[0] + 1.0f ) * (SCR_WIDTH / 2);
+    w = floor(x2 - x1);
+}
+
+void Map_object::change_l() {
+    double y1 = (1.0f - vertices[1]) * (SCR_HEIGHT / 2);
+    double y2 = (1.0f - vertices[9]) * (SCR_HEIGHT / 2);
+    l = floor(y2 - y1);
+}
+
+void Map_object::change_x() {
+    double x1 = (vertices[16] + 0.7f) * (SCR_WIDTH / 2);
+    double x2 = (vertices[0] + 0.7f) * (SCR_WIDTH / 2);
+    x = floor(x1+(x2 - x1)/2);
+}
+
+void Map_object::change_y() {
+    double y1 = (vertices[1]+0.7f) * (SCR_HEIGHT / 2);
+    double y2 = ( vertices[9]+0.7f) * (SCR_HEIGHT / 2);
+    y = floor(y1+(y2 - y1)/2);
+}
+
+void Map_object::change_z() {
+    z = floor(vertices[2]) * (SCR_HEIGHT / 2);
+}
+/*
+ std::vector<float> vertices_button{
+            // координаты
+
+            0.2f, 0.2f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
+            0.2f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
+            0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
+            0.0f, 0.2f, 0.0f,   1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+
+    };
+ */
+/*std::vector<float> vertices_paper2 = {
+        // координаты
+
+        0.7f,  0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // верхняя правая
+        0.7f, -0.7f, 0.0f,  1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // нижняя правая
+        -0.7f, -0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+        -0.7f, 0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
+
+};*/
+
+

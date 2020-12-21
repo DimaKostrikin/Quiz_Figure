@@ -17,7 +17,8 @@ public:
     size_t cur_elem;
     size_t cur_container;
     Map_editor_handler();
-    Map_editor_handler(GLFWwindow *window);
+    Map_editor_handler(GLFWwindow *window, const unsigned int &SCR_HEIGHT,
+    const unsigned int &SCR_WIDTH);
     ~Map_editor_handler();
     std::vector<Button_toolbar> toolbar_buttons;
     std::shared_ptr<Scene> scene;
@@ -40,6 +41,8 @@ public:
 private:
     void toolbar_init();
     void scene_init();
+    const unsigned int SCR_HEIGHT;
+    const unsigned int SCR_WIDTH;
     Map_parser parser;
     //std::shared_ptr<Scene>scene;
     //
