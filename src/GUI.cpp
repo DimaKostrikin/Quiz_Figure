@@ -147,28 +147,32 @@ bool Map_object::is_activator() {
 }
 
 bool Map_object::is_activated() {
-    return ((type == DOOR) || (type == BUTTON) || (type == FINISH) );
+    return ((type == DOOR) || (type == BUTTON) || (type == FINISH)
+    || (type == TELEPORT_IN));
 }
 
 bool Map_object::is_dynamic() {
     return ((type == CUBE) || (type == BALL));
 }
 
+bool Map_object::is_static() {
+    return ((type == PLATFORM) || (type == WALL));
+}
+
+//
+bool Map_object::is_connected() {
+    return (type == JUMPER);
+}
+
+
+
 void Map_object::up_z() {
-    vertices[2] += 0.01f;
-    vertices[10] += 0.01f;
-    vertices[18] += 0.01f;
-    vertices[26] += 0.01f;
-    change_z();
+    z += 10;
 }
 
 void Map_object::down_z() {
-    if (vertices[2]>0.0f) {
-        vertices[2] -= 0.01f;
-        vertices[10] -= 0.01f;
-        vertices[18] -= 0.01f;
-        vertices[26] -= 0.01f;
-        change_z();
+    if (z>0) {
+        z -= 10;
     }
 }
 /*
@@ -286,8 +290,15 @@ void Map_object::change_y() {
     y = floor(y1+(y2 - y1)/2);
 }
 
-void Map_object::change_z() {
-    z = floor(vertices[2]) * (SCR_HEIGHT / 2);
+
+void Map_object::minus_height() {
+    if (h > 0){
+        h-=10;
+    }
+}
+
+void Map_object::plus_height() {
+    h += 10;
 }
 /*
  std::vector<float> vertices_button{

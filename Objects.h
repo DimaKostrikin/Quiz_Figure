@@ -31,7 +31,6 @@ struct Size {
 
 enum type_elem {
     SAVE, // для тулбара, сорян
-    CONNECT,
     DELETE,
     PLUS,
     MINUS,

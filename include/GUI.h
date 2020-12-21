@@ -98,7 +98,7 @@ public:
     Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id,
                const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH):
             Button_entry(std::move(f1), std::move(f2), std::move(vertices)),
-            id(id), SCR_HEIGHT(SCR_HEIGHT), SCR_WIDTH(SCR_WIDTH), connect(0),type(type), z(0){change_w(); change_l();};
+            id(id), SCR_HEIGHT(SCR_HEIGHT), SCR_WIDTH(SCR_WIDTH), connect(0),type(type), z(0), h(0){change_w(); change_l();};
 
     void up();
     void down();
@@ -117,7 +117,6 @@ public:
     void change_l();
     void change_x();
     void change_y();
-    void change_z();
 
 
     bool check_border_right();
@@ -130,13 +129,17 @@ public:
     bool is_activator();
     bool is_activated();
     bool is_dynamic();
+    bool is_static();
+    // for jumper - connected object
+    bool is_connected();
 
     ~Map_object()=default;
-    /*Map_object(const Map_object<N> &elem) : Button_entry<N>(elem){}*/
-private:
 
     const unsigned int SCR_HEIGHT;
     const unsigned int SCR_WIDTH;
+    /*Map_object(const Map_object<N> &elem) : Button_entry<N>(elem){}*/
+private:
+
 };
 
 #endif //QUIZ_FIGURE_GUI_H

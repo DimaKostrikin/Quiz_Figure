@@ -49,7 +49,7 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window, const unsigned int &S
             -0.65f, -0.75f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f
 
     };
-    for (int i=0; i < 3; ++i){
+    for (int i=0; i < 2; ++i){
         coordinates_rectangle.push_back(vertices_button_rec);
         vertices_button_rec[0]+=0.4f;
         vertices_button_rec[8]+=0.4f;
@@ -67,9 +67,8 @@ Map_editor_handler::Map_editor_handler(GLFWwindow *window, const unsigned int &S
     toolbar_buttons.emplace_back("textures/platform_icon.png", "textures/platform_icon_act.png", coordinates_square[7], PLATFORM);
     toolbar_buttons.emplace_back("textures/teleport_in_icon.png", "textures/teleport_in_icon_act.png", coordinates_square[8], TELEPORT_IN);
     toolbar_buttons.emplace_back("textures/teleport_out_icon.png", "textures/teleport_out_icon_act.png", coordinates_square[9], TELEPORT_OUT);
-    toolbar_buttons.emplace_back("textures/connect_text.png", "textures/connect_text_act.png", coordinates_rectangle[0], CONNECT);
-    toolbar_buttons.emplace_back("textures/delete_text.png", "textures/delete_text_act.png", coordinates_rectangle[1], DELETE);
-    toolbar_buttons.emplace_back("textures/save_text.png", "textures/save_text_act.png", coordinates_rectangle[2], SAVE);
+    toolbar_buttons.emplace_back("textures/delete_text.png", "textures/delete_text_act.png", coordinates_rectangle[0], DELETE);
+    toolbar_buttons.emplace_back("textures/save_text.png", "textures/save_text_act.png", coordinates_rectangle[1], SAVE);
 
 }
 
@@ -304,6 +303,27 @@ void Map_editor_handler::processInput() {
         }
     }
 
+    if ((glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) &&
+        (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f))
+            {
+                delta=0;
+                scene->container[scene->cur_elem].plus_height();
+            }
+        }
+    }
+
+    if ((glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)) {
+        if (!scene->container.empty()) {
+            if (scene->container[scene->cur_elem].is_active() && (delta>0.1f))
+            {
+                delta=0;
+                scene->container[scene->cur_elem].minus_height();
+            }
+        }
+    }
+
 
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         if (!scene->container.empty()) {
@@ -326,6 +346,14 @@ void Map_editor_handler::processInput() {
         }
     }
 
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
+        scene->container[scene->cur_elem].deactivate();
+        scene->connection_mode = true;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_RELEASE) {
+        scene->connection_mode = false;
+    }
 
 }
 
@@ -343,10 +371,22 @@ void Map_editor_handler::connect(size_t i, size_t j) {
             scene->container[i].connect = scene->container[j].id; // дырка открывается из-за куба
     } else if (scene->container[i].is_activated()){
         if (scene->container[j].is_activator())
-            scene->container[i].connect = scene->container[j].id; // финиш открывается из-за дырки
+            scene->container[i].connect = scene->container[j].id; // финиш открывается из-за отверстия
     } else if (scene->container[i].is_dynamic()){
         if (scene->container[j].is_activator())
-            scene->container[j].connect = scene->container[i].id; // финиш открывается из-за дырки
+            scene->container[j].connect = scene->container[i].id; // финиш открывается из-за отверстия
+    } else if (scene->container[i].is_connected()){
+        if (scene->container[j].is_static())
+            scene->container[i].connect = scene->container[j].id; // jumper
+    } else if (scene->container[j].is_connected()) {
+        if (scene->container[i].is_static())
+            scene->container[j].connect = scene->container[i].id;
+    } else if (scene->container[i].type == TELEPORT_IN) {
+        if (scene->container[j].type == TELEPORT_OUT)
+            scene->container[j].connect = scene->container[i].id;
+    } else if (scene->container[j].type == TELEPORT_IN) {
+        if (scene->container[i].type == TELEPORT_OUT)
+            scene->container[i].connect = scene->container[j].id;
     }
 }
 
@@ -422,13 +462,6 @@ void Map_editor_handler::toolbar_left_action(double &x, double &y) {
                                                    WALL, ++scene->id, SCR_HEIGHT, SCR_WIDTH));
             break;
         }
-        case CONNECT: {
-            if (scene->container.size() >= 2) {
-                scene->connection_mode = true;
-                scene->container[scene->cur_elem].deactivate();
-            }
-            break;
-        }
         case SAVE: {
             if (scene->container.size() > 0)
                 parser.create_json(scene->container);
@@ -474,17 +507,16 @@ void Map_editor_handler::scene_action(double &x, double &y) {
             double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
             double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
             double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
-            if (n < 2 ) {
+            if (n < 2) {
                 if ((x1 < x) && (x < x2)
                     && (y1 < y) && (y < y2)) {
                     i.activate();
                     n++;
-                    if (n == 0) save = j;
+                    if (n == 1) save = j;
                     else {
                         connect(save, j);
                         scene->container[save].deactivate();
                         scene->container[j].deactivate();
-                        scene->connection_mode=false;
                         n = 0;
                     }
                 }
