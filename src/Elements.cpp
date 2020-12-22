@@ -3,16 +3,7 @@
 //
 
 #include <Interface.h>
-#include "GUI.h"
-std::vector<float> vertices_paper2 = {
-        // координаты
-
-        0.7f,  0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // верхняя правая
-        0.7f, -0.7f, 0.0f,  1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // нижняя правая
-        -0.7f, -0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-        -0.7f, 0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
-
-};
+#include "Elements.h"
 
 //генерация текстуры
 void Elem::texture_gen(unsigned int &texture, const std::string& filename){
@@ -73,7 +64,7 @@ void Elem::draw(unsigned int &VAO, unsigned int &VBO, unsigned int &EBO){
     glBindTexture(GL_TEXTURE_2D, texture_cur);
 
 
-    // Рендеринг ящика
+    // Рендеринг
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
@@ -93,8 +84,6 @@ void Button_entry::deactivate(){
     set_texture(texture_passive);
     activated = false;
 }
-
-
 
 void Map_object::up(){
     if (this->vertices[1] < 0.7f) {
@@ -175,30 +164,17 @@ void Map_object::down_z() {
         z -= 10;
     }
 }
-/*
- std::vector<float> vertices_button{
-            // координаты
 
-            0.2f, 0.2f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
-            0.2f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
-            0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
-            0.0f, 0.2f, 0.0f,   1.0f, 1.0f, 0.0f, 0.0f, 1.0f
-
-    };
- */
-
-
-
-void Map_object::plus_width() {
-    if (check_border()) {
+void Map_object::plus_width(float &rborder, float &lborder, float &tborder, float &bborder) {
+    if (check_border(rborder, lborder, tborder, bborder)) {
         vertices[0] += 0.01f;
         vertices[8] += 0.01f;
         vertices[16] -= 0.01f;
         vertices[24] -= 0.01f;
-    } else if (!check_border_right() && check_border_left()){
+    } else if (!check_border_right(rborder) && check_border_left(lborder)){
         vertices[16] -= 0.01f;
         vertices[24] -= 0.01f;
-    } else if (!check_border_left() && check_border_right()){
+    } else if (!check_border_left(lborder) && check_border_right(rborder)){
         vertices[0] += 0.01f;
         vertices[8] += 0.01f;
     }
@@ -216,16 +192,16 @@ void Map_object::minus_width() {
     }
 }
 
-void Map_object::plus_length() {
-    if (check_border()) {
+void Map_object::plus_length(float &rborder, float &lborder, float &tborder, float &bborder) {
+    if (check_border(rborder, lborder, tborder, bborder)) {
         vertices[1] += 0.01f;
         vertices[9] -= 0.01f;
         vertices[17] -= 0.01f;
         vertices[25] += 0.01f;
-    } else if (!check_border_up() && check_border_down()){
+    } else if (!check_border_up(tborder) && check_border_down(bborder)){
         vertices[9] -= 0.01f;
         vertices[17] -= 0.01f;
-    } else if (!check_border_down() && check_border_up()){
+    } else if (!check_border_down(bborder) && check_border_up(tborder)){
         vertices[1] += 0.01f;
         vertices[25] += 0.01f;
     }
@@ -246,35 +222,36 @@ bool Map_object::check_elem() {
     return ((vertices[0] - vertices[16]) >= 0.05f && (vertices[1] - vertices[9])>=0.05f);
 }
 
-bool Map_object::check_border_right() {
-    return vertices[0] < vertices_paper2[0];
+bool Map_object::check_border_right(float &border) {
+    return vertices[0] < border;
 }
 
-bool Map_object::check_border_left() {
-    return vertices[16] > vertices_paper2[16];
+bool Map_object::check_border_left(float &border) {
+    return vertices[16] > border;
 }
 
-bool Map_object::check_border_up() {
-    return vertices[1] < vertices_paper2[1];
+bool Map_object::check_border_up(float &border) {
+    return vertices[1] < border;
 }
 
-bool Map_object::check_border_down() {
-    return vertices[9] > vertices_paper2[9];
+bool Map_object::check_border_down(float &border) {
+    return vertices[9] > border;
 }
 
-bool Map_object::check_border() {
-    return (check_border_left() && check_border_down() && check_border_right() && check_border_up());
+bool Map_object::check_border(float &rborder, float &lborder, float &tborder, float &bborder) {
+    return (check_border_left(lborder) && check_border_down(bborder)
+            && check_border_right(rborder) && check_border_up(tborder));
 }
 
 void Map_object::change_w() {
-    double x1 = (vertices[16] + 1.0f) * (SCR_WIDTH / 2);
-    double x2 = (vertices[0] + 1.0f ) * (SCR_WIDTH / 2);
+    double x1 = (vertices[16] + 0.7f) * (SCR_WIDTH / 2);
+    double x2 = (vertices[0] + 0.7f ) * (SCR_WIDTH / 2);
     w = floor(x2 - x1);
 }
 
 void Map_object::change_l() {
-    double y1 = (1.0f - vertices[1]) * (SCR_HEIGHT / 2);
-    double y2 = (1.0f - vertices[9]) * (SCR_HEIGHT / 2);
+    double y1 = (0.7f - vertices[1]) * (SCR_HEIGHT / 2);
+    double y2 = (0.7f - vertices[9]) * (SCR_HEIGHT / 2);
     l = floor(y2 - y1);
 }
 
@@ -300,25 +277,16 @@ void Map_object::minus_height() {
 void Map_object::plus_height() {
     h += 10;
 }
-/*
- std::vector<float> vertices_button{
-            // координаты
 
-            0.2f, 0.2f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
-            0.2f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
-            0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
-            0.0f, 0.2f, 0.0f,   1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+Map_object::Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id,
+                       const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH) :
+        Button_entry(std::move(f1), std::move(f2), std::move(vertices)),
+        id(id), SCR_HEIGHT(SCR_HEIGHT), SCR_WIDTH(SCR_WIDTH), connect(0),type(type), z(0), h(0){
+    change_w();
+    change_l();
+    change_x();
+    change_y();
 
-    };
- */
-/*std::vector<float> vertices_paper2 = {
-        // координаты
-
-        0.7f,  0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // верхняя правая
-        0.7f, -0.7f, 0.0f,  1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // нижняя правая
-        -0.7f, -0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
-        -0.7f, 0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
-
-};*/
+}
 
 

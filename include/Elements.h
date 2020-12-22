@@ -2,8 +2,8 @@
 // Created by moroz on 07.12.2020.
 //
 
-#ifndef QUIZ_FIGURE_GUI_H
-#define QUIZ_FIGURE_GUI_H
+#ifndef QUIZ_FIGURE_ELEMENTS_H
+#define QUIZ_FIGURE_ELEMENTS_H
 
 
 #include <glad/glad.h>
@@ -19,9 +19,8 @@
 
 class Elem{
 public:
-    const size_t N = 32;
+
     std::vector<float> vertices;
-    static void texture_gen(unsigned int &texture, const std::string& filename);
 
     void draw(unsigned int &VAO, unsigned int &VBO, unsigned int &EBO);
 
@@ -36,7 +35,9 @@ public:
 
 
 protected:
+    const size_t N = 32;
     unsigned int texture_cur, texture_passive;
+    static void texture_gen(unsigned int &texture, const std::string& filename);
 private:
 
 };
@@ -69,8 +70,6 @@ public:
 protected:
     unsigned int texture_active;
     bool activated;
-
-
 };
 
 
@@ -91,14 +90,9 @@ public:
     size_t id;
     size_t connect;
     type_elem type;
-    int x, y, z;
-    int h, w, l;
-   // Map_object(Map_object<N>&& o) = default;
-    //Map_object(const Map_object<N>& o) = default;
+
     Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id,
-               const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH):
-            Button_entry(std::move(f1), std::move(f2), std::move(vertices)),
-            id(id), SCR_HEIGHT(SCR_HEIGHT), SCR_WIDTH(SCR_WIDTH), connect(0),type(type), z(0), h(0){change_w(); change_l();};
+               const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH);
 
     void up();
     void down();
@@ -106,12 +100,12 @@ public:
     void left();
     void up_z();
     void down_z();
-    void plus_width();
+    void plus_width(float &rborder, float &lborder, float &tborder, float &bborder);
     void minus_width();
     void plus_height();
     void minus_height();
     void minus_length();
-    void plus_length();
+    void plus_length(float &rborder, float &lborder, float &tborder, float &bborder);
     bool check_elem();
     void change_w();
     void change_l();
@@ -119,11 +113,11 @@ public:
     void change_y();
 
 
-    bool check_border_right();
-    bool check_border_left();
-    bool check_border_up();
-    bool check_border_down();
-    bool check_border();
+    bool check_border_right(float &border);
+    bool check_border_left(float &border);
+    bool check_border_up(float &border);
+    bool check_border_down(float &border);
+    bool check_border(float &rborder, float &lborder, float &tborder, float &bborder);
     Map_object& operator= (const Map_object &elem);
 
     bool is_activator();
@@ -137,9 +131,12 @@ public:
 
     const unsigned int SCR_HEIGHT;
     const unsigned int SCR_WIDTH;
-    /*Map_object(const Map_object<N> &elem) : Button_entry<N>(elem){}*/
+
+    int x, y, z;
+    int h, w, l;
+
 private:
 
 };
 
-#endif //QUIZ_FIGURE_GUI_H
+#endif //QUIZ_FIGURE_ELEMENTS_H

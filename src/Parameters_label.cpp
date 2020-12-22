@@ -1,14 +1,15 @@
 #include "../include/Parameters_label.h"
 
+#include <utility>
+
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 1024;
 
 
 
 
-Parameters_label::Parameters_label() {
+Parameters_label::Parameters_label() : obj(nullptr), shader(Shader("text.vs", "text.fs")){
 
-    obj = nullptr;
     // FreeType
     // --------
     FT_Library ft;
@@ -80,39 +81,6 @@ Parameters_label::Parameters_label() {
     // освобождаем использованные ресурсы
     FT_Done_Face(face);
     FT_Done_FreeType(ft);
-
-
-    //по obj_id ищем тайп и его передает
-    /*switch (obj_id) {
-        case 1:
-            //параметры в зависимости от типа
-            break;
-
-        case 2:
-            //параметры в зависимости от типа
-            break;
-        default:
-            break;
-
-
-    }*/
-}
-
-void Parameters_label::changed() {
-    //изменения с объектом, свойства меняются в зависимости от того, что из parameters было изменено
-}
-
-void Parameters_label::close() {
-    //деструктором заменить?
-    //убирает объект, дает scene сигнал
-}
-
-Parameters_label::~Parameters_label() {
-
-}
-
-void Parameters_label::init() {
-    //или в конструкторе все выполнить, или все case сюда запихнуть
 }
 
 
@@ -130,7 +98,6 @@ void Parameters_label::draw() {
 
     // компилируем и устанавливаем шейдер
     // ----------------------------
-    Shader shader("text.vs", "text.fs");
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), 0.0f, static_cast<float>(SCR_HEIGHT));
     shader.use();
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -146,6 +113,8 @@ void Parameters_label::draw() {
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    // хардкод кривоой
     float tx = 1100.0f;
     float coef = 0.4f;
     glm::vec3 black_color = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -220,6 +189,14 @@ void Parameters_label::RenderText(unsigned int &VAO, unsigned int &VBO, Shader& 
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Parameters_label::set_object(std::shared_ptr<Map_object> object) {
+    this->obj = std::move(object);
+}
+
+std::shared_ptr<Map_object> Parameters_label::get_object() {
+    return obj;
 }
 
 

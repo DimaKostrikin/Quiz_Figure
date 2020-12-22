@@ -20,11 +20,10 @@ include_directories(${SOURCE_DIR})
 set(SOURCE_FILES src/main.cpp
         src/Interface.cpp
         src/Map_editor_handler.cpp
-        src/GUI.cpp
+        src/Elements.cpp
         stb_image.cpp
         src/Menu.cpp
         src/Scene.cpp
-        src/Container_map.cpp
         src/Parameters_label.cpp
         src/Map_parser.cpp)
 
@@ -113,10 +112,9 @@ INCLUDE_DIRECTORIES(${GLFW_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS}
 
 add_library(map_editor_lib STATIC src/Interface.cpp include/Interface.h
         src/Map_editor_handler.cpp include/Map_editor_handler.h
-        src/GUI.cpp include/GUI.h
+        src/Elements.cpp include/Elements.h
         src/Menu.cpp include/Menu.h
         src/Scene.cpp include/Scene.h
-        src/Container_map.cpp include/Container_map.h
         src/Parameters_label.cpp include/Parameters_label.h
         src/Map_parser.cpp include/Map_parser.h)
 

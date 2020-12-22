@@ -1,7 +1,6 @@
 #include "Map_parser.h"
 
-//std::vector<Map_object> map
-std::string Map_parser::create_json(std::vector<Map_object> map) {
+std::string Map_parser::create_json(std::vector<Map_object> &map) {
     std::string file_name="filename.json";
     pt::ptree tree;
 
@@ -19,12 +18,12 @@ std::string Map_parser::create_json(std::vector<Map_object> map) {
             case TELEPORT_OUT:
             case CUBE:
             case JUMPER:{
-                size_t x = MAP_SIZE * i.x / i.SCR_WIDTH;
-                size_t y = MAP_SIZE * i.y / i.SCR_HEIGHT;
-                size_t z = MAP_SIZE * i.z / i.SCR_HEIGHT;
-                size_t l = MAP_SIZE * i.l / i.SCR_HEIGHT;
-                size_t w = MAP_SIZE * i.w / i.SCR_WIDTH;
-                size_t h = MAP_SIZE * i.h / i.SCR_HEIGHT;
+                size_t x = MAP_SIZE * i.x / width;
+                size_t y = MAP_SIZE * i.y / height;
+                size_t z = MAP_SIZE * i.z / height;
+                size_t l = MAP_SIZE * i.l / height;
+                size_t w = MAP_SIZE * i.w / width;
+                size_t h = MAP_SIZE * i.h / height;
                 child1.put("id", i.id);
                 child1.put("x", x);
                 child1.put("y", y);
@@ -41,9 +40,9 @@ std::string Map_parser::create_json(std::vector<Map_object> map) {
             case FINISH:
                 child1.put("act_id", i.connect);
             case START:{
-                size_t x = MAP_SIZE * i.x / i.SCR_WIDTH;
-                size_t y = MAP_SIZE * i.y / i.SCR_HEIGHT;
-                size_t z = MAP_SIZE * i.z / i.SCR_HEIGHT;
+                size_t x = MAP_SIZE * i.x / width;
+                size_t y = MAP_SIZE * i.y / height;
+                size_t z = MAP_SIZE * i.z / height;
                 child1.put("id", i.id);
                 child1.put("x", x);
                 child1.put("y", y);
@@ -63,8 +62,4 @@ std::string Map_parser::create_json(std::vector<Map_object> map) {
     pt::write_json("filename.json", tree);
     pt::write_json(std::cout, tree);
     return file_name;
-}
-
-void Map_parser::create_map() {
-
 }

@@ -8,31 +8,32 @@
 #include "../Objects.h"
 #include <iostream>
 #include "memory"
-#include "GUI.h"
-//#include "Parameters_label.h"
+#include "Elements.h"
 
 
 class Scene{
 public:
-    Scene();
+    Scene(std::vector<float>vertices);
+    Scene()=default;
     bool connection_mode;
-    // дичь, исправить
 
     size_t id;
-    ~Scene(){};
+    ~Scene()= default;
     void draw();
     std::vector<Map_object> container;
     size_t cur_elem;
     void delete_elem();
     Elem paper;
-    void draw_object(std::shared_ptr<Object> obj);
-    void change_object(std::shared_ptr<Object> obj);
-    void clear_object(std::shared_ptr<Object> obj);
-    void init_label();
-    //std::shared_ptr<Parameters_label> label;
+
+    void scene_action(double &x, double &y);
+
+    std::vector<float> vertices_paper;
 
 private:
-    void grid_maker();
+    void paper_maker();
+    void connect(size_t &i, size_t &j);
+    size_t n; //считать
+    size_t save; //хелпа
 
 };
 

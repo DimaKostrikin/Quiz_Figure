@@ -9,3 +9,6 @@ using ::testing::DoAll;
 using ::testing::Return;
 using ::testing::SetArgReferee;
 
+TEST(widget, ok) {
+    ASSERT_EQ(1, 1);
+}

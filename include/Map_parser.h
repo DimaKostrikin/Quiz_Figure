@@ -11,18 +11,17 @@
 #include <boost/property_tree/ptree.hpp>
 namespace pt = boost::property_tree;
 #include <boost/property_tree/json_parser.hpp>
-#include "GUI.h"
+#include "Elements.h"
 #include <valarray>
 
 class Map_parser{
 public:
-    Map_parser(){};
-    ~Map_parser(){};
-    // по ссылке передать?
-    std::string create_json(std::vector<Map_object> map); //std::vector<Map_object> map
-    void create_map(); //тут вектора
+    Map_parser(unsigned int h, unsigned int w):
+    height(h), width(w){};
+    ~Map_parser()= default;
+    std::string create_json(std::vector<Map_object> &map);
 private:
-
+    unsigned int height, width;
 };
 
 #endif //QUIZ_FIGURE_MAP_PARSER_H

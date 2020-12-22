@@ -14,7 +14,7 @@
 #include <utility>
 #include "Map_editor_handler.h"
 
-#include "GUI.h"
+#include "Elements.h"
 
 class Menu {
 public:
