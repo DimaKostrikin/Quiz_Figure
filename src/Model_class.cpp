@@ -6,10 +6,10 @@ Model::Model(char *path)
     loadModel(path);
 }
 
-void Model::Draw(Shader &shader, Camera camera, Events_manager ev_manager, bool is_light_source)
+void Model::Draw(Shader &shader, Camera camera, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source)
 {
     for(unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(shader, camera, ev_manager, is_light_source);
+        meshes[i].Draw(shader, camera, ev_manager, point_lights, is_light_source);
 }
 
 void Model::loadModel(std::string const &path)

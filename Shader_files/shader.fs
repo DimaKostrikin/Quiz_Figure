@@ -1,6 +1,6 @@
 #version 330 core
 
-#define NR_POINT_LIGHTS 4
+#define NR_POINT_LIGHTS 128
 
 in vec3 Normal;
 in vec3 FragPos;
@@ -50,6 +50,8 @@ struct SpotLight {
     vec3 specular;
 };
 
+uniform int pointLightsAmount;
+
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform DirLight dirLight;
 uniform SpotLight spotLight;
@@ -87,7 +89,7 @@ void main()
 
 
     // Этап №2: Точечные источники света
-    for(int i = 0; i < NR_POINT_LIGHTS; i++)
+    for(int i = 0; i < pointLightsAmount; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
 
     // Этап №3: Прожектор

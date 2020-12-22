@@ -7,6 +7,7 @@
 #include "Camera_class.h"
 #include "Shader.h"
 #include "Events_manager.h"
+#include "Point_light.h"
 
 struct Vertex {
 
@@ -37,7 +38,7 @@ public:
     std::vector<Texture> textures;
 
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
-    void Draw(Shader shader, Camera camera, Events_manager ev_manager, bool is_light_source = false);
+    void Draw(Shader shader, Camera camera, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source = false);
 private:
     // Данные для рендеринга
     unsigned int VAO, VBO, EBO;

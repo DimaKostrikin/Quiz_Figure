@@ -15,12 +15,15 @@
 
 #include "Model_class.h"
 
+#include "Point_light.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int loadTexture(const char* path);
-void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager, bool is_light_source = false);
+void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source = false);
+bool preparation(GLFWwindow* window);
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
@@ -35,13 +38,22 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-std::map <std::string, bool> control_tools = {{"Flashlight", 0},
-                             {"Flight", 0},
-                             {"Carcass", 0}};
+glm::vec3 pointLightPositions[] = {
+        glm::vec3( -3.0f,  1.0f,  5.0f),
+        glm::vec3( -5.0f, 1.0f, 5.0f),
+        glm::vec3(-5.0f,  1.0f, 3.0f),
+        glm::vec3( -5.0f,  1.0f, 1.0f)
+};
 
 Events_manager ev_manager;
 
+std::vector <Point_light> point_lights;
+
 int main() {
+    for (size_t i = 0; i < 4; ++i) {
+        point_lights.push_back(Point_light(pointLightPositions[i]));
+    }
+
     // glfw: инициализация и конфигурирование
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -50,31 +62,33 @@ int main() {
 
     //glfw: создание окна
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "My Window", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    //glad: загрузка всех указателей на OpenGL-функции
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
+//    if (window == NULL)
+//    {
+//        std::cout << "Failed to create GLFW window" << std::endl;
+//        glfwTerminate();
+//        return -1;
+//    }
+//    glfwMakeContextCurrent(window);
+//    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+//    //glad: загрузка всех указателей на OpenGL-функции
+//    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+//    {
+//        std::cout << "Failed to initialize GLAD" << std::endl;
+//        return -1;
+//    }
+
+    if (!preparation(window)) return -1;
 
     // говорим stb_image.h чтобы он перевернул загруженные текстуры относительно y-оси (до загрузки модели).
 //    stbi_set_flip_vertically_on_load(true);
 
     //включаем Z-буфер
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_DEPTH_TEST);
 
     // Компилирование наших шейдерных программ
     Shader ourShader("../Shader_files/shader.vs", "../Shader_files/shader.fs");
-    Shader lampShader("../Shader_files/lampShader.vs", "../Shader_files/lampShader.fs");
 
     // загрузка моделей
     Model ourModel("../resources/objects/test/test_cube.obj");
@@ -83,14 +97,7 @@ int main() {
 //    // отрисовка в режиме каркаса
 //    if (Control_tools["Carcass"]) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    glm::vec3 pointLightPositions[] = {
-            glm::vec3( -3.0f,  1.0f,  5.0f),
-            glm::vec3( -5.0f, 1.0f, 5.0f),
-            glm::vec3(-5.0f,  1.0f, 3.0f),
-            glm::vec3( -5.0f,  1.0f, 1.0f)
-    };
-
-    //захват курсорв
+    //захват курсора
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Цикл рендеринга
@@ -115,21 +122,19 @@ int main() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        render(ourShader, ourModel, ev_manager);
+        render(ourShader, ourModel, ev_manager, point_lights);
 
         // а теперь мы отрисовывает столько ламп, сколько у нас есть точечных источников света
 //        glBindVertexArray(lightVAO);
-        for (unsigned int i = 0; i < 4; i++)
-        {
+        for (unsigned int i = 0; i < 4; i++) {
             white_cube_model.set_xpos(pointLightPositions[i].x);
             white_cube_model.set_ypos(pointLightPositions[i].y);
             white_cube_model.set_zpos(pointLightPositions[i].z);
 
 //            render(lampShader, white_cube_model, ev_manager);
-            render(ourShader, white_cube_model, ev_manager, true);
+            render(ourShader, white_cube_model, ev_manager, point_lights,true);
 
         }
-
 
         // glfw: обмен содержимым front- и back- буферов. Отслеживание событий Ввода/Ввывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
         glfwSwapBuffers(window);
@@ -211,7 +216,7 @@ unsigned int loadTexture(char const* path)
     return textureID;
 }
 
-void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager, bool is_light_source)  {
+void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source)  {
 
     cur_shader_prog.use();
 
@@ -230,5 +235,28 @@ void render(Shader cur_shader_prog, Model cur_model, Events_manager ev_manager, 
 
     model = glm::scale(model, glm::vec3(cur_model.get_xscale(), cur_model.get_yscale(), cur_model.get_zscale()));
     cur_shader_prog.setMat4("model", model);
-    cur_model.Draw(cur_shader_prog, camera, ev_manager, is_light_source);
+    cur_model.Draw(cur_shader_prog, camera, ev_manager, point_lights, is_light_source);
+}
+
+bool preparation(GLFWwindow* window) {
+
+    //glfw: настройка окна
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return 0;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    //glad: загрузка всех указателей на OpenGL-функции
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return 0;
+    }
+
+    //включаем Z-буфер
+    glEnable(GL_DEPTH_TEST);
 }

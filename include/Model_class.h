@@ -10,10 +10,9 @@
 #include "stb_image.h"
 
 #include "Mesh_class.h"
-
 #include "Shader.h"
-
 #include "Events_manager.h"
+#include "Point_light.h"
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
 
@@ -21,7 +20,7 @@ class Model
 {
 public:
     Model(char *path);
-    void Draw(Shader &shader, Camera camera, Events_manager ev_manager, bool is_light_source = false);
+    void Draw(Shader &shader, Camera camera, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source = false);
     void set_xpos(float xpos);
     void set_ypos(float ypos);
     void set_zpos(float zpos);

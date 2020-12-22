@@ -2026,6 +2026,9 @@
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Model_class.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Point_light.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Shader.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
