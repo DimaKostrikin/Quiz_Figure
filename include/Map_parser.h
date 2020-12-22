@@ -12,6 +12,7 @@
 namespace pt = boost::property_tree;
 #include <boost/property_tree/json_parser.hpp>
 #include "GUI.h"
+#include <valarray>
 
 class Map_parser{
 public:

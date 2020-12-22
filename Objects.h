@@ -58,7 +58,10 @@ enum type_elem {
     TELEPORT_IN,
     TELEPORT_OUT,// Взаимодействие с параметрами игрока
     LASER,
-    JUMPER
+    JUMPER,
+
+
+    COUNT //кол-во знач в enum
 };
 
 class Object {  // Базовый класс объектов
