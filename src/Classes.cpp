@@ -79,21 +79,17 @@ void Object_dynamic::set_on_floor(bool on) {
     on_floor = on;
 }
 
+bool Object_dynamic::get_taken() {
+    return taken;
+}
+
+void Object_dynamic::set_taken(bool tk) {
+    taken = tk;
+}
+
 // Игрок
 
 Player::Player(Point &c, Size &sz) : Object_dynamic(PLAYER, c, sz, true) {}
-
-std::list<Object_dynamic>::iterator& Player::drop_object() {
-    set_status(false);
-    return object;
-}
-
-void Player::take_object(std::list<Object_dynamic>::iterator &object_taken) {
-    //delete object из списка
-    set_status(true);
-    object_taken->set_on_floor(false);
-    object = object_taken;
-}
 
 int Player::get_hp() const {
     return hp;
@@ -116,6 +112,17 @@ bool Player::get_status() {
 Handler::Handler(std::list<Object_dynamic> &d, std::list<Object_static> &s, std::list<Object_activated> &a,
                  std::list<Object_activator> &ar, Player &p, glm::vec3& cam) :
         player(p), dyn_elems(d), stat_elems(s), act_elems(a), actr_elems(ar), camera(cam), passed_time(0) {}
+
+void Handler::take_object(std::list<Object_dynamic>::iterator &object_taken) {
+    player.set_status(true);
+    object_taken->set_on_floor(false);
+    object_taken->set_taken(true);
+}
+
+void Handler::drop_object(std::list<Object_dynamic>::iterator &object_dropped) {
+    player.set_status(false);
+    object_dropped->set_taken(false);
+}
 
 void Handler::default_speed_change(std::list<Object_dynamic>::iterator &dyn) {
     glm::vec3 new_speed = {0,0,0};
@@ -564,33 +571,58 @@ void Handler::position_change(std::list<Object_dynamic>::iterator &dyn) {
     el++;
     for(el; el != dyn_elems.end(); el++) {
         if(collision_dyn(dyn, el)) {
+            if(dyn->get_taken()) {
+                drop_object(dyn);
+            }
             coll_speed_change_dyn(dyn, el);
         }
     }
     for(auto k = stat_elems.begin(); k != stat_elems.end(); k++) {
         col_type = collision(dyn, k);
         if(col_type) {
+            if(dyn->get_taken()) {
+                drop_object(dyn);
+            }
             coll_speed_change(dyn, col_type);
         }
     }
     for(auto k = act_elems.begin(); k != act_elems.end(); k++) {
         col_type = collision_act(dyn, k);
         if(col_type) {
+            if(dyn->get_taken()) {
+                drop_object(dyn);
+            }
             coll_speed_change(dyn, col_type);
         }
     }
     for(auto k = actr_elems.begin(); k != actr_elems.end(); k++) {
         col_type = collision_actr(dyn, k);
         if(col_type) {
+            if(dyn->get_taken()) {
+                drop_object(dyn);
+            }
             coll_speed_change(dyn, col_type);
         }
     }
     Point new_center = {0,0,0};
-    new_center.x = dyn->get_center().x + dyn->get_speed().x * passed_time;
-    new_center.y = dyn->get_center().y + dyn->get_speed().y * passed_time;
-    new_center.z = dyn->get_center().z + dyn->get_speed().z * passed_time;
+    if(dyn->get_taken()) {
+        new_center.x = player.get_center().x + camera.x * PLAYER_RANGE;
+        new_center.y = player.get_center().y + camera.y * PLAYER_RANGE;
+        new_center.z = player.get_center().z + camera.z * PLAYER_RANGE;
+    }
+    else {
+        new_center.x = dyn->get_center().x + dyn->get_speed().x * passed_time;
+        new_center.y = dyn->get_center().y + dyn->get_speed().y * passed_time;
+        new_center.z = dyn->get_center().z + dyn->get_speed().z * passed_time;
+    }
     dyn->set_center(new_center);
-    default_speed_change(dyn);
+    if(dyn->get_taken()) {
+        glm::vec3 new_speed = {0,0,0};
+        dyn->set_speed(new_speed);
+    }
+    else {
+        default_speed_change(dyn);
+    }
 }
 
 void Handler::player_speed_change() {
@@ -647,12 +679,17 @@ void Handler::player_update() {
     new_center.y = player.get_speed().y * passed_time + player.get_center().y;
     new_center.z = player.get_speed().z * passed_time + player.get_center().z;
     player.set_center(new_center);
+    /*if(glfwGetKey(window,GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && player.get_status()){
+        auto els = dyn_elems.begin();
+        for(els; els != dyn_elems.end(); els++){
+            drop_object(els);
+        }
+    }*/
     int coll_type = 0;
     auto el = dyn_elems.begin();
     for(el; el != dyn_elems.end(); el++) {
         /*if(glfwGetKey(window,GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && look_at(el) && !player.get_status()) {
-            player.take_object(el);
-           el.pop;
+            take_object(el);
         }*/
         coll_type = player_collision(el);
         if(coll_type) {
@@ -706,17 +743,6 @@ void Handler::player_update() {
             player.set_on_floor(true);
         }
     }
-    /*if(glfwGetKey(window,GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS && player.get_status()) {
-        std::list<Object_dynamic>::iterator new_elem = player.drop_object();
-        glm::vec3 speed ={0,0,0};
-        Point center = {0,0,0};
-        center.x = player.get_center().x + camera.x * RANGE_DROP;
-        center.y = player.get_center().y + camera.y * RANGE_DROP;
-        center.z = player.get_center().z + camera.z * RANGE_DROP;
-        new_elem->set_speed(speed);
-        new_elem->set_center(center);
-        dyn_elems.push_back(*new_elem);
-    }*/
 }
 
 void Handler::update(float ps_time, glm::vec3& cam) {

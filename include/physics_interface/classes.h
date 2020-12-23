@@ -13,12 +13,11 @@
 #include "../glm/glm/glm/gtx/vector_angle.hpp"
 
 #define Z_ACCELERATION 980
-#define WINDAGE 20 //Достаточно ли?
-#define FRICTION 100 //Достаточно ли?
+#define WINDAGE 20
+#define FRICTION 100
 #define LOSS_RATE 0.7
 #define PLAYER_SPEED 1000
 #define PLAYER_RANGE 2000
-#define RANGE_DROP 1000
 
 void print_speed(glm::vec3& speed);
 
@@ -91,6 +90,7 @@ public:
 class Object_dynamic : public Object_static {
     glm::vec3 speed = {0,0,0};
     bool on_floor = false;
+    bool taken = false;
 public:
     Object_dynamic(const int& elem_type, Point& c, Size& sz);
     Object_dynamic(const int& elem_type, Point& c, Size& sz, bool on_floor);
@@ -103,17 +103,16 @@ public:
     void set_speed(glm::vec3& sd);
     bool get_on_floor();
     void set_on_floor(bool on);
+    bool get_taken();
+    void set_taken(bool tk);
 };
 
 class Player : public Object_dynamic {
     int hp = 100;
     bool status = false;
-    std::list<Object_dynamic>::iterator object;
 public:
     Player(Point& c, Size& sz);
     ~Player() = default;
-    std::list<Object_dynamic>::iterator& drop_object();
-    void take_object(std::list<Object_dynamic>::iterator &object_taken);
     int get_hp() const;
     int& get_hp();
     void set_status(bool st);
@@ -133,6 +132,8 @@ public:
     void update(float ps_time, glm::vec3& cam);
 
 private:
+    void take_object(std::list<Object_dynamic>::iterator &object_taken);
+    void drop_object(std::list<Object_dynamic>::iterator &object_dropped);
     void default_speed_change(std::list<Object_dynamic>::iterator &dyn);
     void coll_speed_change_dyn(std::list<Object_dynamic>::iterator &dyn1, std::list<Object_dynamic>::iterator &dyn2);
     void coll_speed_player(std::list<Object_dynamic>::iterator &dyn, int coll_type);
