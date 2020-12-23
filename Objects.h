@@ -32,10 +32,7 @@ struct Size {
 enum type_elem {
     SAVE, // для тулбара, сорян
     DELETE,
-    PLUS,
-    MINUS,
 
-    // для тулбара, сорян
     PLAYER,  // Игрок
 
     WALL,// Статические объекты

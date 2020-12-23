@@ -25,13 +25,13 @@ public:
     void delete_elem();
     Elem paper;
 
-    void scene_action(double &x, double &y);
+    void scene_action(double &x, double &y, const unsigned int &h, const unsigned int &w);
 
     std::vector<float> vertices_paper;
+    void connect(size_t &i, size_t &j);
 
 private:
     void paper_maker();
-    void connect(size_t &i, size_t &j);
     size_t n; //считать
     size_t save; //хелпа
 

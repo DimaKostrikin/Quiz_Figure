@@ -85,41 +85,53 @@ void Button_entry::deactivate(){
     activated = false;
 }
 
-void Map_object::up(){
+unsigned int Button_entry::get_texture() {
+    return texture_cur;
+}
+
+unsigned int Button_entry::get_act_texture() {
+    return texture_active;
+}
+
+unsigned int Button_entry::get_pas_texture() {
+    return texture_passive;
+}
+
+void Map_object::up(const unsigned int &h){
     if (this->vertices[1] < 0.7f) {
         this->vertices[1] += 0.01f;
         this->vertices[9] += 0.01f;
         this->vertices[17] += 0.01f;
         this->vertices[25] += 0.01f;
-        change_y();
+        change_y(h);
     }
 }
-void Map_object::down(){
+void Map_object::down(const unsigned int &h){
     if (this->vertices[17] > -0.7f) {
         this->vertices[1] -= 0.01f;
         this->vertices[9] -= 0.01f;
         this->vertices[17] -= 0.01f;
         this->vertices[25] -= 0.01f;
-        change_y();
+        change_y(h);
     }
 }
 
-void Map_object::right(){
+void Map_object::right(const unsigned int &w){
     if (this->vertices[0] < 0.7f) {
         this->vertices[0] += 0.01f;
         this->vertices[8] += 0.01f;
         this->vertices[16] += 0.01f;
         this->vertices[24] += 0.01f;
-        change_x();
+        change_x(w);
     }
 }
-void Map_object::left(){
+void Map_object::left(const unsigned int &w){
     if (this->vertices[16] > -0.7f) {
         this->vertices[0] -= 0.01f;
         this->vertices[8] -= 0.01f;
         this->vertices[16] -= 0.01f;
         this->vertices[24] -= 0.01f;
-        change_x();
+        change_x(w);
     }
 }
 
@@ -128,6 +140,9 @@ Map_object &Map_object::operator=(const Map_object &elem) {
     texture_active = elem.texture_active;
     texture_cur = elem.texture_cur;
     activated = elem.activated;
+    id = elem.id;
+    vertices = elem.vertices;
+    type = elem.type;
     return *this;
 }
 
@@ -165,7 +180,7 @@ void Map_object::down_z() {
     }
 }
 
-void Map_object::plus_width(float &rborder, float &lborder, float &tborder, float &bborder) {
+void Map_object::plus_width(float &rborder, float &lborder, float &tborder, float &bborder, const unsigned int &w) {
     if (check_border(rborder, lborder, tborder, bborder)) {
         vertices[0] += 0.01f;
         vertices[8] += 0.01f;
@@ -178,21 +193,21 @@ void Map_object::plus_width(float &rborder, float &lborder, float &tborder, floa
         vertices[0] += 0.01f;
         vertices[8] += 0.01f;
     }
-    change_w();
+    change_w(w);
 
 }
 
-void Map_object::minus_width() {
+void Map_object::minus_width(const unsigned int &w) {
     if (check_elem()) {
         vertices[0] -= 0.01f;
         vertices[8] -= 0.01f;
         vertices[16] += 0.01f;
         vertices[24] += 0.01f;
-        change_w();
+        change_w(w);
     }
 }
 
-void Map_object::plus_length(float &rborder, float &lborder, float &tborder, float &bborder) {
+void Map_object::plus_length(float &rborder, float &lborder, float &tborder, float &bborder, const unsigned int &h) {
     if (check_border(rborder, lborder, tborder, bborder)) {
         vertices[1] += 0.01f;
         vertices[9] -= 0.01f;
@@ -205,17 +220,17 @@ void Map_object::plus_length(float &rborder, float &lborder, float &tborder, flo
         vertices[1] += 0.01f;
         vertices[25] += 0.01f;
     }
-    change_l();
+    change_l(h);
 
 }
 
-void Map_object::minus_length() {
+void Map_object::minus_length(const unsigned int &h) {
     if (check_elem()) {
         vertices[1] -= 0.01f;
         vertices[9] += 0.01f;
         vertices[17] += 0.01f;
         vertices[25] -= 0.01f;
-        change_l();
+        change_l(h);
     }
 }
 bool Map_object::check_elem() {
@@ -243,28 +258,28 @@ bool Map_object::check_border(float &rborder, float &lborder, float &tborder, fl
             && check_border_right(rborder) && check_border_up(tborder));
 }
 
-void Map_object::change_w() {
-    double x1 = (vertices[16] + 0.7f) * (SCR_WIDTH / 2);
-    double x2 = (vertices[0] + 0.7f ) * (SCR_WIDTH / 2);
-    w = floor(x2 - x1);
+void Map_object::change_w(const unsigned int &w) {
+    double x1 = (vertices[16] + 0.7f) * (w / 2);
+    double x2 = (vertices[0] + 0.7f ) * (w / 2);
+    this->w = floor(x2 - x1);
 }
 
-void Map_object::change_l() {
-    double y1 = (0.7f - vertices[1]) * (SCR_HEIGHT / 2);
-    double y2 = (0.7f - vertices[9]) * (SCR_HEIGHT / 2);
-    l = floor(y2 - y1);
+void Map_object::change_l(const unsigned int &h) {
+    double y1 = (0.7f - vertices[1]) * (h / 2);
+    double y2 = (0.7f - vertices[9]) * (h / 2);
+    this->l = floor(y2 - y1);
 }
 
-void Map_object::change_x() {
-    double x1 = (vertices[16] + 0.7f) * (SCR_WIDTH / 2);
-    double x2 = (vertices[0] + 0.7f) * (SCR_WIDTH / 2);
-    x = floor(x1+(x2 - x1)/2);
+void Map_object::change_x(const unsigned int &w) {
+    double x1 = (vertices[16] + 0.7f) * (w / 2);
+    double x2 = (vertices[0] + 0.7f) * (w / 2);
+    this->x = floor(x1+(x2 - x1)/2);
 }
 
-void Map_object::change_y() {
-    double y1 = (vertices[1]+0.7f) * (SCR_HEIGHT / 2);
-    double y2 = ( vertices[9]+0.7f) * (SCR_HEIGHT / 2);
-    y = floor(y1+(y2 - y1)/2);
+void Map_object::change_y(const unsigned int &h) {
+    double y1 = (vertices[1]+0.7f) * (h / 2);
+    double y2 = ( vertices[9]+0.7f) * (h / 2);
+    this->y = floor(y1+(y2 - y1)/2);
 }
 
 
@@ -281,11 +296,11 @@ void Map_object::plus_height() {
 Map_object::Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id,
                        const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH) :
         Button_entry(std::move(f1), std::move(f2), std::move(vertices)),
-        id(id), SCR_HEIGHT(SCR_HEIGHT), SCR_WIDTH(SCR_WIDTH), connect(0),type(type), z(0), h(0){
-    change_w();
-    change_l();
-    change_x();
-    change_y();
+        id(id), connect(0),type(type), z(0), h(0){
+    change_w(SCR_WIDTH);
+    change_l(SCR_HEIGHT);
+    change_x(SCR_WIDTH);
+    change_y(SCR_HEIGHT);
 
 }
 

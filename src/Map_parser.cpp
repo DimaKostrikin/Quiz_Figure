@@ -6,6 +6,28 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
 
     const size_t MAP_SIZE = 1000;
 
+    std::string text[20];
+    text[0] = "SAVE";
+    text[1] = "DELETE";
+    text[2] = "PLAYER";
+    text[3] = "WALL";
+    text[4] = "WALL_STATIC";
+    text[5] = "HINT";
+    text[6] = "PLATFORM";
+    text[7] = "STAIRS";
+    text[8] = "START";
+    text[9] = "FINISH";
+    text[10] = "CUBE";
+    text[11] = "BALL";
+    text[12] = "DOOR";
+    text[13] = "BUTTON";
+    text[14] = "STEP";
+    text[15] = "HOLE";
+    text[16] = "TELEPORT_IN";
+    text[17] = "TELEPORT_OUT";
+    text[18] = "LASER";
+    text[19] = "JUMPER";
+
     std::valarray<pt::ptree> children (COUNT);
     for (auto &i: map){
         pt::ptree child1, child2;
@@ -55,7 +77,7 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
     }
 
     for (int i = 0; i < children.size(); ++i){
-        if (!children[i].empty()) tree.add_child(std::to_string(i), children[i]);
+        if (!children[i].empty()) tree.add_child(text[i], children[i]);
     }
 
     // Сохранение дерева в JSON файл

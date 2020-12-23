@@ -177,7 +177,7 @@ void Map_editor_handler::processInput() {
             // нажатие на тулбар слева
             if (toolbar_buttons[cur_elem].is_active() && (!scene->connection_mode)) {
                 toolbar_left_action(x, y);
-            } else scene->scene_action(x, y); // нажатие на элемент сцены
+            } else scene->scene_action(x, y, SCR_HEIGHT, SCR_WIDTH); // нажатие на элемент сцены
         }
     }
 
@@ -188,7 +188,7 @@ void Map_editor_handler::processInput() {
             (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)) {
         if (!scene->container.empty()) {
             if (scene->container[scene->cur_elem].is_active())
-                scene->container[scene->cur_elem].up();
+                scene->container[scene->cur_elem].up(SCR_HEIGHT);
         }
     }
 
@@ -196,7 +196,7 @@ void Map_editor_handler::processInput() {
         if (!scene->container.empty()) {
             if (scene->container[scene->cur_elem].is_active() && (delta>0.1f)) {
                 delta = 0;
-                scene->container[scene->cur_elem].minus_width();
+                scene->container[scene->cur_elem].minus_width(SCR_WIDTH);
             }
         }
     }
@@ -208,7 +208,7 @@ void Map_editor_handler::processInput() {
             {
                 delta=0;
                 scene->container[scene->cur_elem].plus_width(scene->vertices_paper[0], scene->vertices_paper[16],
-                                                             scene->vertices_paper[1], scene->vertices_paper[9]);
+                                                             scene->vertices_paper[1], scene->vertices_paper[9], SCR_WIDTH);
 
             }
         }
@@ -218,7 +218,7 @@ void Map_editor_handler::processInput() {
         if (!scene->container.empty()) {
             if (scene->container[scene->cur_elem].is_active() && (delta>0.1f)) {
                 delta = 0;
-                scene->container[scene->cur_elem].minus_length();
+                scene->container[scene->cur_elem].minus_length(SCR_HEIGHT);
             }
         }
     }
@@ -230,7 +230,7 @@ void Map_editor_handler::processInput() {
             {
                 delta=0;
                 scene->container[scene->cur_elem].plus_length(scene->vertices_paper[0], scene->vertices_paper[16],
-                                                              scene->vertices_paper[1], scene->vertices_paper[9]);
+                                                              scene->vertices_paper[1], scene->vertices_paper[9], SCR_HEIGHT);
             }
         }
     }
@@ -281,21 +281,21 @@ void Map_editor_handler::processInput() {
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         if (!scene->container.empty()) {
             if (scene->container[scene->cur_elem].is_active())
-                scene->container[scene->cur_elem].down();
+                scene->container[scene->cur_elem].down(SCR_HEIGHT);
         }
     }
 
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         if (!scene->container.empty()) {
             if (scene->container[scene->cur_elem].is_active())
-                scene->container[scene->cur_elem].left();
+                scene->container[scene->cur_elem].left(SCR_WIDTH);
         }
     }
 
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         if (!scene->container.empty()) {
             if (scene->container[scene->cur_elem].is_active())
-                scene->container[scene->cur_elem].right();
+                scene->container[scene->cur_elem].right(SCR_WIDTH);
         }
     }
 

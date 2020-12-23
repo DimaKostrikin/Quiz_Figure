@@ -46,8 +46,6 @@ private:
 class Button_entry : public Elem{
 public:
 
-    void set_texture(unsigned int texture);
-
     Button_entry(std::string f1, std::string f2, std::vector<float> vertices):
             Elem(std::move(f1), std::move(vertices)),
             activated(false){
@@ -60,6 +58,10 @@ public:
 
     void deactivate();
 
+    unsigned int get_texture();
+    unsigned int get_act_texture();
+    unsigned int get_pas_texture();
+
     ~Button_entry()= default;
 
     bool is_active() const {
@@ -70,6 +72,7 @@ public:
 protected:
     unsigned int texture_active;
     bool activated;
+    void set_texture(unsigned int texture);
 };
 
 
@@ -91,26 +94,26 @@ public:
     size_t connect;
     type_elem type;
 
-    Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id,
-               const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH);
+    Map_object(std::string f1, std::string f2, std::vector<float> vertices,
+               type_elem type, size_t id, const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH);
 
-    void up();
-    void down();
-    void right();
-    void left();
+    void up(const unsigned int &h);
+    void down(const unsigned int &h);
+    void right(const unsigned int &w);
+    void left(const unsigned int &w);
     void up_z();
     void down_z();
-    void plus_width(float &rborder, float &lborder, float &tborder, float &bborder);
-    void minus_width();
+    void plus_width(float &rborder, float &lborder, float &tborder, float &bborder, const unsigned int &w);
+    void minus_width(const unsigned int &w);
     void plus_height();
     void minus_height();
-    void minus_length();
-    void plus_length(float &rborder, float &lborder, float &tborder, float &bborder);
+    void minus_length(const unsigned int &h);
+    void plus_length(float &rborder, float &lborder, float &tborder, float &bborder, const unsigned int &h);
     bool check_elem();
-    void change_w();
-    void change_l();
-    void change_x();
-    void change_y();
+    void change_w(const unsigned int &w);
+    void change_l(const unsigned int &h);
+    void change_x(const unsigned int &w);
+    void change_y(const unsigned int &h);
 
 
     bool check_border_right(float &border);
@@ -128,9 +131,6 @@ public:
     bool is_connected();
 
     ~Map_object()=default;
-
-    const unsigned int SCR_HEIGHT;
-    const unsigned int SCR_WIDTH;
 
     int x, y, z;
     int h, w, l;

@@ -43,9 +43,6 @@ void Scene::delete_elem() {
         if (container[cur_elem].is_active()) {
             size_t c = container[cur_elem].id;
             container[cur_elem] = container[container.size()-1];
-            container[cur_elem].id = container[container.size()-1].id;
-            container[cur_elem].vertices = container[container.size()-1].vertices;
-            container[cur_elem].type = container[container.size()-1].type;
             container.pop_back();
             for (auto &i: container){
                 if (i.connect == c) i.connect = 0;
@@ -54,7 +51,7 @@ void Scene::delete_elem() {
     }
 }
 
-void Scene::scene_action(double &x, double &y) {
+void Scene::scene_action(double &x, double &y, const unsigned int &h, const unsigned int &w) {
     size_t j = 0;
     bool is_not_activated = true;
 
@@ -62,10 +59,10 @@ void Scene::scene_action(double &x, double &y) {
     if (!connection_mode) {
         for (auto &i: container) {
             i.deactivate();
-            double x1 = (i.vertices[16] + 1.0f) * (i.SCR_WIDTH / 2);
-            double x2 = (i.vertices[0] + 1.0f) * (i.SCR_WIDTH / 2);
-            double y1 = (1.0f - i.vertices[1]) * (i.SCR_HEIGHT / 2);
-            double y2 = (1.0f - i.vertices[9]) * (i.SCR_HEIGHT / 2);
+            double x1 = (i.vertices[16] + 1.0f) * (w / 2);
+            double x2 = (i.vertices[0] + 1.0f) * (w / 2);
+            double y1 = (1.0f - i.vertices[1]) * (h / 2);
+            double y2 = (1.0f - i.vertices[9]) * (h / 2);
             if (is_not_activated) {
                 if ((x1 < x) && (x < x2)
                     && (y1 < y) && (y < y2)) {
@@ -81,10 +78,10 @@ void Scene::scene_action(double &x, double &y) {
     } else {
         j = 0;
         for (auto &i: container) {
-            double x1 = (i.vertices[16] + 1.0f) * (i.SCR_WIDTH / 2);
-            double x2 = (i.vertices[0] + 1.0f) * (i.SCR_WIDTH / 2);
-            double y1 = (1.0f - i.vertices[1]) * (i.SCR_HEIGHT / 2);
-            double y2 = (1.0f - i.vertices[9]) * (i.SCR_HEIGHT / 2);
+            double x1 = (i.vertices[16] + 1.0f) * (w / 2);
+            double x2 = (i.vertices[0] + 1.0f) * (w / 2);
+            double y1 = (1.0f - i.vertices[1]) * (h / 2);
+            double y2 = (1.0f - i.vertices[9]) * (h / 2);
             if (n < 2) {
                 if ((x1 < x) && (x < x2)
                     && (y1 < y) && (y < y2)) {
