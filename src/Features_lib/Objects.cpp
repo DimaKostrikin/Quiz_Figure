@@ -3,6 +3,12 @@
 
 // Тупа объект
 
+
+void print_speed(glm::vec3& speed) {
+    std::cout << "Speed: (" << speed.x << ", " << speed.y << ", " << speed.z << ")"<< std::endl;
+    return;
+}
+
 Object::Object(unsigned int elem_type, Point &c) : elem_type(elem_type), center(c) {}
 
 unsigned int Object::get_elem_type() {
@@ -43,32 +49,46 @@ void Object_static::set_size(Size &sz) {
 Object_dynamic::Object_dynamic(const int& elem_type, Point& c, Size &sz)
         : Object_static(elem_type, c, sz) {}
 
-Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, Speed &sd)
+Object_dynamic::Object_dynamic(const int& elem_type, Point& c, Size &sz, bool on)
+        : Object_static(elem_type, c, sz), on_floor(on) {}
+
+Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, glm::vec3 &sd)
         : Object_static(elem_type, c, sz), speed(sd) {}
 
-Speed Object_dynamic::get_speed() const {
+Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, glm::vec3 &sd, bool on)
+        : Object_static(elem_type, c, sz), speed(sd), on_floor(on) {}
+
+glm::vec3 Object_dynamic::get_speed() const {
     return speed;
 }
 
-Speed &Object_dynamic::get_speed() {
+glm::vec3 &Object_dynamic::get_speed() {
     return speed;
 }
 
-void Object_dynamic::set_speed(Speed &sd) {
+void Object_dynamic::set_speed(glm::vec3 &sd) {
     speed = sd;
 }
 
-void Object_dynamic::update_position() {
-    auto& c = get_center();
-    auto& s = get_speed();
-    c.x += s.dx * ELAPSED_TIME;
-    c.y += s.dy * ELAPSED_TIME;
-    c.z += s.dz * ELAPSED_TIME;
+bool Object_dynamic::get_on_floor() {
+    return on_floor;
+}
+
+void Object_dynamic::set_on_floor(bool on) {
+    on_floor = on;
+}
+
+bool Object_dynamic::get_taken() {
+    return taken;
+}
+
+void Object_dynamic::set_taken(bool tk) {
+    taken = tk;
 }
 
 // Игрок
 
-Player::Player(Point &c, Size &sz) : Object_dynamic(PLAYER, c, sz) {}
+Player::Player(Point &c, Size &sz) : Object_dynamic(PLAYER, c, sz, true) {}
 
 int Player::get_hp() const {
     return hp;
@@ -77,6 +97,18 @@ int Player::get_hp() const {
 int& Player::get_hp() {
     return hp;
 }
+
+void Player::set_status(bool st) {
+    status = st;
+}
+
+bool Player::get_status() {
+    return status;
+};
+
+
+// Игрок
+
 
 
 // Взаимодействие с характеристиками игрока
@@ -89,8 +121,7 @@ void Object_influence::update_player() {
         player.get_hp() -= 50;
     }
     if (get_elem_type() == JUMPER) {
-        player.get_speed().dz += 100;
-        player.get_speed().dy += 100;  // Временная затычка. Для jumper наверное еще надо сделать направление,
+        player.get_speed().z += 100;// Временная затычка. Для jumper наверное еще надо сделать направление,
         // куда он будет кидать игрока
     }
 }

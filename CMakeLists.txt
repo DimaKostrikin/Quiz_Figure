@@ -71,11 +71,19 @@ INCLUDE_DIRECTORIES(${GLFW_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS}
 ####################
 
 
-
+file(GLOB features_sources
+        "include/Features_lib/*.h"
+        "src/Features_lib/*.cpp")
 
 file(GLOB map_editor_sources
         "include/Map_editor_lib/*.h"
         "src/Map_editor_lib/*.cpp")
+
+file(GLOB physics_sources
+        "include/Physics_lib/*.h"
+        "src/Physics_lib/*.cpp")
+
+
         
 add_library(map_editor_lib STATIC ${map_editor_sources})
 
@@ -83,13 +91,20 @@ target_link_libraries(map_editor_lib glad ${GLFW_STATIC_LIBRARIES}
         ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLM_LIBRARIES}
         ${BOOST_LIBRARIES})
 
-file(GLOB features_sources
-        "include/Features_lib/*.h"
-        "src/Features_lib/*.cpp")
+
+
+
 
 add_library(features STATIC ${features_sources})
 
 target_link_libraries(features PUBLIC map_editor_lib)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC features)
+add_library(physics STATIC ${physics_sources})
+
+target_link_libraries(physics ${GLFW_STATIC_LIBRARIES}
+        ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLM_LIBRARIES}
+        ${BOOST_LIBRARIES})
+
+
+target_link_libraries(${PROJECT_NAME} PUBLIC features physics)
 

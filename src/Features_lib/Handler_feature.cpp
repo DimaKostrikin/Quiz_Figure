@@ -65,12 +65,12 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
 
         if (event_radius_obj < a_radius && diff_z_obj < a_height) {
             acceleration_coeff = (a_height - diff_z_obj) / a_height;
-            obj_d->get_speed().dz += acceleration_coeff * elapsed_time * 1000 ; // TODO коэффициент скорости отладить
+            obj_d->get_speed().z += acceleration_coeff * elapsed_time * 1000 ; // TODO коэффициент скорости отладить
         }
 
         if (event_radius_pl < a_radius && diff_z_pl < a_height) {
             acceleration_coeff = (a_height - diff_z_pl) / a_height;
-            player.get_speed().dz += acceleration_coeff * elapsed_time * 1000 ; // TODO коэффициент скорости отладить
+            player.get_speed().z += acceleration_coeff * elapsed_time * 1000 ; // TODO коэффициент скорости отладить
         }
     }
 
@@ -80,8 +80,8 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
 
         int changing_speed = 10000;
         if (event_radius_obj < a_radius && diff_z_obj < a_height) {
-            obj_d->get_speed().dz += changing_speed;
-            obj_d->get_speed().dx += changing_speed / 4;
+            obj_d->get_speed().z += changing_speed;
+            obj_d->get_speed().x += changing_speed / 4;
         }
     }
 
