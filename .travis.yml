@@ -1,0 +1,42 @@
+sudo:     required  # using VM
+
+language: cpp
+
+os:
+  - linux
+
+compiler:
+  - gcc
+
+env:
+  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
+  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
+  - TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
+  - TARGET_CPU=x86 BUILD_CONFIGURATION=Release
+
+
+install:
+  # set environment and set dependencies
+  - source ci/travis/install-$TRAVIS_OS_NAME.sh
+
+script:
+  # test project
+  - mkdir build
+  - cd build
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
+  - cmake --build .
+  - valgrind --tool=memcheck --leak-check=full --leak-resolution=med  --track-origins=yes test/work_tests_tests
+
+deploy:
+  # release tagged-commits on GitHub Releases:
+  provider:     releases
+  file:         <package-file>
+  skip_cleanup: true
+  overwrite:    true
+
+  api_key:
+    secure:   uYEUDYSFhCtdxuuIW9Lw6erMHROK/P2nUkaicgoNgi+CHwUtiuZrO7LwQSN5bNssQYdfkbDDWdjzgos6Df9qhn/im5lomCRkTIvn2vAiNx3AHEKwVhIajURRYQbYzjPEkZSpCKNqcemIjRqGEM1+8UQaYeK/JK9+bKJ7FvRwYnpHd+1r6AngIe0z7P5C/8hVIDq2wYvBcI8kxWNXkThNSsVOrbH9NGB/TQfQYGjek1y3gE8o/qCFT4d5pE8M2nxpIDj/Rq1/bQN+KVLqkYxucrExf8m0C28aEFKEAyi8YqP4zCpfV/ZTjZ8i4WIKUZ0wkrzg8ZEpafsTslaJgwAUXtvYYPGKrmsOENkQnobIh63j4jSx0K94XCEEnHrTkzrPHGGAAwjdGPjqs8t+K9Na+SMu5GXL+mjrxbXSzShppaEewWW/OhoiRD+/KEbvJazaIjhmjKpSKJZo9f3wC+x7yi/+eU7LdM0hPEBnubHcjNs15tiQkJLN6U6qDxIQF9sFb9L4Yhx6lHdbI3/VkJOMogC6d0KQuB9fD1JcDoba9Xl31hHnO6JyW67g2G5f8xdSS7b5kJVuLPt9lxct+wH/YX4Xm8X5sdzVYUP1ck+rjBxaDBHeVI/FpyS63Q3X31oSkyqsds71nnOyluE5Fv9lG6o5OUts8e+5EP+pTNPKI3s=
+
+  on:
+    tags:     true
+
