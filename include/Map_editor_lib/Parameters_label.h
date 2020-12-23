@@ -31,7 +31,7 @@ struct Character {
 
 class Parameters_label{
 public:
-    Parameters_label();
+    Parameters_label(const unsigned int SCR_HEIGHT, const unsigned int SCR_WIDTH);
     ~Parameters_label() = default;
 
     void set_object(std::shared_ptr<Map_object> object);
@@ -43,6 +43,8 @@ private:
     std::string label;
     std::shared_ptr<Map_object> obj;
     Shader shader;
+    const unsigned int SCR_HEIGHT;
+    const unsigned int SCR_WIDTH;
 
 };
 

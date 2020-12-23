@@ -48,7 +48,7 @@ Interface::Interface() {
 
     menu = std::make_shared<Menu>(window);
     levels = std::make_shared<Levels>(window);
-    map_editor = std::make_shared<Map_editor_handler>(window, 1280, 1280);
+    map_editor = std::make_shared<Map_editor_handler>(window, SCR_HEIGHT, SCR_WIDTH);
 }
 
 GLFWwindow *Interface::get_window() {

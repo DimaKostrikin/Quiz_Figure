@@ -20,7 +20,7 @@ public:
 
     int processInput();
     void draw();
-    // унести отдельно, сцену точн
+
     void toolbar_left_action(double &x, double &y);
 
 

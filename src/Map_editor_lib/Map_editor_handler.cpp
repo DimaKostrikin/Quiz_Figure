@@ -1,20 +1,16 @@
 #include <Map_editor_lib/Map_editor_handler.h>
-#include "Map_editor_lib/Map_editor_handler.h"
-
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 1280;
 
 Map_editor_handler::Map_editor_handler() : window(nullptr),
-    SCR_WIDTH(0), SCR_HEIGHT(0), shader(Shader("shader.vs", "shader.fs")),
+    SCR_WIDTH(0), SCR_HEIGHT(0), shader(Shader("include/Map_editor_lib/shader.vs", "include/Map_editor_lib/shader.fs")),
     last_frame(0), delta(0), cur_elem(0), parser(0,0){
     toolbar_init();
 }
 
 Map_editor_handler::Map_editor_handler(GLFWwindow *window, const unsigned int &SCR_HEIGHT,
     const unsigned int &SCR_WIDTH) : window(window), SCR_HEIGHT(SCR_HEIGHT),
-    SCR_WIDTH(SCR_WIDTH), shader(Shader("shader.vs", "shader.fs")),
+    SCR_WIDTH(SCR_WIDTH), shader(Shader("include/Map_editor_lib/shader.vs", "include/Map_editor_lib/shader.fs")),
     last_frame(0), delta(0), cur_elem(0),
-    label(std::make_shared<Parameters_label>()), parser(0,0){
+    label(std::make_shared<Parameters_label>(SCR_HEIGHT, SCR_WIDTH)), parser(0,0){
     std::vector<float>vertices = {
             // координаты
 
@@ -122,19 +118,6 @@ void Map_editor_handler::draw() {
 
 }
 
-double get_d(float f){
-    double d;
-    if (f <= 0){
-        f += 1.0f;
-    } else {
-        f -= 1.0f;
-    }
-    d = f * (SCR_WIDTH / 2);
-    return d;
-}
-
-
-// разбить на подфункции
 
 
 int Map_editor_handler::processInput() {
