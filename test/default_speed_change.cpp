@@ -35,8 +35,12 @@ TEST(default_speed_change, ok) {
 
     ASSERT_EQ(dyn_elems.begin()->get_speed(), predicted_speed_1);
     ASSERT_EQ(el->get_speed(), predicted_speed_2);
-    ASSERT_EQ(dyn_elems.begin()->get_center(), predicted_center_1);
-    ASSERT_EQ(el->get_center(), predicted_center_2);
+    ASSERT_EQ(dyn_elems.begin()->get_center().x, predicted_center_1.x);
+    ASSERT_EQ(dyn_elems.begin()->get_center().y, predicted_center_1.y);
+    ASSERT_EQ(dyn_elems.begin()->get_center().z, predicted_center_1.z);
+    ASSERT_EQ(el->get_center().x, predicted_center_2.x);
+    ASSERT_EQ(el->get_center().y, predicted_center_2.y);
+    ASSERT_EQ(el->get_center().z, predicted_center_2.z);
 
     handler.update(1, camera);
 
@@ -46,6 +50,10 @@ TEST(default_speed_change, ok) {
 
     ASSERT_EQ(dyn_elems.begin()->get_speed(), predicted_speed_1);
     ASSERT_EQ(el->get_speed(), predicted_speed_2);
-    ASSERT_EQ(dyn_elems.begin()->get_center(), predicted_center_1);
-    ASSERT_EQ(el->get_center(), predicted_center_2);
+    ASSERT_EQ(dyn_elems.begin()->get_center().x, predicted_center_1.x);
+    ASSERT_EQ(dyn_elems.begin()->get_center().y, predicted_center_1.y);
+    ASSERT_EQ(dyn_elems.begin()->get_center().z, predicted_center_1.z);
+    ASSERT_EQ(el->get_center().x, predicted_center_2.x);
+    ASSERT_EQ(el->get_center().y, predicted_center_2.y);
+    ASSERT_EQ(el->get_center().z, predicted_center_2.z);
 }

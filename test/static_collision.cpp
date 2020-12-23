@@ -31,7 +31,9 @@ TEST(static_collision, ok) {
     //(x=980 - 200*0.7 = 840)
 
     ASSERT_EQ(predicted_speed, dyn_elems.begin()->get_speed());
-    ASSERT_EQ(predicted_center, dyn_elems.begin()->get_center());
+    ASSERT_EQ(predicted_center.x, dyn_elems.begin()->get_center().x);
+    ASSERT_EQ(predicted_center.y, dyn_elems.begin()->get_center().y);
+    ASSERT_EQ(predicted_center.z, dyn_elems.begin()->get_center().z);
 
     handler.update(1,camera);
 
@@ -39,5 +41,7 @@ TEST(static_collision, ok) {
     predicted_center = {720,1380,420};
 
     ASSERT_EQ(predicted_speed, dyn_elems.begin()->get_speed());
-    ASSERT_EQ(predicted_center, dyn_elems.begin()->get_center());
+    ASSERT_EQ(predicted_center.x, dyn_elems.begin()->get_center().x);
+    ASSERT_EQ(predicted_center.y, dyn_elems.begin()->get_center().y);
+    ASSERT_EQ(predicted_center.z, dyn_elems.begin()->get_center().z);
 }
