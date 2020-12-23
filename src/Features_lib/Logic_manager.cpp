@@ -63,7 +63,14 @@ void Logic_manager::start_game(const std::string &level_path) {
     // Хендлер фич, обработка внутриигровых эвентов
     auto &hand_feat = Handler_feature::instance(obj_acted, obj_actor, obj_dyn, obj_infl, player);
 
+    float deltaTime = 0;
+    float lastFrame = 0;
+
     while (!glfwWindowShouldClose(window)) {  // TODO main cycle
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         //hand_feat.do_logic();
         // хендлер физики делает бррр
         // отрисовка объектов делает бррр
