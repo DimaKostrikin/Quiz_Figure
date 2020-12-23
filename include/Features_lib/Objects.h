@@ -53,6 +53,7 @@ enum type_elem {
 
     STEP,  // Активаторы
     HOLE,
+    FAN,
 
     TELEPORT,  // Взаимодействие с параметрами игрока
     LASER,

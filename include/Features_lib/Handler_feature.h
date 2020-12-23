@@ -10,7 +10,7 @@ public:
                                      std::list<Object_dynamic>& in_dyn,
                                      std::list<Object_influence>& in_infl,
                                      Player& pl);
-    void do_logic();
+    void do_logic(const double &elapsed_time);
 
 private:
     Handler_feature(std::list<Object_activated>& in_acted,
@@ -20,7 +20,7 @@ private:
                     Player& pl);
     Handler_feature(Handler_feature const&);
     Handler_feature& operator=(Handler_feature const&);
-    bool is_near(std::list<Object_dynamic>::iterator& obj_d, std::list<Object_activator>::iterator& obj_a);
+    bool is_near(std::list<Object_dynamic>::iterator& obj_d, std::list<Object_activator>::iterator& obj_a, const double &elapsed_time);
 
 private:
     std::list<Object_activated>& obj_acted;
