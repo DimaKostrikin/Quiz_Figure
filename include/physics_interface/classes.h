@@ -157,7 +157,7 @@ private:
     std::list<Object_activated>& act_elems;
     std::list<Object_activator>& actr_elems;
     float passed_time;
-    glm::vec3& camera;
+    glm::vec3& camera; //normalized по умолчанию
 };
 
 
