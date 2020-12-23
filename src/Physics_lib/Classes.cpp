@@ -178,9 +178,9 @@ bool Handler_physics::collision_dyn(std::list<Object_dynamic>::iterator &first, 
     if(sqrt(pow(first->get_center().x - second->get_center().x, 2) + pow(first->get_center().y - second->get_center().y, 2)
             + pow(first->get_center().z - second->get_center().z, 2)) < range) {
         glm::vec3 distance ={0,0,0};
-        distance.x = second->get_center().x - first->get_center().x;
-        distance.y = second->get_center().y - first->get_center().y;
-        distance.z = second->get_center().z - first->get_center().z;
+        distance.x = -second->get_center().x + first->get_center().x;
+        distance.y = -second->get_center().y + first->get_center().y;
+        distance.z = -second->get_center().z + first->get_center().z;
         glm::vec3 set_dist = glm::normalize(distance) * range;
         Point new_center = {0,0,0};
         new_center.x = second->get_center().x + set_dist.x;
