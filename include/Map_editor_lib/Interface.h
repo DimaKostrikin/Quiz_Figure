@@ -33,12 +33,14 @@ public:
     GLFWwindow* get_window();
     void draw_menu();
     void draw_leves();
+    void draw_redactor();
 
 private:
     GLFWwindow *window;
     int shaderProgram;
     std::shared_ptr<Menu> menu;
     std::shared_ptr<Levels> levels;
+    std::shared_ptr<Map_editor_handler> map_editor;
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);

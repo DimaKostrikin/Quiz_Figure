@@ -33,6 +33,9 @@ struct Size {
 };
 
 enum type_elem {
+    // для тулбара, сорян
+    DELETE,
+
     START,
     FINISH,
     CONNECT,
@@ -40,7 +43,8 @@ enum type_elem {
 
     PLAYER,  // Игрок
 
-    WALL,  // Статические объекты
+    WALL,
+    WALL_STATIC, // Статические объекты
     HINT,
     PLATFORM,
     STAIRS,
@@ -51,13 +55,17 @@ enum type_elem {
     DOOR,  // Активируемые объекты
     BUTTON,
 
-    STEP,  // Активаторы
+    STEP,
+    TELEPORT_IN,
+    TELEPORT_OUT,// Активаторы
     HOLE,
     FAN,
 
     TELEPORT,  // Взаимодействие с параметрами игрока
     LASER,
-    JUMPER
+    JUMPER,
+
+    COUNT
 };
 
 class Object {  // Базовый класс объектов

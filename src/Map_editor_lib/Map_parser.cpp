@@ -1,63 +1,60 @@
 #include "Map_editor_lib/Map_parser.h"
 
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 1024;
-
-//std::vector<Map_object> map
-std::string Map_parser::create_json(std::vector<Map_object> map) {
-    std::string file_name="../new.json";
+std::string Map_parser::create_json(std::vector<Map_object> &map) {
+    std::string file_name="filename.json";
     pt::ptree tree;
-    std::ofstream out;
-    out.open(file_name);
-    if (out.is_open())
 
+    const size_t MAP_SIZE = 1000;
 
+    std::string text[20];
+    text[0] = "SAVE";
+    text[1] = "DELETE";
+    text[2] = "PLAYER";
+    text[3] = "WALL";
+    text[4] = "WALL_STATIC";
+    text[5] = "HINT";
+    text[6] = "PLATFORM";
+    text[7] = "STAIRS";
+    text[8] = "START";
+    text[9] = "FINISH";
+    text[10] = "CUBE";
+    text[11] = "BALL";
+    text[12] = "DOOR";
+    text[13] = "BUTTON";
+    text[14] = "STEP";
+    text[15] = "HOLE";
+    text[16] = "TELEPORT_IN";
+    text[17] = "TELEPORT_OUT";
+    text[18] = "LASER";
+    text[19] = "JUMPER";
 
-
-
-    /*std::vector<float> vertices_button{
-            // координаты
-
-            0.2f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // верхняя правая
-            0.2f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   // нижняя правая
-            0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,   // нижняя левая
-            0.0f, 0.2f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f
-
-    };
-
-
-    Map_object a ("textures/start.jpg", "textures/start_act.jpg", vertices_button,
-                                           START, 1);
-    Map_object b ("textures/start.jpg", "textures/start_act.jpg", vertices_button,
-                  FINISH, 2);
-
-    Map_object c ("textures/start.jpg", "textures/start_act.jpg", vertices_button,
-                  CUBE, 3);
-
-
-    std::vector<Map_object> map;
-    map.push_back(a);
-    map.push_back(b);
-    map.push_back(c);*/
+    std::valarray<pt::ptree> children (COUNT);
     for (auto &i: map){
-        double x1 = (i.vertices[16] + 1.0f) * (SCR_WIDTH / 2);
-        double x2 = (i.vertices[0] + 1.0f) * (SCR_WIDTH / 2);
-        double y1 = (1.0f - i.vertices[1]) * (SCR_HEIGHT / 2);
-        double y2 = (1.0f - i.vertices[9]) * (SCR_HEIGHT / 2);
-        pt::ptree child1;
+        pt::ptree child1, child2;
         switch (i.type){
+            case WALL_STATIC:
+            case WALL:
             case HOLE:
-            case CUBE:{
-                double x = x1+(x2 - x1)/2;
-                double y = y1+(y2 - y1)/2;
+            case PLATFORM:
+            case TELEPORT_IN:
+            case TELEPORT_OUT:
+            case CUBE:
+            case JUMPER:{
+                size_t x = MAP_SIZE * i.x / width;
+                size_t y = MAP_SIZE * i.y / height;
+                size_t z = MAP_SIZE * i.z / height;
+                size_t l = MAP_SIZE * i.l / height;
+                size_t w = MAP_SIZE * i.w / width;
+                size_t h = MAP_SIZE * i.h / height;
                 child1.put("id", i.id);
                 child1.put("x", x);
                 child1.put("y", y);
-                child1.put("z", (150-0)/2);
-                child1.put("a", 150); //длина стороны
-                //if (i.connect!=0)
+                child1.put("z", z);
+                child1.put("l", l);
+                child1.put("w", w);
+                child1.put("h", h);
                 child1.put("act_id", i.connect);
-                tree.add_child(std::to_string(i.type), child1);
+                children[i.type].push_back(std::make_pair("", child1));
                 //
             }
                 break;
@@ -65,31 +62,26 @@ std::string Map_parser::create_json(std::vector<Map_object> map) {
             case FINISH:
                 child1.put("act_id", i.connect);
             case START:{
-                double x = x1+(x2 - x1)/2;
-                double y = y1+(y2 - y1)/2;
+                size_t x = MAP_SIZE * i.x / width;
+                size_t y = MAP_SIZE * i.y / height;
+                size_t z = MAP_SIZE * i.z / height;
+                child1.put("id", i.id);
                 child1.put("x", x);
                 child1.put("y", y);
-                child1.put("z", 0);
-                tree.add_child(std::to_string(i.type), child1);
+                child1.put("z", z);
+                children[i.type].push_back(std::make_pair("", child1));
                 //
             }
-
                 break;
         }
     }
 
-
+    for (int i = 0; i < children.size(); ++i){
+        if (!children[i].empty()) tree.add_child(text[i], children[i]);
+    }
 
     // Сохранение дерева в JSON файл
-    pt::write_json(out, tree);
+    pt::write_json("filename.json", tree);
     pt::write_json(std::cout, tree);
-    out.close();
-
-    // если так не стакается, то делаем вектор для каждого типа, пушим, проходимся
     return file_name;
-}
-
-void Map_parser::create_map() {
-    //парсинг объектов
-
 }

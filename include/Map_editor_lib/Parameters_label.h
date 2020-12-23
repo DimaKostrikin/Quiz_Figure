@@ -18,7 +18,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "GUI.h"
+#include "Elements.h"
 
 
 struct Character {
@@ -32,19 +32,17 @@ struct Character {
 class Parameters_label{
 public:
     Parameters_label();
-    std::map<GLchar, Character> characters;
-    ~Parameters_label();
-    void init();
-    void changed();
-    void close();
+    ~Parameters_label() = default;
+
+    void set_object(std::shared_ptr<Map_object> object);
+    std::shared_ptr<Map_object> get_object();
     void draw();
     void RenderText(unsigned int &VAO, unsigned int &VBO,Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
-    std::shared_ptr<Map_object> obj;
 private:
+    std::map<GLchar, Character> characters;
     std::string label;
-    int obj_id;
-    std::map <std::string, int> parameters_num;
-    std::map<std::string, bool> parameters_bool;
+    std::shared_ptr<Map_object> obj;
+    Shader shader;
 
 };
 

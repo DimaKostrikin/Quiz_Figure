@@ -14,7 +14,7 @@
 #include <utility>
 #include "Map_editor_handler.h"
 
-#include "GUI.h"
+#include "Elements.h"
 #include "Map_editor_lib/Key_press.h"
 
 

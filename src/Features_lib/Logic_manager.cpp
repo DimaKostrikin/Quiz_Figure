@@ -28,9 +28,11 @@ void Logic_manager::initialize() {
             }
             start_game(level_path);
         }
-        if (item == REDACTOR) { // Проверка нажатия на кнопку редактора
-            std::cout << "Redactor start" << std::endl;
-            //start_redactor();  // Повызывай методы, которые тебе нужны внутри этой функции
+        if (item == REDACTOR) {  // Проверка нажатия на кнопку редактора
+            interface.draw_redactor();
+            while (!glfwWindowShouldClose(window)) {
+                interface.cycle();
+            }
         }
         if (item == EXIT) {  // Проверка нажатия на кнопку выхода
             break;

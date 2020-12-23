@@ -26,8 +26,8 @@ std::vector<float> vertices2 = {
         -0.6f,  -0.2f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f,  1.0f  // верхняя левая вершина
 };
 
-Menu::Menu(GLFWwindow *window): button_start("textures/button8.jpg", "textures/button8_act.png", vertices),
-        button_map_editor("textures/button9.jpg", "textures/button9_act.jpg", vertices2), window(window),
+Menu::Menu(GLFWwindow *window): button_start("textures/start_text.png", "textures/start_text_act.png", vertices),
+        button_map_editor("textures/map_editor_text.png", "textures/map_editor_text_act.png", vertices2), window(window),
         map_editor_handler(nullptr){
     button_start.activate();
     draw = std::bind(&Menu::draw_menu, this);

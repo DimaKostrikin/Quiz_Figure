@@ -4,7 +4,6 @@ int Interface::cycle() {
     int choose = processInput();
 
     draw();
-
     // glfw: обмен содержимым front- и back- буферов. Отслеживание событий Ввода\Вывода (была ли нажата/отпущена кнопка, перемещен курсор мыши и т.п.)
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -49,6 +48,7 @@ Interface::Interface() {
 
     menu = std::make_shared<Menu>(window);
     levels = std::make_shared<Levels>(window);
+    map_editor = std::make_shared<Map_editor_handler>(window, 1280, 1280);
 }
 
 GLFWwindow *Interface::get_window() {
@@ -64,5 +64,11 @@ void Interface::draw_leves() {
     draw = levels->draw;
     processInput = levels->processInput;
 }
+
+void Interface::draw_redactor() {
+    draw = std::bind(&Map_editor_handler::draw, map_editor);
+    processInput = std::bind(&Map_editor_handler::processInput, map_editor);
+}
+
 
 

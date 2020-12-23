@@ -1,14 +1,15 @@
 #include "Map_editor_lib/Parameters_label.h"
 
+#include <utility>
+
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 1024;
 
 
 
 
-Parameters_label::Parameters_label() {
+Parameters_label::Parameters_label() : obj(nullptr), shader(Shader("text.vs", "text.fs")){
 
-    obj = nullptr;
     // FreeType
     // --------
     FT_Library ft;
@@ -80,39 +81,6 @@ Parameters_label::Parameters_label() {
     // освобождаем использованные ресурсы
     FT_Done_Face(face);
     FT_Done_FreeType(ft);
-
-
-    //по obj_id ищем тайп и его передает
-    /*switch (obj_id) {
-        case 1:
-            //параметры в зависимости от типа
-            break;
-
-        case 2:
-            //параметры в зависимости от типа
-            break;
-        default:
-            break;
-
-
-    }*/
-}
-
-void Parameters_label::changed() {
-    //изменения с объектом, свойства меняются в зависимости от того, что из parameters было изменено
-}
-
-void Parameters_label::close() {
-    //деструктором заменить?
-    //убирает объект, дает scene сигнал
-}
-
-Parameters_label::~Parameters_label() {
-
-}
-
-void Parameters_label::init() {
-    //или в конструкторе все выполнить, или все case сюда запихнуть
 }
 
 
@@ -130,12 +98,9 @@ void Parameters_label::draw() {
 
     // компилируем и устанавливаем шейдер
     // ----------------------------
-    Shader shader("text.vs", "text.fs");
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), 0.0f, static_cast<float>(SCR_HEIGHT));
     shader.use();
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
-
 
     // конфигурируем VAO/VBO для текстурных прямоугольников
     // -----------------------------------
@@ -149,21 +114,26 @@ void Parameters_label::draw() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    // хардкод кривоой
+    float tx = 1100.0f;
+    float coef = 0.4f;
+    glm::vec3 black_color = glm::vec3(0.0f, 0.0f, 0.0f);
+    const std::string help_text = "Help text: to change height, width, length, z - ";
+    RenderText(VAO, VBO, shader, help_text, 200, 960.0f, coef, black_color);
+    const std::string help_text2 = "push first letter of the word with - or +";
+    RenderText(VAO, VBO, shader, help_text2, 400, 930.0f, coef, black_color);
+    const std::string help_text3 = "Press c and select two elements to connect them";
+    RenderText(VAO, VBO, shader, help_text3, 200, 900.0f, coef, black_color);
     //внимание! здесь считаем от левого нижнего угла. убрать хардкод
     if (obj) {
-        double x1 = (obj->vertices[16] + 1.0f) * (SCR_WIDTH / 2);
-        double x2 = (obj->vertices[0] + 1.0f) * (SCR_WIDTH / 2);
-        double y1 = (1.0f - obj->vertices[1]) * (SCR_HEIGHT / 2);
-        double y2 = (1.0f - obj->vertices[9]) * (SCR_HEIGHT / 2);
-        // осторожно !1!!1
-        double x = x1+(x2 - x1)/2;
-        double y = y1+(y2 - y1)/2;
-
-        RenderText(VAO, VBO, shader, "ID: " + std::to_string(obj->id), 1150.0f, 1000.0f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
-        RenderText(VAO, VBO, shader, "X: " + std::to_string(x), 1150.0f, 970.0f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
-        RenderText(VAO, VBO, shader, "Y: " + std::to_string(y), 1150.0f, 940.f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
-        RenderText(VAO, VBO, shader, "Z: 0" , 1150.0f, 910.f, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
-        RenderText(VAO, VBO, shader, "Connect: " + std::to_string(obj->connect), 1150.0f, 880.f, 0.3f, glm::vec3(0.0f, 0.0f, 0.0f));
+        RenderText(VAO, VBO, shader, "ID: " + std::to_string(obj->id), tx, 1000.0f, coef, black_color);
+        RenderText(VAO, VBO, shader, "X: " + std::to_string(obj->x), tx, 970.0f, coef, black_color);
+        RenderText(VAO, VBO, shader, "Y: " + std::to_string(obj->y), tx, 940.f, coef, black_color);
+        RenderText(VAO, VBO, shader, "Z: " + std::to_string(obj->z) , tx, 910.f, coef, black_color);
+        RenderText(VAO, VBO, shader, "Width: " + std::to_string(obj->w), tx, 880.0f, coef, black_color);
+        RenderText(VAO, VBO, shader, "Length: " + std::to_string(obj->l), tx, 850.0f, coef, black_color);
+        RenderText(VAO, VBO, shader, "Height: " + std::to_string(obj->h), tx, 820.0f, coef, black_color);
+        RenderText(VAO, VBO, shader, "Connect: " + std::to_string(obj->connect), tx, 790.f, coef, black_color);
     }
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
@@ -219,6 +189,14 @@ void Parameters_label::RenderText(unsigned int &VAO, unsigned int &VBO, Shader& 
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Parameters_label::set_object(std::shared_ptr<Map_object> object) {
+    this->obj = std::move(object);
+}
+
+std::shared_ptr<Map_object> Parameters_label::get_object() {
+    return obj;
 }
 
 
