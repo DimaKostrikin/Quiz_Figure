@@ -20,7 +20,9 @@ private:
                     Player& pl);
     Handler_feature(Handler_feature const&);
     Handler_feature& operator=(Handler_feature const&);
-    bool is_near(std::list<Object_dynamic>::iterator& obj_d, std::list<Object_activator>::iterator& obj_a, const double &elapsed_time);
+    void action(std::list<Object_dynamic>::iterator& obj_d, std::list<Object_activator>::iterator& obj_a, const double &elapsed_time);
+
+    bool is_near();
 
 private:
     std::list<Object_activated>& obj_acted;

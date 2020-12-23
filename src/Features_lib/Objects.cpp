@@ -127,3 +127,7 @@ void Object_activator::activate_linked_object() {
 void Object_activator::deactivate_linked_object() {
     linked_object.deactivate();
 }
+
+Object_activated &Object_activator::get_linked_object() {
+    return linked_object;
+}

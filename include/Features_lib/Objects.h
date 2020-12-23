@@ -131,6 +131,7 @@ public:
     ~Object_activator() = default;
     void activate_linked_object();
     void deactivate_linked_object();
+    Object_activated& get_linked_object();
 };
 
 #endif //OBJECTS_H
