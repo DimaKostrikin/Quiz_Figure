@@ -1,6 +1,5 @@
 #include "physics_interface/classes.h"
 
-//#define passed_time 1 // Временная затычка вместо прошедшего времени
 #define SPEED_ERROR 100
 #define X_COLLISION 1
 #define Y_COLLISION 2
@@ -164,7 +163,7 @@ void Handler::coll_speed_change_dyn(std::list<Object_dynamic>::iterator &dyn1, s
     glm::vec2 norm_xy1 = glm::normalize(xy1);
     glm::vec2 xy2 = {dyn2->get_speed().x, dyn2->get_speed().y};
     glm::vec2 norm_xy2 = glm::normalize(xy2);
-    glm::vec2 xy_dist_1 = {dyn2->get_center().x - dyn1->get_center().x, dyn2->get_center().y - dyn1->get_center().x};
+    glm::vec2 xy_dist_1 = {dyn2->get_center().x - dyn1->get_center().x, dyn2->get_center().y - dyn1->get_center().y};
     glm::vec2 norm_xy_dist_1 = glm::normalize(xy_dist_1);
     glm::vec2 xy_dist_2 = -xy_dist_1;
     glm::vec2 norm_xy_dist_2 = glm::normalize(xy_dist_2);
@@ -267,15 +266,26 @@ void Handler::coll_speed_player(std::list<Object_dynamic>::iterator &dyn, int co
 }
 
 bool Handler::collision_dyn(std::list<Object_dynamic>::iterator &first, std::list<Object_dynamic>::iterator &second) {
-    unsigned int range = first->get_size().height + second->get_size().height;
+    float range = first->get_size().height / 2 + second->get_size().height / 2;
     if(sqrt(pow(first->get_center().x - second->get_center().x, 2) + pow(first->get_center().y - second->get_center().y, 2)
             + pow(first->get_center().z - second->get_center().z, 2)) < range) {
+        glm::vec3 distance ={0,0,0};
+        distance.x = second->get_center().x - first->get_center().x;
+        distance.y = second->get_center().y - first->get_center().y;
+        distance.z = second->get_center().z - first->get_center().z;
+        glm::vec3 set_dist = glm::normalize(distance) * range;
+        Point new_center = {0,0,0};
+        new_center.x = second->get_center().x + set_dist.x;
+        new_center.y = second->get_center().y + set_dist.y;
+        new_center.z = second->get_center().z + set_dist.z;
+        first->set_center(new_center);
         return true;
     }
     return false;
 }
 
 int Handler::player_collision(std::list<Object_dynamic>::iterator &dyn) {
+    Point new_center = dyn->get_center();
     auto cmp = [](int x, int y, int a, int b) {return (x - y / 2 < a + b / 2) && (x + y / 2 > a - b / 2);};
     if(cmp(dyn->get_center().x, dyn->get_size().length, player.get_center().x, player.get_size().length) &&
        cmp(dyn->get_center().y, dyn->get_size().width, player.get_center().y, player.get_size().width) &&
@@ -283,16 +293,40 @@ int Handler::player_collision(std::list<Object_dynamic>::iterator &dyn) {
         unsigned int range = abs(dyn->get_center().x - player.get_center().x);
         unsigned int characteristics = player.get_size().length / 2;//Длина всегда по x
         if (range > characteristics) {
+            if(player.get_center().x - dyn->get_center().x > 0) {
+                new_center.x = player.get_center().x - player.get_size().length / 2 - dyn->get_size().length / 2;
+                dyn->set_center(new_center);
+            }
+            else {
+                new_center.x = player.get_center().x + player.get_size().length / 2 + dyn->get_size().length / 2;
+                dyn->set_center(new_center);
+            }
             return X_COLLISION;
         }
         range = abs(dyn->get_center().y - player.get_center().y);
         characteristics = player.get_size().width / 2;//Ширина всегда по y
         if (range > characteristics) {
+            if(player.get_center().y - dyn->get_center().y > 0) {
+                new_center.y = player.get_center().y - player.get_size().width / 2 - dyn->get_size().width / 2;
+                dyn->set_center(new_center);
+            }
+            else {
+                new_center.y = player.get_center().y + player.get_size().width / 2 + dyn->get_size().width / 2;
+                dyn->set_center(new_center);
+            }
             return Y_COLLISION;
         }
         range = abs(dyn->get_center().z - player.get_center().z);
         characteristics = player.get_size().height / 2;//Высота всегда по z
         if (range > characteristics) {
+            if(player.get_center().z - dyn->get_center().z > 0) {
+                new_center.z = player.get_center().z - player.get_size().height / 2 - dyn->get_size().height / 2;
+                dyn->set_center(new_center);
+            }
+            else {
+                new_center.z = player.get_center().z + player.get_size().height / 2 + dyn->get_size().height / 2;
+                dyn->set_center(new_center);
+            }
             return Z_COLLISION;
         }
     }
@@ -300,6 +334,7 @@ int Handler::player_collision(std::list<Object_dynamic>::iterator &dyn) {
 }
 
 int Handler::collision(std::list<Object_dynamic>::iterator &first, std::list<Object_static>::iterator &second) {
+    Point new_center = first->get_center();
     auto cmp = [](int x, int y, int a, int b) {return (x - y / 2 < a + b / 2) && (x + y / 2 > a - b / 2);};
     if(cmp(first->get_center().x, first->get_size().length, second->get_center().x, second->get_size().length) &&
        cmp(first->get_center().y, first->get_size().width, second->get_center().y, second->get_size().width) &&
@@ -307,16 +342,40 @@ int Handler::collision(std::list<Object_dynamic>::iterator &first, std::list<Obj
         unsigned int range = abs(first->get_center().x - second->get_center().x);
         unsigned int characteristics = second->get_size().length / 2;//Длина всегда по x
         if (range > characteristics) {
+            if(second->get_center().x - first->get_center().x > 0) {
+                new_center.x = second->get_center().x - second->get_size().length / 2 - first->get_size().length / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.x = second->get_center().x + second->get_size().length / 2 + first->get_size().length / 2;
+                first->set_center(new_center);
+            }
             return X_COLLISION;
         }
         range = abs(first->get_center().y - second->get_center().y);
         characteristics = second->get_size().width / 2;//Ширина всегда по y
         if (range > characteristics) {
+            if(second->get_center().y - first->get_center().y > 0) {
+                new_center.y = second->get_center().y - second->get_size().width / 2 - first->get_size().width / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.y = second->get_center().y + second->get_size().width / 2 + first->get_size().width / 2;
+                first->set_center(new_center);
+            }
             return Y_COLLISION;
         }
         range = abs(first->get_center().z - second->get_center().z);
         characteristics = second->get_size().height / 2;//Высота всегда по z
         if (range > characteristics) {
+            if(second->get_center().z - first->get_center().z > 0) {
+                new_center.z = second->get_center().z - second->get_size().height / 2 - first->get_size().height / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.z = second->get_center().z + second->get_size().height / 2 + first->get_size().height / 2;
+                first->set_center(new_center);
+            }
             return Z_COLLISION;
         }
     }
@@ -351,6 +410,7 @@ int Handler::collision_act(std::list<Object_dynamic>::iterator &first, std::list
     /*if(second->get_elem_type() == DOOR && second.status == active) { //Не знаю реализацию, надо пофиксить
         return false;
     }*/
+    Point new_center = first->get_center();
     auto cmp = [](int x, int y, int a, int b) {return (x - y / 2 < a + b / 2) && (x + y / 2 > a - b / 2);};
     if(cmp(first->get_center().x, first->get_size().length, second->get_center().x, second->get_size().length) &&
        cmp(first->get_center().y, first->get_size().width, second->get_center().y, second->get_size().width) &&
@@ -358,16 +418,40 @@ int Handler::collision_act(std::list<Object_dynamic>::iterator &first, std::list
         unsigned int range = abs(first->get_center().x - second->get_center().x);
         unsigned int characteristics = second->get_size().length / 2;//Длина всегда по x
         if (range > characteristics) {
+            if(second->get_center().x - first->get_center().x > 0) {
+                new_center.x = second->get_center().x - second->get_size().length / 2 - first->get_size().length / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.x = second->get_center().x + second->get_size().length / 2 + first->get_size().length / 2;
+                first->set_center(new_center);
+            }
             return X_COLLISION;
         }
         range = abs(first->get_center().y - second->get_center().y);
         characteristics = second->get_size().width / 2;//Ширина всегда по y
         if (range > characteristics) {
+            if(second->get_center().y - first->get_center().y > 0) {
+                new_center.y = second->get_center().y - second->get_size().width / 2 - first->get_size().width / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.y = second->get_center().y + second->get_size().width / 2 + first->get_size().width / 2;
+                first->set_center(new_center);
+            }
             return Y_COLLISION;
         }
         range = abs(first->get_center().z - second->get_center().z);
         characteristics = second->get_size().height / 2;//Высота всегда по z
         if (range > characteristics) {
+            if(second->get_center().z - first->get_center().z > 0) {
+                new_center.z = second->get_center().z - second->get_size().height / 2 - first->get_size().height / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.z = second->get_center().z + second->get_size().height / 2 + first->get_size().height / 2;
+                first->set_center(new_center);
+            }
             return Z_COLLISION;
         }
     }
@@ -402,6 +486,7 @@ int Handler::collision_act_player(std::list<Object_activated>::iterator &second)
 }
 
 int Handler::collision_actr(std::list<Object_dynamic>::iterator &first, std::list<Object_activator>::iterator &second) {
+    Point new_center = first->get_center();
     auto cmp = [](int x, int y, int a, int b) {return (x - y / 2 < a + b / 2) && (x + y / 2 > a - b / 2);};
     if(cmp(first->get_center().x, first->get_size().length, second->get_center().x, second->get_size().length) &&
        cmp(first->get_center().y, first->get_size().width, second->get_center().y, second->get_size().width) &&
@@ -409,16 +494,40 @@ int Handler::collision_actr(std::list<Object_dynamic>::iterator &first, std::lis
         unsigned int range = abs(first->get_center().x - second->get_center().x);
         unsigned int characteristics = second->get_size().length / 2;//Длина всегда по x
         if (range > characteristics) {
+            if(second->get_center().x - first->get_center().x > 0) {
+                new_center.x = second->get_center().x - second->get_size().length / 2 - first->get_size().length / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.x = second->get_center().x + second->get_size().length / 2 + first->get_size().length / 2;
+                first->set_center(new_center);
+            }
             return X_COLLISION;
         }
         range = abs(first->get_center().y - second->get_center().y);
         characteristics = second->get_size().width / 2;//Ширина всегда по y
         if (range > characteristics) {
+            if(second->get_center().y - first->get_center().y > 0) {
+                new_center.y = second->get_center().y - second->get_size().width / 2 - first->get_size().width / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.y = second->get_center().y + second->get_size().width / 2 + first->get_size().width / 2;
+                first->set_center(new_center);
+            }
             return Y_COLLISION;
         }
         range = abs(first->get_center().z - second->get_center().z);
         characteristics = second->get_size().height / 2;//Высота всегда по z
         if (range > characteristics) {
+            if(second->get_center().z - first->get_center().z > 0) {
+                new_center.z = second->get_center().z - second->get_size().height / 2 - first->get_size().height / 2;
+                first->set_center(new_center);
+            }
+            else {
+                new_center.z = second->get_center().z + second->get_size().height / 2 + first->get_size().height / 2;
+                first->set_center(new_center);
+            }
             return Z_COLLISION;
         }
     }
