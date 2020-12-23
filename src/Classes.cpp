@@ -577,6 +577,7 @@ void Handler::position_change(std::list<Object_dynamic>::iterator &dyn) {
             coll_speed_change_dyn(dyn, el);
         }
     }
+    //dyn->set_on_floor(false);
     for(auto k = stat_elems.begin(); k != stat_elems.end(); k++) {
         col_type = collision(dyn, k);
         if(col_type) {
