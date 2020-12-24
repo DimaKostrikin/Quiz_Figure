@@ -7,10 +7,10 @@
 #include <cmath>
 #include <algorithm>
 
-#include "../glm/glm/glm/glm.hpp"
-#include "../glm/glm/glm/gtc/matrix_transform.hpp"
-#include "../glm/glm/glm/gtc/type_ptr.hpp"
-#include "../glm/glm/glm/gtx/vector_angle.hpp"
+#include "../glm/glm/glm.hpp"
+#include "../glm/glm/gtc/matrix_transform.hpp"
+#include "../glm/glm/gtc/type_ptr.hpp"
+#include "../glm/glm/gtx/vector_angle.hpp"
 
 #define Z_ACCELERATION 980
 #define WINDAGE 20
