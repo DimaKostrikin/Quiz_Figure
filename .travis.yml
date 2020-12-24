@@ -7,12 +7,10 @@ language: c++       # на практике разницы между специ
 os:
     # будем прогонять CI и на Linux, и на Mac OS X...
     - linux
-    - osx
 
 compiler:
     # ... и с помощью GCC, и Clang
     - gcc
-    - clang
 
 env:
     # список переменных окружения, влияющих на матрицу сборки:
@@ -39,6 +37,7 @@ install:
 
 script:
     # скрипт сборки и тестирования проекта:
+    - git clone https://github.com/g-truc/glm.git
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
