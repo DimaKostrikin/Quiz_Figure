@@ -51,14 +51,12 @@ void Logic_manager::start_game(const std::string &level_path) {
 
 
     // Стандартные значения характеристик для игрока
-    Point default_player_center = {1000, 1000, 5000};
-    Size default_player_size = {10, 10, 10};
+    glm::vec3 default_player_center = {1, 1, 30};
+    glm::vec3 default_player_size = {0.5, 0.5, 0.5};
+
 
     Player player(default_player_center, default_player_size);  // Инициализация игрока
 
-
-    Point point = {0,0,0};
-    Size size = {0,0,0};
 
     Parser p(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);  // Создание парсера для загрузки уровня
     p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
@@ -110,9 +108,12 @@ void Logic_manager::start_game(const std::string &level_path) {
             it->update_model();
         }
 
-        render_mng.get_camera().Position.x = (float)player.get_center().x / 1000;
-        render_mng.get_camera().Position.y = (float)player.get_center().z / 1000 + 0.1f;
-        render_mng.get_camera().Position.z = (float)player.get_center().y / 1000;
+        render_mng.get_camera().Position.x = (float)player.get_center().x;
+
+        render_mng.get_camera().Position.z = (float)player.get_center().y;
+
+        render_mng.get_camera().Position.y = (float)player.get_center().z;
+
 
         hand_phys.camera = render_mng.get_camera().Front;
     }

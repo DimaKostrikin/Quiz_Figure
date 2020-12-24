@@ -9,21 +9,21 @@ void print_speed(glm::vec3& speed) {
     return;
 }
 
-Object::Object(unsigned int elem_type, Point &c) : elem_type(elem_type), center(c) {}
+Object::Object(unsigned int elem_type, glm::vec3 &c) : elem_type(elem_type), center(c) {}
 
 unsigned int Object::get_elem_type() {
     return elem_type;
 }
 
-Point Object::get_center() const {
+glm::vec3 Object::get_center() const {
     return center;
 }
 
-Point &Object::get_center() {
+glm::vec3 &Object::get_center() {
     return center;
 }
 
-void Object::set_center(Point &c) {
+void Object::set_center(glm::vec3 &c) {
     center = c;
 }
 
@@ -37,27 +37,27 @@ unsigned int &Object::get_id() {
 
 // Статические объекты
 
-Object_static::Object_static(const int& elem_type, Point &c, Size &sz)
+Object_static::Object_static(const int& elem_type, glm::vec3 &c, glm::vec3 &sz)
         : Object(elem_type, c), size(sz) {
-    our_model.set_xpos(float(c.x) / 1000);
-    our_model.set_ypos(float(c.z) / 1000);
-    our_model.set_zpos(float(c.y) / 1000);
+    our_model.set_xpos(float(c.x));
+    our_model.set_ypos(float(c.z));
+    our_model.set_zpos(float(c.y));
 
-    our_model.set_xscale(float(size.length) / 1000);
-    our_model.set_yscale(float(size.height) / 1000);
-    our_model.set_zscale(float(size.width) / 1000);
+    our_model.set_xscale(float(size.x) * 1.55);
+    our_model.set_yscale(float(size.z) * 1.55);
+    our_model.set_zscale(float(size.y) * 1.55);
 
 }
 
-Size Object_static::get_size() const {
+glm::vec3 Object_static::get_size() const {
     return size;
 }
 
-Size& Object_static::get_size() {
+glm::vec3& Object_static::get_size() {
     return size;
 }
 
-void Object_static::set_size(Size &sz) {
+void Object_static::set_size(glm::vec3 &sz) {
     size = sz;
 }
 
@@ -66,25 +66,25 @@ Model &Object_static::get_model() {
 }
 
 void Object_static::update_model() {
-    our_model.set_xpos(float(center.x) / 1000);
-    our_model.set_ypos(float(center.z) / 1000);
-    our_model.set_zpos(float(center.y) / 1000);
+    our_model.set_xpos(float(center.x));
+    our_model.set_ypos(float(center.z));
+    our_model.set_zpos(float(center.y));
 }
 
 
 
 // Динамические объекты
 
-Object_dynamic::Object_dynamic(const int& elem_type, Point& c, Size &sz)
+Object_dynamic::Object_dynamic(const int& elem_type, glm::vec3& c, glm::vec3 &sz)
         : Object_static(elem_type, c, sz) {}
 
-Object_dynamic::Object_dynamic(const int& elem_type, Point& c, Size &sz, bool on)
+Object_dynamic::Object_dynamic(const int& elem_type, glm::vec3& c, glm::vec3 &sz, bool on)
         : Object_static(elem_type, c, sz), on_floor(on) {}
 
-Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, glm::vec3 &sd)
+Object_dynamic::Object_dynamic(const int &elem_type, glm::vec3 &c, glm::vec3 &sz, glm::vec3 &sd)
         : Object_static(elem_type, c, sz), speed(sd) {}
 
-Object_dynamic::Object_dynamic(const int &elem_type, Point &c, Size &sz, glm::vec3 &sd, bool on)
+Object_dynamic::Object_dynamic(const int &elem_type, glm::vec3 &c, glm::vec3 &sz, glm::vec3 &sd, bool on)
         : Object_static(elem_type, c, sz), speed(sd), on_floor(on) {}
 
 glm::vec3 Object_dynamic::get_speed() const {
@@ -118,7 +118,7 @@ void Object_dynamic::set_taken(bool tk) {
 
 // Игрок
 
-Player::Player(Point &c, Size &sz) : Object_dynamic(PLAYER, c, sz, true) {}
+Player::Player(glm::vec3 &c, glm::vec3 &sz) : Object_dynamic(PLAYER, c, sz, true) {}
 
 int Player::get_hp() const {
     return hp;
@@ -142,7 +142,7 @@ bool Player::get_status() {
 
 // Взаимодействие с характеристиками игрока
 
-Object_influence::Object_influence(const int &elem_type, Point &c, Size &sz, Player& pl)
+Object_influence::Object_influence(const int &elem_type, glm::vec3 &c, glm::vec3 &sz, Player& pl)
         : Object_static(elem_type, c, sz), player(pl) {}
 
 void Object_influence::update_player() {
@@ -158,7 +158,7 @@ void Object_influence::update_player() {
 
 // Ну короче
 
-Object_activated::Object_activated(const int &elem_type, Point &c, Size &sz)
+Object_activated::Object_activated(const int &elem_type, glm::vec3 &c, glm::vec3 &sz)
         : Object_static(elem_type, c, sz) {}
 
 bool Object_activated::is_activated() {
@@ -174,8 +174,8 @@ void Object_activated::deactivate() {
 }
 
 Object_activator::Object_activator(const int &elem_type,
-                                   Point &c,
-                                   Size &sz,
+                                   glm::vec3 &c,
+                                   glm::vec3 &sz,
                                    std::list<Object_activated>::iterator &linked_object)
         : Object_activated(elem_type, c, sz), linked_object(linked_object)
  {}

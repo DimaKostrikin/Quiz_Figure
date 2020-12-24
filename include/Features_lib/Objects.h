@@ -9,35 +9,6 @@
 #include "Graphics_lib/Model_class.h"
 
 
-struct Point {
-    int x;
-    int y;
-    int z;
-    friend std::ostream& operator<< (std::ostream &out, const Point &point) {
-        out << "Center: (" << point.x << ", " << point.y << ", " << point.z << ")"<< std::endl;
-        return out;
-    }
-};
-
-struct Speed {
-    int dx;
-    int dy;
-    int dz;
-    friend std::ostream& operator<< (std::ostream &out, const Speed &speed) {
-        out << "Speed: (" << speed.dx << ", " << speed.dy << ", " << speed.dz << ")"<< std::endl;
-        return out;
-    }
-};
-
-struct Size {
-    int height;
-    int length;
-    int width;
-    friend std::ostream& operator<< (std::ostream &out, const Size &size) {
-        out << "Size: (" << size.height << ", " << size.length << ", " << size.width << ")"<< std::endl;
-        return out;
-    }
-};
 
 enum type_elem {
     SAVE, // для тулбара, сорян
@@ -77,32 +48,32 @@ enum type_elem {
 
 class Object {  // Базовый класс объектов
 protected:
-    Point center;
+    glm::vec3 center;
     unsigned int elem_type;
     unsigned int id;
 public:
-    Object(unsigned int elem_type, Point& c);
+    Object(unsigned int elem_type, glm::vec3& c);
     virtual ~Object() = default;
     unsigned int get_elem_type();
-    Point get_center() const;
-    Point& get_center();
+    glm::vec3 get_center() const;
+    glm::vec3& get_center();
 
     unsigned int get_id() const;
     unsigned int &get_id();
 
 
-    void set_center(Point& c);
+    void set_center(glm::vec3& c);
 };
 
 class Object_static : public Object {
-    Size size;
+    glm::vec3 size;
     Model our_model;
 public:
-    Object_static(const int& elem_type, Point& c, Size& sz);
+    Object_static(const int& elem_type, glm::vec3& c, glm::vec3& sz);
     ~Object_static() = default;
-    Size get_size() const;
-    Size& get_size();
-    void set_size(Size& sz);
+    glm::vec3 get_size() const;
+    glm::vec3& get_size();
+    void set_size(glm::vec3& sz);
     Model& get_model();
     void update_model();
 };
@@ -112,10 +83,10 @@ class Object_dynamic : public Object_static {
     bool on_floor = false;
     bool taken = false;
 public:
-    Object_dynamic(const int& elem_type, Point& c, Size& sz);
-    Object_dynamic(const int& elem_type, Point& c, Size& sz, bool on_floor);
-    Object_dynamic(const int& elem_type, Point& c, Size& sz, glm::vec3& sd);
-    Object_dynamic(const int& elem_type, Point& c, Size& sz, glm::vec3& sd, bool on_floor);
+    Object_dynamic(const int& elem_type, glm::vec3& c, glm::vec3& sz);
+    Object_dynamic(const int& elem_type, glm::vec3& c, glm::vec3& sz, bool on_floor);
+    Object_dynamic(const int& elem_type, glm::vec3& c, glm::vec3& sz, glm::vec3& sd);
+    Object_dynamic(const int& elem_type, glm::vec3& c, glm::vec3& sz, glm::vec3& sd, bool on_floor);
     ~Object_dynamic() = default;
 
     glm::vec3 get_speed() const;
@@ -131,7 +102,7 @@ class Player : public Object_dynamic {
     int hp = 100;
     bool status = false;
 public:
-    Player(Point& c, Size& sz);
+    Player(glm::vec3& c, glm::vec3& sz);
     ~Player() = default;
     int get_hp() const;
     int& get_hp();
@@ -143,7 +114,7 @@ public:
 class Object_influence : public Object_static {
     Player& player;
 public:
-    Object_influence(const int& elem_type, Point& c, Size& sz, Player& pl);
+    Object_influence(const int& elem_type, glm::vec3& c, glm::vec3& sz, Player& pl);
     ~Object_influence() = default;
     void update_player();
 };
@@ -151,7 +122,7 @@ public:
 class Object_activated : public Object_static {
     bool activated = false;
 public:
-    Object_activated(const int& elem_type, Point& c, Size& sz);
+    Object_activated(const int& elem_type, glm::vec3& c, glm::vec3& sz);
     ~Object_activated() = default;
     bool is_activated();
     void activate();
@@ -161,7 +132,7 @@ public:
 class Object_activator : public Object_activated {
     std::list<Object_activated>::iterator &linked_object;
 public:
-    Object_activator(const int& elem_type, Point& c, Size& sz, std::list<Object_activated>::iterator &linked_object);
+    Object_activator(const int& elem_type, glm::vec3& c, glm::vec3& sz, std::list<Object_activated>::iterator &linked_object);
     ~Object_activator() = default;
     void activate_linked_object();
     void deactivate_linked_object();
