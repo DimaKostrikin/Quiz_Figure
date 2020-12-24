@@ -46,6 +46,12 @@ script:
     - make -j4
     - sudo make install
     - cd ..
+    - git clone git@github.com:assimp/assimp.git
+    - mkdir assimp-build
+    - cd assimp-build
+    - cmake ../assimp
+    - make -j4
+    - cd ..
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU

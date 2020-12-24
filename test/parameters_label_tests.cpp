@@ -12,6 +12,9 @@
 TEST(functions, ok) {
     const unsigned int h = 1280;
     glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     // glfw: создание окна
     GLFWwindow *window = glfwCreateWindow(h, h, "FigureQuiz", nullptr, nullptr);
     if (window == nullptr){
