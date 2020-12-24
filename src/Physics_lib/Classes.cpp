@@ -544,14 +544,17 @@ void Handler_physics::player_speed_change() {
         s_speed.x = -PLAYER_SPEED * camera.x;
         s_speed.y = -PLAYER_SPEED * camera.z;
     }
+    double help = camera.y;
+    camera.y = camera.z;
+    camera.z = help;
     glm::vec3 camera_normal = glm::rotate(camera, glm::radians(90.0f), glm::vec3(0.0,0.0,1.0));
     if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
-        a_speed.x = PLAYER_SPEED * camera_normal.x;
-        a_speed.y = PLAYER_SPEED * camera_normal.z;
+        a_speed.x = -PLAYER_SPEED * camera_normal.x;
+        a_speed.y = -PLAYER_SPEED * camera_normal.y;
     }
     if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS) {
-        d_speed.x = -PLAYER_SPEED * camera_normal.x;
-        d_speed.y = -PLAYER_SPEED * camera_normal.z;
+        d_speed.x = PLAYER_SPEED * camera_normal.x;
+        d_speed.y = PLAYER_SPEED * camera_normal.y;
     }
     new_speed = w_speed + s_speed + a_speed + d_speed;
     /*if(!player.get_on_floor()) {
