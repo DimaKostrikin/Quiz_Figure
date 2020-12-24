@@ -1,7 +1,7 @@
 #include "Graphics_lib/Model_class.h"
 
 Model::Model() {
-    load_model("resources/objects/white_cube/white_cube.obj");
+    load_model("resources/objects/funny_cube/funny_cube.obj");
 }
 
 Model::Model(char *path) {

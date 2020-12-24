@@ -4,14 +4,14 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
     std::string file_name="filename.json";
     pt::ptree tree;
 
-    const size_t MAP_SIZE = 1000;
+    const size_t MAP_SIZE = 100000;
 
-    std::string text[20];
+    std::string text[22];
     text[0] = "save";
     text[1] = "delete";
     text[2] = "players";
     text[3] = "walls";
-    text[4] = "wall_statics";
+    text[4] = "walls_static";
     text[5] = "hints";
     text[6] = "platforms";
     text[7] = "stairs";
@@ -19,13 +19,16 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
     text[9] = "finish";
     text[10] = "cubes";
     text[11] = "balls";
-    text[12] = "buttons";
+    text[12] = "doors";
+    text[13] = "buttons";
     text[14] = "steps";
     text[15] = "holes";
-    text[16] = "teleports_in";
-    text[17] = "teleports_out";
-    text[18] = "lasers";
-    text[19] = "jumpers";
+    text[16] = "fans";
+    text[17] = "teleports";
+    text[18] = "teleports_in";
+    text[19] = "teleports_out";
+    text[20] = "lasers";
+    text[21] = "jumpers";
 
     std::valarray<pt::ptree> children (COUNT);
     for (auto &i: map){
