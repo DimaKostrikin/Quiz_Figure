@@ -2,7 +2,7 @@ dist:     trusty    # используем Ubuntu 14.04 Trusty Tahr (а не 12.
 sudo:     required  # используем Virtual Machine (а не Docker container)
 
 language: c++       # на практике разницы между специфичным для C++ окружением
-                    # и, скажем, python -- никакой. Но пусть будет cpp.
+# и, скажем, python -- никакой. Но пусть будет cpp.
 
 os:
     # будем прогонять CI и на Linux, и на Mac OS X...
@@ -39,6 +39,8 @@ script:
 
     - mkdir build
     - cd build
+    - sudo apt-get install libassimp-dev
+    - sudo apt-get install libglwf3-dev
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
     - ctest --output-on-failure
