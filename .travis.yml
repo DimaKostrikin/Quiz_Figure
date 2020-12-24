@@ -40,11 +40,14 @@ script:
     - sudo apt-get install libassimp-dev
     - sudo apt-get install -y xorg-dev
     - git clone https://github.com/glfw/glfw
-    - mkdir build
-    - cd build
+    - mkdir glfw-build
+    - cd glfw-build
     - cmake ../glfw
     - make -j4
     - sudo make install
+    - cd ..
+    - mkdir build
+    - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
     - ctest --output-on-failure
