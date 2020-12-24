@@ -19,6 +19,7 @@ public:
     unsigned int ID;
 
     // Конструктор считывает данные и выполняет построение шейдера
+    Shader();
     Shader(const char* vertexPath, const char* fragmentPath);
 
     //Использование/активация шейдера
@@ -39,7 +40,7 @@ public:
     void setMat4(const std::string& name, const glm::mat4& mat) const;
 private:
     //Функция для проверки ошибок компиляции/связывания шейдеров
-    void checkCompileErrors(unsigned int shader, std::string type);
+    void check_compile_errors(unsigned int shader, std::string type);
 };
 
 

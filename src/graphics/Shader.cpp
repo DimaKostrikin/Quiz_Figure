@@ -1,5 +1,9 @@
 #include "Shader.h"
 
+Shader::Shader() {
+    Shader("../Shader_files/shader.vs", "../Shader_files/shader.fs");
+}
+
 Shader::Shader(const char* vertexPath, const char* fragmentPath) {
     // Этап №1: Получение исходного кода вершинного/фрагментного шейдера из переменной filePath
     std::string vertexCode;
@@ -43,20 +47,20 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vShaderCode, NULL);
     glCompileShader(vertex);
-    checkCompileErrors(vertex, "VERTEX");
+    check_compile_errors(vertex, "VERTEX");
 
     // Фрагментный шейдер
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &fShaderCode, NULL);
     glCompileShader(fragment);
-    checkCompileErrors(fragment, "FRAGMENT");
+    check_compile_errors(fragment, "FRAGMENT");
 
     // Шейдерная программа
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
     glLinkProgram(ID);
-    checkCompileErrors(ID, "PROGRAM");
+    check_compile_errors(ID, "PROGRAM");
 
     // После того, как мы связали шейдеры с нашей программой, удаляем их, так как они нам больше не нужны
     glDeleteShader(vertex);
@@ -104,7 +108,7 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-void Shader::checkCompileErrors(unsigned int shader, std::string type) {
+void Shader::check_compile_errors(unsigned int shader, std::string type) {
     int success;
     char infoLog[1024];
     if (type != "PROGRAM")

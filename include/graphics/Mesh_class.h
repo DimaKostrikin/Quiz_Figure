@@ -31,6 +31,11 @@ struct Texture {
 };
 
 class Mesh {
+private:
+    // Данные для рендеринга
+    unsigned int VAO, VBO, EBO;
+
+    void setup_mesh();
 public:
     // mesh-данные
     std::vector<Vertex> vertices;
@@ -38,12 +43,7 @@ public:
     std::vector<Texture> textures;
 
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
-    void Draw(Shader shader, Camera camera, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source = false);
-private:
-    // Данные для рендеринга
-    unsigned int VAO, VBO, EBO;
-
-    void setupMesh();
+    void draw(Shader shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source = false);
 };
 
 #endif //PROJECT_QUIZ_FIGURE_MESH_CLASS_H

@@ -7,7 +7,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : Front
     WorldUp = up;
     Yaw = yaw;
     Pitch = pitch;
-    updateCameraVectors();
+    update_camera_vectors();
 }
 
 Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
@@ -16,15 +16,15 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
     WorldUp = glm::vec3(upX, upY, upZ);
     Yaw = yaw;
     Pitch = pitch;
-    updateCameraVectors();
+    update_camera_vectors();
 }
 
-glm::mat4 Camera::GetViewMatrix()
+glm::mat4 Camera::get_view_matrix()
 {
     return glm::lookAt(Position, Position + Front, Up);
 }
 
-void Camera::ProcessKeyboard(Camera_Movement direction, float delta_time,  std::map <std::string, bool> control_tools)
+void Camera::process_keyboard(Camera_Movement direction, float delta_time,  std::map <std::string, bool> control_tools)
 {
     float velocity = MovementSpeed * delta_time;
     if (direction == FORWARD) {
@@ -47,7 +47,7 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta_time,  std::
 
 }
 
-void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
+void Camera::process_mouse_movement(float xoffset, float yoffset, GLboolean constrainPitch)
 {
     xoffset *= MouseSensitivity;
     yoffset *= MouseSensitivity;
@@ -65,10 +65,10 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     }
 
     // Обновляем значения вектора-прямо, вектора-вправо и вектора-вверх, используя обновленные значения углов Эйлера
-    updateCameraVectors();
+    update_camera_vectors();
 }
 
-void Camera::ProcessMouseScroll(float yoffset)
+void Camera::process_mouse_scroll(float yoffset)
 {
     if (Zoom >= 1.0f && Zoom <= 45.0f)
         Zoom -= yoffset;
@@ -78,7 +78,7 @@ void Camera::ProcessMouseScroll(float yoffset)
         Zoom = 45.0f;
 }
 
-void Camera::updateCameraVectors()
+void Camera::update_camera_vectors()
 {
     // Вычисляем новый вектор-прямо
     glm::vec3 front;
@@ -89,4 +89,10 @@ void Camera::updateCameraVectors()
     // Также пересчитываем вектор-вправо и вектор-вверх
     Right = glm::normalize(glm::cross(Front, WorldUp));  // Нормализуем векторы, потому что их длина становится стремится к 0 тем больше, чем больше вы смотрите вверх или вниз, что приводит к более медленному движению.
     Up    = glm::normalize(glm::cross(Right, Front));
+}
+
+void Camera::set_yaw_pitch(float yaw, float pitch) {
+    Yaw = yaw;
+    Pitch = pitch;
+    update_camera_vectors();
 }

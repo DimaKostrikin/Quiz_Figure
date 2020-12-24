@@ -44,6 +44,7 @@
 				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
@@ -68,6 +69,7 @@
 				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
@@ -102,6 +104,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-build/code/../include"/>
@@ -128,6 +131,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-build/code/../include"/>
@@ -207,7 +211,7 @@
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/."/>
-					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../contrib/rapidjson/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../contrib"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../contrib/pugixml/src"/>
@@ -252,7 +256,7 @@
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/."/>
-					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../contrib/rapidjson/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../contrib"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../contrib/pugixml/src"/>
@@ -291,7 +295,7 @@
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/."/>
-					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-build/tools/assimp_cmd"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-build/code/../include"/>
@@ -325,7 +329,7 @@
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/."/>
-					<Add directory="/home/purplelime/Project_Quiz_Figure/include"/>
+					<Add directory="/home/purplelime/Project_Quiz_Figure/include/graphics"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-build/tools/assimp_cmd"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-src/code/../include"/>
 					<Add directory="/home/purplelime/Project_Quiz_Figure/cmake-build-debug/_deps/assimp-build/code/../include"/>
@@ -2014,31 +2018,31 @@
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/include/glad/glad.h">
 			<Option target="glad"/>
 		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Camera_class.cpp">
-			<Option target="Project_Quiz_Figure"/>
-		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Events_manager.cpp">
-			<Option target="Project_Quiz_Figure"/>
-		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Mesh_class.cpp">
-			<Option target="Project_Quiz_Figure"/>
-		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Model_class.cpp">
-			<Option target="Project_Quiz_Figure"/>
-		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Point_light.cpp">
-			<Option target="Project_Quiz_Figure"/>
-		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/Shader.cpp">
-			<Option target="Project_Quiz_Figure"/>
-		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/glad.c">
 			<Option target="glad"/>
 		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/main.cpp">
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Camera_class.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
-		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/stb_image.cpp">
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Events_manager.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Mesh_class.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Model_class.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Point_light.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Shader.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/stb_image.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/main.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/CMakeLists.txt">

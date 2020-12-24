@@ -3,16 +3,16 @@
 
 Model::Model(char *path)
 {
-    loadModel(path);
+    load_model(path);
 }
 
-void Model::Draw(Shader &shader, Camera camera, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source)
+void Model::draw(Shader &shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source)
 {
     for(unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(shader, camera, ev_manager, point_lights, is_light_source);
+        meshes[i].draw(shader, camera, control_tools, point_lights, is_light_source);
 }
 
-void Model::loadModel(std::string const &path)
+void Model::load_model(std::string const &path)
 {
     // Чтение файла с помощью Assimp
     Assimp::Importer importer;
@@ -29,25 +29,25 @@ void Model::loadModel(std::string const &path)
     directory = path.substr(0, path.find_last_of('/'));
 
     // Рекурсивная обработка корневого узла Assimp
-    processNode(scene->mRootNode, scene);
+    process_node(scene->mRootNode, scene);
 }
 
-void Model::processNode(aiNode *node, const aiScene *scene)
+void Model::process_node(aiNode *node, const aiScene *scene)
 {
     // Обрабатываем все меши (если они есть) у выбранного узла
     for(unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        meshes.push_back(processMesh(mesh, scene));
+        meshes.push_back(process_mesh(mesh, scene));
     }
     // И проделываем то же самое для всех дочерних узлов
     for(unsigned int i = 0; i < node->mNumChildren; i++)
     {
-        processNode(node->mChildren[i], scene);
+        process_node(node->mChildren[i], scene);
     }
 }
 
-Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
+Mesh Model::process_mesh(aiMesh *mesh, const aiScene *scene)
 {
     // Данные для заполнения
     std::vector<Vertex> vertices;
@@ -117,26 +117,26 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
     // нормали - texture_normalN
 
     // 1. Диффузные карты
-    std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    std::vector<Texture> diffuseMaps = load_material_textures(material, aiTextureType_DIFFUSE, "texture_diffuse");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
     // 2. Карты отражения
-    std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+    std::vector<Texture> specularMaps = load_material_textures(material, aiTextureType_SPECULAR, "texture_specular");
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
     // 3. Карты нормалей
-    std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+    std::vector<Texture> normalMaps = load_material_textures(material, aiTextureType_HEIGHT, "texture_normal");
     textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
     // 4. Карты высот
-    std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+    std::vector<Texture> heightMaps = load_material_textures(material, aiTextureType_AMBIENT, "texture_height");
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
     // Возвращаем mesh-объект, созданный на основе полученных данных
     return Mesh(vertices, indices, textures);
 }
 
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+std::vector<Texture> Model::load_material_textures(aiMaterial *mat, aiTextureType type, std::string typeName)
 {
     std::vector<Texture> textures;
 
@@ -157,7 +157,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
         if(!skip)
         {   // Если текстура не была загружена ранее, то загружаем её
             Texture texture;
-            texture.id = TextureFromFile(str.C_Str(), directory);
+            texture.id = texture_from_file(str.C_Str(), directory);
             texture.type = typeName;
             texture.path = str.C_Str();
             textures.push_back(texture);
@@ -167,7 +167,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
     return textures;
 }
 
-unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma)
+unsigned int Model::texture_from_file(const char *path, const std::string &directory, bool gamma)
 {
     std::string filename = std::string(path);
     filename = directory + '/' + filename;

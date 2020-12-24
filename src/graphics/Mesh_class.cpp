@@ -6,10 +6,10 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
     this->indices = indices;
     this->textures = textures;
 
-    setupMesh();
+    setup_mesh();
 }
 
-void Mesh::setupMesh()
+void Mesh::setup_mesh()
 {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -39,7 +39,7 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(Shader shader, Camera camera, Events_manager ev_manager, std::vector <Point_light> point_lights, bool is_light_source)
+void Mesh::draw(Shader shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source)
 {
 
     glm::vec3 pointLightPositions[] = {
@@ -71,14 +71,8 @@ void Mesh::Draw(Shader shader, Camera camera, Events_manager ev_manager, std::ve
         else shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
 
         shader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-//        shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
         shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
         shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
-
-//        shader.setVec3("dirLightLamp.direction", -0.2f, -1.0f, -0.3f);
-//        shader.setVec3("dirLightLamp.ambient", 1.0f, 1.0f, 1.0f);
-//        shader.setVec3("dirLightLamp.diffuse", 0.4f, 0.4f, 0.4f);
-//        shader.setVec3("dirLightLamp.specular", 0.5f, 0.5f, 0.5f);
 
         shader.setInt("pointLightsAmount", point_lights.size());
 
@@ -91,40 +85,9 @@ void Mesh::Draw(Shader shader, Camera camera, Events_manager ev_manager, std::ve
             shader.setFloat(("pointLights[" + std::to_string(i) + "].linear").c_str(), point_lights[i].get_linear());
             shader.setFloat(("pointLights[" + std::to_string(i) + "].quadratic").c_str(), point_lights[i].get_quadratic());
         }
-//        // точечный источник света 1
-//        shader.setVec3("pointLights[0].position", pointLightPositions[0]);
-//        shader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
-//        shader.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
-//        shader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
-//        shader.setFloat("pointLights[0].constant", 1.0f);
-//        shader.setFloat("pointLights[0].linear", 0.09);
-//        shader.setFloat("pointLights[0].quadratic", 0.032);
-//        // точечный источник света 2
-//        shader.setVec3("pointLights[1].position", pointLightPositions[1]);
-//        shader.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
-//        shader.setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
-//        shader.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
-//        shader.setFloat("pointLights[1].constant", 1.0f);
-//        shader.setFloat("pointLights[1].linear", 0.09);
-//        shader.setFloat("pointLights[1].quadratic", 0.032);
-//        // точечный источник света 3
-//        shader.setVec3("pointLights[2].position", pointLightPositions[2]);
-//        shader.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
-//        shader.setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
-//        shader.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
-//        shader.setFloat("pointLights[2].constant", 1.0f);
-//        shader.setFloat("pointLights[2].linear", 0.09);
-//        shader.setFloat("pointLights[2].quadratic", 0.032);
-//        // точечный источник света 4
-//        shader.setVec3("pointLights[3].position", pointLightPositions[3]);
-//        shader.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
-//        shader.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
-//        shader.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
-//        shader.setFloat("pointLights[3].constant", 1.0f);
-//        shader.setFloat("pointLights[3].linear", 0.09);
-//        shader.setFloat("pointLights[3].quadratic", 0.032);
+
         // прожектор(фонарик)
-        if (ev_manager.get("Flashlight")) {
+        if (control_tools["Flashlight"]) {
             shader.setBool("spotLight.active", 1);
             shader.setVec3("spotLight.position", camera.Position);
             shader.setVec3("spotLight.direction", camera.Front);

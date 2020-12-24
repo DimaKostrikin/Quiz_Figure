@@ -10,8 +10,8 @@ set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 #file(GLOB_RECURSE SOURCE_FILES RELATIVE ${PROJECT_SOURCE_DIR} "/*.cpp")
 
 
-include_directories(${INCLUDE_DIR})
-set(SOURCE_FILES src/stb_image.cpp src/Model_class.cpp src/Mesh_class.cpp src/Camera_class.cpp src/Shader.cpp src/Events_manager.cpp src/Point_light.cpp src/main.cpp)
+include_directories(${INCLUDE_DIR}/graphics)
+set(SOURCE_FILES src/graphics/stb_image.cpp src/graphics/Model_class.cpp src/graphics/Mesh_class.cpp src/graphics/Camera_class.cpp src/graphics/Shader.cpp src/graphics/Events_manager.cpp src/graphics/Point_light.cpp src/main.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
