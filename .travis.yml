@@ -37,9 +37,6 @@ install:
 
 script:
 
-    - sudo apt-get install libassimp-dev
-    - sudo apt install assimp-utils
-    - sudo apt-get install -y xorg-dev
     - git clone https://github.com/glfw/glfw
     - mkdir glfw-build
     - cd glfw-build
@@ -48,8 +45,7 @@ script:
     - sudo make install
     - cd ..
     - git clone https://github.com/assimp/assimp.git
-    - cmake CMakeLists.txt
-    - make -j4
+    - git clone https://github.com/g-truc/glm.git
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU

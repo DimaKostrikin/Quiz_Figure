@@ -5,9 +5,15 @@ sudo apt-get update -qq
 
 sudo apt-get install -qq g++-5
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
-sudo apt-get install libglm-dev
 
-#sudo apt install valgrind
+sudo apt-get update
+sudo apt-get install build-essential tar curl zip unzip
+
+sudo apt install valgrind
+sudo apt-get install libglm-dev
+sudo apt-get install libassimp-dev
+sudo apt install assimp-utils
+sudo apt-get install -y xorg-dev
 
 
 CMAKE_VERSION=3.1
@@ -34,3 +40,4 @@ if [ "$TARGET_CPU" == "x86" ]; then
 
     sudo apt-get install -y g++-5-multilib
 fi
+
