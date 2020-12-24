@@ -36,8 +36,6 @@ public:
            std::list<Object_activator>& obj_actor,
            std::list<Object_influence>& obj_infl);
     void fill_from(std::string path_to_json);
-
-
 };
 
 

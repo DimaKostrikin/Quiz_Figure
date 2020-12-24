@@ -114,36 +114,40 @@ void Parser::fill_static(const std::string &elem_type) {
     Point p = {0, 0, 0};
     Size sz = {0, 0, 0};
     unsigned int id = 0;
-    for (auto &wall : pt_json.get_child(elem_type)) {
-        for (auto &con : wall.second.get_child("")) {
-            std::cout << con.first << ": " << con.second.data() << std::endl;
-            if (con.first == "id")
-                id = con.second.get_value<int>();
 
-            if (con.first == "x")
-                p.x = con.second.get_value<int>();
+    auto child = pt_json.get_child_optional(elem_type);
+    if (child) {
+        for (auto &wall : pt_json.get_child(elem_type)) {
+            for (auto &con : wall.second.get_child("")) {
+                std::cout << con.first << ": " << con.second.data() << std::endl;
+                if (con.first == "id")
+                    id = con.second.get_value<int>();
 
-            if (con.first == "y")
-                p.y = con.second.get_value<int>();
+                if (con.first == "x")
+                    p.x = con.second.get_value<int>();
 
-            if (con.first == "z")
-                p.z = con.second.get_value<int>();
+                if (con.first == "y")
+                    p.y = con.second.get_value<int>();
 
-            if (con.first == "width")
-                sz.width = con.second.get_value<int>();
+                if (con.first == "z")
+                    p.z = con.second.get_value<int>();
 
-            if (con.first == "height")
-                sz.height = con.second.get_value<int>();
+                if (con.first == "width")
+                    sz.width = con.second.get_value<int>();
 
-            if (con.first == "length")
-                sz.length = con.second.get_value<int>();
+                if (con.first == "height")
+                    sz.height = con.second.get_value<int>();
+
+                if (con.first == "length")
+                    sz.length = con.second.get_value<int>();
+            }
+
+            int elem_enum = get_elem_enum(elem_type);
+
+            Object_static emplaced(elem_enum, p, sz);
+            emplaced.get_id() = id;
+            obj_stat.push_back(emplaced);
         }
-
-        int elem_enum = get_elem_enum(elem_type);
-
-        Object_static emplaced(elem_enum, p, sz);
-        emplaced.get_id() = id;
-        obj_stat.push_back(emplaced);
     }
 }
 
@@ -152,82 +156,91 @@ void Parser::fill_dynamic(const std::string &elem_type) {
     Size sz = {0, 0, 0};
     glm::vec3 speed = {0, 0, 0};
     unsigned int id = 0;
-    for (auto &wall : pt_json.get_child(elem_type)) {
-        for (auto &con : wall.second.get_child("")) {
-            std::cout << con.first << ": " << con.second.data() << std::endl;
-            if (con.first == "id")
-                id = con.second.get_value<int>();
 
-            if (con.first == "x")
-                p.x = con.second.get_value<int>();
+    auto child = pt_json.get_child_optional(elem_type);
+    if (child) {
+        for (auto &wall : pt_json.get_child(elem_type)) {
+            for (auto &con : wall.second.get_child("")) {
+                std::cout << con.first << ": " << con.second.data() << std::endl;
+                if (con.first == "id")
+                    id = con.second.get_value<int>();
 
-            if (con.first == "y")
-                p.y = con.second.get_value<int>();
+                if (con.first == "x")
+                    p.x = con.second.get_value<int>();
 
-            if (con.first == "z")
-                p.z = con.second.get_value<int>();
+                if (con.first == "y")
+                    p.y = con.second.get_value<int>();
 
-            if (con.first == "width")
-                sz.width = con.second.get_value<int>();
+                if (con.first == "z")
+                    p.z = con.second.get_value<int>();
 
-            if (con.first == "height")
-                sz.height = con.second.get_value<int>();
+                if (con.first == "width")
+                    sz.width = con.second.get_value<int>();
 
-            if (con.first == "length")
-                sz.length = con.second.get_value<int>();
+                if (con.first == "height")
+                    sz.height = con.second.get_value<int>();
 
-            if (con.first == "dx")
-                speed.x = con.second.get_value<int>();
+                if (con.first == "length")
+                    sz.length = con.second.get_value<int>();
 
-            if (con.first == "dy")
-                speed.y = con.second.get_value<int>();
+                if (con.first == "dx")
+                    speed.x = con.second.get_value<int>();
 
-            if (con.first == "dz")
-                speed.z = con.second.get_value<int>();
+                if (con.first == "dy")
+                    speed.y = con.second.get_value<int>();
+
+                if (con.first == "dz")
+                    speed.z = con.second.get_value<int>();
+            }
+            int elem_enum = get_elem_enum(elem_type);
+
+            Object_dynamic emplaced(elem_enum, p, sz, speed);
+            emplaced.get_id() = id;
+
+            obj_dyn.push_back(emplaced);
         }
-        int elem_enum = get_elem_enum(elem_type);
-
-        Object_dynamic emplaced(elem_enum, p, sz, speed);
-        emplaced.get_id() = id;
-
-        obj_dyn.push_back(emplaced);
     }
+
 }
 
 void Parser::fill_acted(const std::string &elem_type) {
     Point p = {0, 0, 0};
     Size sz = {0, 0, 0};
     unsigned int id = 0;
-    for (auto &wall : pt_json.get_child(elem_type)) {
-        for (auto &con : wall.second.get_child("")) {
-            std::cout << con.first << ": " << con.second.data() << std::endl;
-            if (con.first == "id")
-                id = con.second.get_value<int>();
 
-            if (con.first == "x")
-                p.x = con.second.get_value<int>();
+    auto child = pt_json.get_child_optional(elem_type);
+    if (child) {
+        for (auto &wall : pt_json.get_child(elem_type)) {
+            for (auto &con : wall.second.get_child("")) {
+                std::cout << con.first << ": " << con.second.data() << std::endl;
+                if (con.first == "id")
+                    id = con.second.get_value<int>();
 
-            if (con.first == "y")
-                p.y = con.second.get_value<int>();
+                if (con.first == "x")
+                    p.x = con.second.get_value<int>();
 
-            if (con.first == "z")
-                p.z = con.second.get_value<int>();
+                if (con.first == "y")
+                    p.y = con.second.get_value<int>();
 
-            if (con.first == "width")
-                sz.width = con.second.get_value<int>();
+                if (con.first == "z")
+                    p.z = con.second.get_value<int>();
 
-            if (con.first == "height")
-                sz.height = con.second.get_value<int>();
+                if (con.first == "width")
+                    sz.width = con.second.get_value<int>();
 
-            if (con.first == "length")
-                sz.length = con.second.get_value<int>();
+                if (con.first == "height")
+                    sz.height = con.second.get_value<int>();
+
+                if (con.first == "length")
+                    sz.length = con.second.get_value<int>();
+            }
+            int elem_enum = get_elem_enum(elem_type);
+            Object_activated emplaced(elem_enum, p, sz);
+
+            emplaced.get_id() = id;
+
+            obj_acted.push_back(emplaced);
         }
-        int elem_enum = get_elem_enum(elem_type);
-        Object_activated emplaced(elem_enum, p, sz);
-
-        emplaced.get_id() = id;
-
-        obj_acted.push_back(emplaced);
     }
 }
 
@@ -238,40 +251,43 @@ void Parser::fill_actor(const std::string &elem_type) {
     unsigned int id = 0;
     unsigned int act_id = 999999;  // чтобы не попалось значение
 
-    for (auto &wall : pt_json.get_child(elem_type)) {
-        for (auto &con : wall.second.get_child("")) {
-            std::cout << con.first << ": " << con.second.data() << std::endl;
-            if (con.first == "id")
-                id = con.second.get_value<int>();
+    auto child = pt_json.get_child_optional(elem_type);
+    if (child) {
+        for (auto &wall : pt_json.get_child(elem_type)) {
+            for (auto &con : wall.second.get_child("")) {
+                std::cout << con.first << ": " << con.second.data() << std::endl;
+                if (con.first == "id")
+                    id = con.second.get_value<int>();
 
-            if (con.first == "act_id")
-                act_id = con.second.get_value<int>();
+                if (con.first == "act_id")
+                    act_id = con.second.get_value<int>();
 
-            if (con.first == "x")
-                p.x = con.second.get_value<int>();
+                if (con.first == "x")
+                    p.x = con.second.get_value<int>();
 
-            if (con.first == "y")
-                p.y = con.second.get_value<int>();
+                if (con.first == "y")
+                    p.y = con.second.get_value<int>();
 
-            if (con.first == "z")
-                p.z = con.second.get_value<int>();
+                if (con.first == "z")
+                    p.z = con.second.get_value<int>();
 
-            if (con.first == "width")
-                sz.width = con.second.get_value<int>();
+                if (con.first == "width")
+                    sz.width = con.second.get_value<int>();
 
-            if (con.first == "height")
-                sz.height = con.second.get_value<int>();
+                if (con.first == "height")
+                    sz.height = con.second.get_value<int>();
 
-            if (con.first == "length")
-                sz.length = con.second.get_value<int>();
-        }
-        int elem_enum = get_elem_enum(elem_type);
-        
-        for (auto it = obj_acted.begin(); it != obj_acted.end(); ++it) {
-            if (it->get_id() == act_id) {
-                Object_activator emplaced(elem_enum, p, sz, it);
-                emplaced.get_id() = id;
-                obj_actor.push_back(emplaced);
+                if (con.first == "length")
+                    sz.length = con.second.get_value<int>();
+            }
+            int elem_enum = get_elem_enum(elem_type);
+
+            for (auto it = obj_acted.begin(); it != obj_acted.end(); ++it) {
+                if (it->get_id() == act_id) {
+                    Object_activator emplaced(elem_enum, p, sz, it);
+                    emplaced.get_id() = id;
+                    obj_actor.push_back(emplaced);
+                }
             }
         }
     }
