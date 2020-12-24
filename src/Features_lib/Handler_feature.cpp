@@ -91,15 +91,15 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
 
 
         if (event_radius_obj < a_radius && diff_z_obj < a_height) {
-            obj_d->get_center().x = obj_a->get_linked_object().get_center().x;
-            obj_d->get_center().y = obj_a->get_linked_object().get_center().y;
-            obj_d->get_center().z = obj_a->get_linked_object().get_center().z;
+            obj_d->get_center().x = obj_a->get_linked_object()->get_center().x;
+            obj_d->get_center().y = obj_a->get_linked_object()->get_center().y;
+            obj_d->get_center().z = obj_a->get_linked_object()->get_center().z;
         }
 
         if (event_radius_pl < a_radius && diff_z_pl < a_height) {
-            player.get_center().x = obj_a->get_linked_object().get_center().x;
-            player.get_center().y = obj_a->get_linked_object().get_center().y;
-            player.get_center().z = obj_a->get_linked_object().get_center().z;
+            player.get_center().x = obj_a->get_linked_object()->get_center().x;
+            player.get_center().y = obj_a->get_linked_object()->get_center().y;
+            player.get_center().z = obj_a->get_linked_object()->get_center().z;
         }
     }
 }

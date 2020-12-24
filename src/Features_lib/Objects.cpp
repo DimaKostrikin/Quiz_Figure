@@ -27,6 +27,14 @@ void Object::set_center(Point &c) {
     center = c;
 }
 
+unsigned int Object::get_id() const {
+    return id;
+}
+
+unsigned int &Object::get_id() {
+    return id;
+}
+
 // Статические объекты
 
 Object_static::Object_static(const int& elem_type, Point &c, Size &sz)
@@ -106,7 +114,6 @@ bool Player::get_status() {
     return status;
 };
 
-
 // Игрок
 
 
@@ -147,18 +154,18 @@ void Object_activated::deactivate() {
 Object_activator::Object_activator(const int &elem_type,
                                    Point &c,
                                    Size &sz,
-                                   Object_activated& linked_obj)
-        : Object_activated(elem_type, c, sz),
-          linked_object(linked_obj) {}
+                                   std::list<Object_activated>::iterator &linked_object)
+        : Object_activated(elem_type, c, sz), linked_object(linked_object)
+ {}
 
 void Object_activator::activate_linked_object() {
-    linked_object.activate();
+    linked_object->activate();
 }
 
 void Object_activator::deactivate_linked_object() {
-    linked_object.deactivate();
+    linked_object->deactivate();
 }
 
-Object_activated &Object_activator::get_linked_object() {
+std::list<Object_activated>::iterator &Object_activator::get_linked_object() {
     return linked_object;
 }

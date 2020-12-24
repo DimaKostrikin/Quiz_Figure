@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <list>
 
 
 struct Point {
@@ -78,12 +79,17 @@ enum type_elem {
 class Object {  // Базовый класс объектов
     Point center;
     unsigned int elem_type;
+    unsigned int id;
 public:
     Object(unsigned int elem_type, Point& c);
     virtual ~Object() = default;
     unsigned int get_elem_type();
     Point get_center() const;
     Point& get_center();
+
+    unsigned int get_id() const;
+    unsigned int &get_id();
+
 
     void set_center(Point& c);
 };
@@ -150,13 +156,13 @@ public:
 };
 
 class Object_activator : public Object_activated {
-    Object_activated& linked_object;
+    std::list<Object_activated>::iterator &linked_object;
 public:
-    Object_activator(const int& elem_type, Point& c, Size& sz, Object_activated& linked_obj);
+    Object_activator(const int& elem_type, Point& c, Size& sz, std::list<Object_activated>::iterator &linked_object);
     ~Object_activator() = default;
     void activate_linked_object();
     void deactivate_linked_object();
-    Object_activated& get_linked_object();
+    std::list<Object_activated>::iterator &get_linked_object();
 };
 
 #endif //OBJECTS_H

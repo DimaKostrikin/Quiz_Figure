@@ -49,6 +49,7 @@ void Logic_manager::start_game(const std::string &level_path) {
     std::list<Object_activator> obj_actor;
     std::list<Object_influence> obj_infl;
 
+
     // Стандартные значения характеристик для игрока
     Point default_player_center = {1000, 1000, 1000};
     Size default_player_size = {500, 500, 1000};
