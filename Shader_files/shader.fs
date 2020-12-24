@@ -35,7 +35,7 @@ struct PointLight {
 };
 
 struct SpotLight {
-    bool active;
+    bool pactive;
     vec3 position;
     vec3 direction;
     float cutOff;
@@ -93,7 +93,7 @@ void main()
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
 
     // Этап №3: Прожектор
-    if (spotLight.active) result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+    if (spotLight.pactive) result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
     FragColor = vec4(result, 1.0);
 //     FragColor = texture(material.texture_diffuse1, TexCoord);
 }
