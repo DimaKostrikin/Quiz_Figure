@@ -25,7 +25,7 @@ SET_TARGET_PROPERTIES(Quiz_Figure PROPERTIES LINKER_LANGUAGE C)
 
 SET(CMAKE_C_FLAGS " -pthread  -Wall -Werror  -fPIC")
 SET(CMAKE_C_FLAGS " -pthread -lX11  -lXrandr -lXi -ldl  -lglfw3")
-SET(CMAKE_CXX_FLAGS "-lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl -fPIC")
+SET(CMAKE_CXX_FLAGS "-pthread -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl -fPIC")
 # SET(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -fPIC")
 
 ##################### google test #####################
@@ -33,18 +33,18 @@ SET(CMAKE_CXX_FLAGS "-lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl -fPIC")
 #------------tests def------------#
 
 
-#configure_file(CMakeLists.txt.in
-#        googletest-download/CMakeLists.txt)
-#execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-#        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
-#execute_process(COMMAND ${CMAKE_COMMAND} --build .
-#        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+configure_file(CMakeLists.txt.in
+        googletest-download/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
 
-#add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
-#        ${CMAKE_BINARY_DIR}/googletest-build)
-#
-#enable_testing()
-#add_subdirectory(test)
+add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
+        ${CMAKE_BINARY_DIR}/googletest-build)
+
+enable_testing()
+add_subdirectory(test)
 
 
 #for glad
@@ -87,7 +87,6 @@ file(GLOB graphics_sources
         "include/Graphics_lib/*.h"
         "src/Graphics_lib/*.cpp")
 
-        
 add_library(map_editor_lib STATIC ${map_editor_sources})
 
 target_link_libraries(map_editor_lib glad ${GLFW_STATIC_LIBRARIES}
