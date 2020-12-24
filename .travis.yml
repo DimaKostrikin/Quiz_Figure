@@ -37,6 +37,7 @@ install:
 
 script:
 
+    - git clone https://github.com/glfw/glfw
     - mkdir glfw-build
     - cd glfw-build
     - cmake ../glfw

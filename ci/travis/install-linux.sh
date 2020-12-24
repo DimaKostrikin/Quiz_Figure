@@ -14,7 +14,6 @@ sudo apt-get install libglm-dev
 sudo apt-get install libassimp-dev
 sudo apt install assimp-utils
 sudo apt-get install -y xorg-dev
-git clone https://github.com/glfw/glfw
 
 
 CMAKE_VERSION=3.1
