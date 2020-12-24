@@ -47,13 +47,10 @@ script:
     - sudo make install
     - cd ..
     - git clone https://github.com/assimp/assimp
-    - mkdir assimp-build
-    - cd assimp-build
-    - cmake .. -G 'Unix Makefiles'
-    - make -j4
-    - cd ..
     - mkdir build
     - cd build
+    - cmake .. -G 'Unix Makefiles'
+    - make -j4
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
     - ctest --output-on-failure
