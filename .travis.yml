@@ -41,6 +41,7 @@ script:
     - cd build
     - sudo apt-get install libassimp-dev
     - sudo apt-get install -y xorg-dev
+    - sudo apt install libglfw3-dev
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
     - ctest --output-on-failure
