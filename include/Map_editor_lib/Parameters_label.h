@@ -40,7 +40,6 @@ public:
     void RenderText(unsigned int &VAO, unsigned int &VBO,Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
 private:
     std::map<GLchar, Character> characters;
-    std::string label;
     std::shared_ptr<Map_object> obj;
     Shader shader;
     const unsigned int SCR_HEIGHT;
