@@ -7,26 +7,25 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
     const size_t MAP_SIZE = 1000;
 
     std::string text[20];
-    text[0] = "SAVE";
-    text[1] = "DELETE";
-    text[2] = "PLAYER";
-    text[3] = "WALL";
-    text[4] = "WALL_STATIC";
-    text[5] = "HINT";
-    text[6] = "PLATFORM";
-    text[7] = "STAIRS";
-    text[8] = "START";
-    text[9] = "FINISH";
-    text[10] = "CUBE";
-    text[11] = "BALL";
-    text[12] = "DOOR";
-    text[13] = "BUTTON";
-    text[14] = "STEP";
-    text[15] = "HOLE";
-    text[16] = "TELEPORT_IN";
-    text[17] = "TELEPORT_OUT";
-    text[18] = "LASER";
-    text[19] = "JUMPER";
+    text[0] = "save";
+    text[1] = "delete";
+    text[2] = "players";
+    text[3] = "walls";
+    text[4] = "wall_statics";
+    text[5] = "hints";
+    text[6] = "platforms";
+    text[7] = "stairs";
+    text[8] = "start";
+    text[9] = "finish";
+    text[10] = "cubes";
+    text[11] = "balls";
+    text[12] = "buttons";
+    text[14] = "steps";
+    text[15] = "holes";
+    text[16] = "teleports_in";
+    text[17] = "teleports_out";
+    text[18] = "lasers";
+    text[19] = "jumpers";
 
     std::valarray<pt::ptree> children (COUNT);
     for (auto &i: map){
@@ -50,9 +49,9 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
                 child1.put("x", x);
                 child1.put("y", y);
                 child1.put("z", z);
-                child1.put("l", l);
-                child1.put("w", w);
-                child1.put("h", h);
+                child1.put("length", l);
+                child1.put("width", w);
+                child1.put("height", h);
                 child1.put("act_id", i.connect);
                 children[i.type].push_back(std::make_pair("", child1));
                 //
