@@ -5,11 +5,6 @@
 #define Y_COLLISION 2
 #define Z_COLLISION 3
 
-void print_speed(glm::vec3& speed) {
-    std::cout << "Speed: (" << speed.x << ", " << speed.y << ", " << speed.z << ")"<< std::endl;
-    return;
-}
-
 Object::Object(unsigned int elem_type, Point &c) : elem_type(elem_type), center(c) {}
 
 unsigned int Object::get_elem_type() {
