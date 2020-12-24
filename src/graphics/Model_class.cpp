@@ -1,19 +1,19 @@
 #include "Model_class.h"
 
+Model::Model() {
+    load_model("../resources/objects/white_cube/white_cube.obj");
+}
 
-Model::Model(char *path)
-{
+Model::Model(char *path) {
     load_model(path);
 }
 
-void Model::draw(Shader &shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source)
-{
+void Model::draw(Shader &shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source) {
     for(unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].draw(shader, camera, control_tools, point_lights, is_light_source);
 }
 
-void Model::load_model(std::string const &path)
-{
+void Model::load_model(std::string const &path) {
     // Чтение файла с помощью Assimp
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -30,16 +30,19 @@ void Model::load_model(std::string const &path)
 
     // Рекурсивная обработка корневого узла Assimp
     process_node(scene->mRootNode, scene);
+
 }
 
-void Model::process_node(aiNode *node, const aiScene *scene)
-{
+void Model::process_node(aiNode *node, const aiScene *scene) {
+
     // Обрабатываем все меши (если они есть) у выбранного узла
     for(unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(process_mesh(mesh, scene));
+
     }
+
     // И проделываем то же самое для всех дочерних узлов
     for(unsigned int i = 0; i < node->mNumChildren; i++)
     {
@@ -47,8 +50,8 @@ void Model::process_node(aiNode *node, const aiScene *scene)
     }
 }
 
-Mesh Model::process_mesh(aiMesh *mesh, const aiScene *scene)
-{
+Mesh Model::process_mesh(aiMesh *mesh, const aiScene *scene) {
+
     // Данные для заполнения
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
@@ -136,12 +139,12 @@ Mesh Model::process_mesh(aiMesh *mesh, const aiScene *scene)
     return Mesh(vertices, indices, textures);
 }
 
-std::vector<Texture> Model::load_material_textures(aiMaterial *mat, aiTextureType type, std::string typeName)
-{
+std::vector<Texture> Model::load_material_textures(aiMaterial *mat, aiTextureType type, std::string typeName) {
     std::vector<Texture> textures;
 
     for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
+
         aiString str;
         mat->GetTexture(type, i, &str);
         bool skip = false;
@@ -154,6 +157,7 @@ std::vector<Texture> Model::load_material_textures(aiMaterial *mat, aiTextureTyp
                 break;
             }
         }
+
         if(!skip)
         {   // Если текстура не была загружена ранее, то загружаем её
             Texture texture;
@@ -163,16 +167,17 @@ std::vector<Texture> Model::load_material_textures(aiMaterial *mat, aiTextureTyp
             textures.push_back(texture);
             textures_loaded.push_back(texture); // добавляем её к списку загруженных текстур
         }
+
     }
     return textures;
 }
 
-unsigned int Model::texture_from_file(const char *path, const std::string &directory, bool gamma)
-{
+unsigned int Model::texture_from_file(const char *path, const std::string &directory, bool gamma) {
     std::string filename = std::string(path);
     filename = directory + '/' + filename;
 
     unsigned int textureID;
+
     glGenTextures(1, &textureID);
 
     int width, height, nrComponents;

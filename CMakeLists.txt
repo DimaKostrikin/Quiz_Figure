@@ -11,7 +11,7 @@ set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
 
 include_directories(${INCLUDE_DIR}/graphics)
-set(SOURCE_FILES src/graphics/stb_image.cpp src/graphics/Model_class.cpp src/graphics/Mesh_class.cpp src/graphics/Camera_class.cpp src/graphics/Shader.cpp src/graphics/Events_manager.cpp src/graphics/Point_light.cpp src/main.cpp)
+set(SOURCE_FILES src/graphics/stb_image.cpp src/graphics/Model_class.cpp src/graphics/Mesh_class.cpp src/graphics/Camera_class.cpp src/graphics/Shader.cpp src/graphics/Events_manager.cpp src/graphics/Point_light.cpp src/graphics/Render_manager.cpp src/graphics/Objects.cpp src/main.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 

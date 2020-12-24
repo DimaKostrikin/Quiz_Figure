@@ -2033,7 +2033,13 @@
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Model_class.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Objects.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Point_light.cpp">
+			<Option target="Project_Quiz_Figure"/>
+		</Unit>
+		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Render_manager.cpp">
 			<Option target="Project_Quiz_Figure"/>
 		</Unit>
 		<Unit filename="/home/purplelime/Project_Quiz_Figure/src/graphics/Shader.cpp">

@@ -37,6 +37,7 @@ private:
     Mesh process_mesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> load_material_textures(aiMaterial *mat, aiTextureType type, std::string typeName);
 public:
+    Model();
     Model(char *path);
     void draw(Shader &shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source = false);
     unsigned int texture_from_file(const char *path, const std::string &directory, bool gamma = false);
