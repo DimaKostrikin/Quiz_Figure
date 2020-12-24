@@ -1,7 +1,5 @@
 #include "Map_editor_lib/Parameters_label.h"
 
-#include <utility>
-
 Parameters_label::Parameters_label(const unsigned int SCR_HEIGHT, const unsigned int SCR_WIDTH) :
 obj(nullptr), SCR_HEIGHT(SCR_HEIGHT), SCR_WIDTH(SCR_WIDTH),
 shader(Shader("include/Map_editor_lib/text.vs", "include/Map_editor_lib/text.fs")){

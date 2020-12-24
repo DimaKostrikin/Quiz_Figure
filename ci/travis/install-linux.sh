@@ -8,9 +8,6 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
 
 sudo apt install valgrind
 
-sudo apt-get install libassimp-dev
-sudo apt-get install -y xorg-dev
-
 
 CMAKE_VERSION=3.1
 CMAKE_VERSION_DIR=v3.1
