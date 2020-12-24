@@ -32,6 +32,8 @@ public:
     void process_render(GLFWwindow* window, Shader shader, std::vector <Point_light> point_lights, std::vector <Model> models_vec);
     void clear();
 
+    Camera &get_camera();
+
 private:
 };
 

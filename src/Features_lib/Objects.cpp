@@ -38,7 +38,16 @@ unsigned int &Object::get_id() {
 // Статические объекты
 
 Object_static::Object_static(const int& elem_type, Point &c, Size &sz)
-        : Object(elem_type, c), size(sz) {}
+        : Object(elem_type, c), size(sz) {
+    our_model.set_xpos(float(c.x) / 1000);
+    our_model.set_ypos(float(c.z) / 1000);
+    our_model.set_zpos(float(c.y) / 1000);
+
+    our_model.set_xscale(float(size.length) / 1000);
+    our_model.set_yscale(float(size.height) / 1000);
+    our_model.set_zscale(float(size.width) / 1000);
+
+}
 
 Size Object_static::get_size() const {
     return size;
@@ -55,6 +64,14 @@ void Object_static::set_size(Size &sz) {
 Model &Object_static::get_model() {
     return our_model;
 }
+
+void Object_static::update_model() {
+    our_model.set_xpos(float(center.x) / 1000);
+    our_model.set_ypos(float(center.z) / 1000);
+    our_model.set_zpos(float(center.y) / 1000);
+}
+
+
 
 // Динамические объекты
 
@@ -97,6 +114,7 @@ bool Object_dynamic::get_taken() {
 void Object_dynamic::set_taken(bool tk) {
     taken = tk;
 }
+
 
 // Игрок
 

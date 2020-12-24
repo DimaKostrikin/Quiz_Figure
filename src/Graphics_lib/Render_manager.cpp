@@ -37,7 +37,6 @@ bool Render_manager::preparation(GLFWwindow* window) {
     glEnable(GL_DEPTH_TEST);
 
     //захват курсора
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 // glfw: всякий раз, когда изменяются размеры окна (пользователем или оперионной системой), вызывается данная callback-функция
@@ -169,4 +168,8 @@ void Render_manager::process_render(GLFWwindow* window, Shader shader, std::vect
 void Render_manager::clear() {
     // glfw: завершение, освобождение всех ранее задействованных GLFW-ресурсов
     glfwTerminate();
+}
+
+Camera &Render_manager::get_camera() {
+    return camera;
 }

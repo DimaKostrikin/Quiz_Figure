@@ -27,8 +27,8 @@ public:
     Handler_physics(std::list<Object_dynamic> &d, std::list<Object_static> &s, std::list<Object_activated> &a,
             std::list<Object_activator> &ar, Player &p, glm::vec3& cam, GLFWwindow *window);
     ~Handler_physics() = default;
-    void update(float ps_time);
-
+    void update(double ps_time);
+    glm::vec3 camera;
 private:
     void take_object(std::list<Object_dynamic>::iterator &object_taken);
     void drop_object(std::list<Object_dynamic>::iterator &object_dropped);
@@ -49,13 +49,13 @@ private:
     void player_speed_change();
     void player_update();
 
-    Player player;
+    Player& player;
     std::list<Object_dynamic>& dyn_elems;
     std::list<Object_static>& stat_elems;
     std::list<Object_activated>& act_elems;
     std::list<Object_activator>& actr_elems;
-    float passed_time;
-    glm::vec3& camera;
+    double passed_time;
+
     GLFWwindow *window;
 };
 

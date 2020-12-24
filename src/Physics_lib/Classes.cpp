@@ -532,25 +532,28 @@ void Handler_physics::player_speed_change() {
     glm::vec3 a_speed = {0,0,0};
     glm::vec3 s_speed = {0,0,0};
     glm::vec3 d_speed = {0,0,0};
-    
-    if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) {
-        w_speed.x = PLAYER_SPEED * camera.x;
-        w_speed.y = PLAYER_SPEED * camera.y;
+
+
+
+
+    float velocity = 1000;
+    if (glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) {
+        new_speed = camera * glm::vec3(1.0f, 1.0f, 0.0f) * velocity;
     }
-    if(glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) {
-        s_speed.x = -PLAYER_SPEED * camera.x;
-        s_speed.y = -PLAYER_SPEED * camera.y;
+
+    if (glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) {
+        new_speed = -camera * glm::vec3(1.0f, 1.0f, 0.0f) * velocity;
     }
-    glm::vec3 camera_normal = glm::rotate(camera, glm::radians(90.0f), glm::vec3(0.0,0.0,1.0));
+/*
     if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
-        a_speed.x = PLAYER_SPEED * camera_normal.x;
-        a_speed.y = PLAYER_SPEED * camera_normal.y;
+        a_speed.x = -PLAYER_SPEED * camera_normal.x;
+        a_speed.y = -PLAYER_SPEED * camera_normal.z;
     }
     if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS) {
-        d_speed.x = -PLAYER_SPEED * camera_normal.x;
-        d_speed.y = -PLAYER_SPEED * camera_normal.y;
+        d_speed.x = PLAYER_SPEED * camera_normal.x;
+        d_speed.y = PLAYER_SPEED * camera_normal.z;
     }
-    new_speed = w_speed + s_speed + a_speed + d_speed;
+    //new_speed = w_speed + s_speed + a_speed + d_speed;
     if(!player.get_on_floor()) {
         new_speed.z = player.get_speed().z - Z_ACCELERATION * passed_time;
     }
@@ -558,6 +561,7 @@ void Handler_physics::player_speed_change() {
         new_speed.z = PLAYER_SPEED;
         player.set_on_floor(false);
     }
+    */
     
     player.set_speed(new_speed);
 }
@@ -649,7 +653,7 @@ void Handler_physics::player_update() {
     }
 }
 
-void Handler_physics::update(float ps_time) {
+void Handler_physics::update(double ps_time) {
     passed_time = ps_time;
     player_update();
     auto el = dyn_elems.begin();

@@ -51,8 +51,8 @@ void Logic_manager::start_game(const std::string &level_path) {
 
 
     // Стандартные значения характеристик для игрока
-    Point default_player_center = {1000, 1000, 1000};
-    Size default_player_size = {500, 500, 1000};
+    Point default_player_center = {1000, 1000, 5000};
+    Size default_player_size = {10, 10, 10};
 
     Player player(default_player_center, default_player_size);  // Инициализация игрока
 
@@ -60,22 +60,15 @@ void Logic_manager::start_game(const std::string &level_path) {
     Point point = {0,0,0};
     Size size = {0,0,0};
 
-    Object_static my_static(WALL, point, size);
-
-    obj_stat.push_back(my_static);
-    std::cout << level_path;
     Parser p(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);  // Создание парсера для загрузки уровня
     p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
-
 
     // Хендлер фич, обработка внутриигровых эвентов
     auto &hand_feat = Handler_feature::instance(obj_acted, obj_actor, obj_dyn, obj_infl, player);
 
-    glm::vec3 cam;
 
-    Handler_physics hand_phys(obj_dyn, obj_stat, obj_acted, obj_actor, player, cam, window);
-    float deltaTime = 0;
-    float lastFrame = 0;
+    double deltaTime = 0;
+    double lastFrame = 0;
 
     Render_manager render_mng(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);
     Shader ourShader("Shader_files/shader.vs", "Shader_files/shader.fs");
@@ -90,21 +83,39 @@ void Logic_manager::start_game(const std::string &level_path) {
             glm::vec3( -5.0f,  1.0f, 1.0f)
     };
 
+
+    glEnable(GL_DEPTH_TEST);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    Handler_physics hand_phys(obj_dyn, obj_stat, obj_acted, obj_actor, player, render_mng.get_camera().Front, window);
+
     //зполняем вектор источников света значениями
     for (size_t i = 0; i < 4; ++i) {
         point_lights.push_back(Point_light(pointLightPositions[i]));
     }
 
     while (!glfwWindowShouldClose(window)) {  // TODO main cycle
-        float currentFrame = glfwGetTime();
+        double currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         hand_feat.do_logic(deltaTime);  // Эвенты
+
+
         hand_phys.update(deltaTime);  // Физика
         render_mng.process_render(window, ourShader, point_lights);  // Отрисовка
-    }
 
+        for (auto it = obj_dyn.begin(); it != obj_dyn.end(); ++it) {
+            //std::cout << it->get_center() << std::endl;
+            it->update_model();
+        }
+
+        render_mng.get_camera().Position.x = (float)player.get_center().x / 1000;
+        render_mng.get_camera().Position.y = (float)player.get_center().z / 1000 + 0.1f;
+        render_mng.get_camera().Position.z = (float)player.get_center().y / 1000;
+
+        hand_phys.camera = render_mng.get_camera().Front;
+    }
 }
 
 

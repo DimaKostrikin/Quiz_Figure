@@ -78,6 +78,7 @@ enum type_elem {
 
 
 class Object {  // Базовый класс объектов
+protected:
     Point center;
     unsigned int elem_type;
     unsigned int id;
@@ -105,6 +106,7 @@ public:
     Size& get_size();
     void set_size(Size& sz);
     Model& get_model();
+    void update_model();
 };
 
 class Object_dynamic : public Object_static {
