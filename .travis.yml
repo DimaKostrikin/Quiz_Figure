@@ -49,7 +49,7 @@ script:
     - git clone https://github.com/assimp/assimp
     - mkdir assimp-build
     - cd assimp-build
-    - cmake ../assimp
+    - cmake .. -G 'Unix Makefiles'
     - make -j4
     - cd ..
     - mkdir build

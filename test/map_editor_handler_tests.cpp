@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <Map_editor_lib/Scene.h>
+#include <Map_editor_lib/Map_editor_handler.h>
 
 TEST(functions, ok) {
     const unsigned int h = 1280;
@@ -31,6 +31,10 @@ TEST(functions, ok) {
             -0.7f, 0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
     };
 
+    Map_editor_handler handler(window, h, h);
+    handler.processInput();
+    handler.draw();
+    handler.toolbar_left_action(0, 0);
 
 
 
