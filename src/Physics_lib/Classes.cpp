@@ -536,32 +536,34 @@ void Handler_physics::player_speed_change() {
 
 
 
-    float velocity = 1000;
-    if (glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) {
-        new_speed = camera * glm::vec3(1.0f, 1.0f, 0.0f) * velocity;
+    if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) {
+        w_speed.x = PLAYER_SPEED * camera.x;
+        w_speed.y = PLAYER_SPEED * camera.z;
     }
-
-    if (glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) {
-        new_speed = -camera * glm::vec3(1.0f, 1.0f, 0.0f) * velocity;
+    if(glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) {
+        s_speed.x = -PLAYER_SPEED * camera.x;
+        s_speed.y = -PLAYER_SPEED * camera.z;
     }
-/*
+    double help = camera.y;
+    camera.y = camera.z;
+    camera.z = help;
+    glm::vec3 camera_normal = glm::rotate(camera, glm::radians(90.0f), glm::vec3(0.0,0.0,1.0));
     if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
         a_speed.x = -PLAYER_SPEED * camera_normal.x;
-        a_speed.y = -PLAYER_SPEED * camera_normal.z;
+        a_speed.y = -PLAYER_SPEED * camera_normal.y;
     }
     if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS) {
         d_speed.x = PLAYER_SPEED * camera_normal.x;
-        d_speed.y = PLAYER_SPEED * camera_normal.z;
+        d_speed.y = PLAYER_SPEED * camera_normal.y;
     }
-    //new_speed = w_speed + s_speed + a_speed + d_speed;
-    if(!player.get_on_floor()) {
+    new_speed = w_speed + s_speed + a_speed + d_speed;
+    /*if(!player.get_on_floor()) {
         new_speed.z = player.get_speed().z - Z_ACCELERATION * passed_time;
     }
     if(glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS && player.get_on_floor()) {
         new_speed.z = PLAYER_SPEED;
         player.set_on_floor(false);
-    }
-    */
+    }*/
     
     player.set_speed(new_speed);
 }
@@ -660,4 +662,6 @@ void Handler_physics::update(double ps_time) {
     for(el; el != dyn_elems.end(); el++) {
         position_change(el);
     }
+    std::cout << "camera " << camera.x << " " << camera.y << " " << camera.z << std::endl;
+    std::cout << "player speed " << player.get_speed().x << " " << player.get_speed().y << " " << player.get_speed().z << std::endl;
 }
