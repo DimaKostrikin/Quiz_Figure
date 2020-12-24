@@ -57,6 +57,12 @@ pkg_search_module(GLFW REQUIRED glfw3)
 
 find_package(Freetype REQUIRED)
 
+if (assimp_FOUND)
+    set(ASSIMP_LIBRARIES "assimp")
+    add_library(${ASSIMP_LIBRARIES} SHARED IMPORTED)
+    set_target_properties(${ASSIMP_LIBRARIES} PROPERTIES IMPORTED_LOCATION "${ASSIMP_LIBRARY_DIRS}/libassimp.so")
+endif(assimp_FOUND)
+
 find_package(ASSIMP REQUIRED)
 
 find_package(glm REQUIRED)
