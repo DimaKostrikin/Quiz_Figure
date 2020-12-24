@@ -46,11 +46,9 @@ script:
     - make -j4
     - sudo make install
     - cd ..
-    - git clone https://github.com/Microsoft/vcpkg.git
-    - cd vcpkg
-    - ./bootstrap-vcpkg.sh
-    - ./vcpkg integrate install
-    - vcpkg install assimp
+    - git clone https://github.com/assimp/assimp.git
+    - cmake CMakeLists.txt
+    - make -j4
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
