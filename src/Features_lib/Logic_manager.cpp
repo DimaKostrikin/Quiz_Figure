@@ -70,14 +70,32 @@ void Logic_manager::start_game(const std::string &level_path) {
     float deltaTime = 0;
     float lastFrame = 0;
 
+    Render_manager render_mng(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);
+    Shader ourShader("../Shader_files/shader.vs", "../Shader_files/shader.fs");
+
+    //заполняем вектор источников света вручную(для примера, пока не объединили код)
+    std::vector <Point_light> point_lights;
+
+    glm::vec3 pointLightPositions[] = {
+            glm::vec3( -3.0f,  1.0f,  5.0f),
+            glm::vec3( -5.0f, 1.0f, 5.0f),
+            glm::vec3(-5.0f,  1.0f, 3.0f),
+            glm::vec3( -5.0f,  1.0f, 1.0f)
+    };
+
+    //зполняем вектор источников света значениями
+    for (size_t i = 0; i < 4; ++i) {
+        point_lights.push_back(Point_light(pointLightPositions[i]));
+    }
+
     while (!glfwWindowShouldClose(window)) {  // TODO main cycle
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        hand_feat.do_logic(deltaTime);
-        hand_phys.update(deltaTime);
-        // отрисовка объектов делает бррр
+        hand_feat.do_logic(deltaTime);  // Эвенты
+        hand_phys.update(deltaTime);  // Физика
+        render_mng.process_render(window, ourShader, point_lights);  // Отрисовка
     }
 
 }

@@ -52,6 +52,10 @@ void Object_static::set_size(Size &sz) {
     size = sz;
 }
 
+Model &Object_static::get_model() {
+    return our_model;
+}
+
 // Динамические объекты
 
 Object_dynamic::Object_dynamic(const int& elem_type, Point& c, Size &sz)

@@ -6,6 +6,7 @@
 #include "Map_editor_lib/Interface.h"
 #include "Features_lib/Parser.h"
 #include "Physics_lib/classes.h"
+#include "Graphics_lib/Render_manager.h"
 // include all features
 
 enum {

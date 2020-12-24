@@ -14,13 +14,13 @@
 #include <utility>
 #include "Menu.h"
 #include "Levels.h"
+#include "Graphics_lib/utils.h"
 
-#include "Map_editor_lib/shader_s.h"
+#include "Graphics_lib/Shader.h"
 
 
 // Константы
-const unsigned int SCR_WIDTH = 1280;
-const unsigned int SCR_HEIGHT = 1280;
+
 
 
 class Interface {

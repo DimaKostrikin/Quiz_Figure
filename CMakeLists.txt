@@ -83,6 +83,9 @@ file(GLOB physics_sources
         "include/Physics_lib/*.h"
         "src/Physics_lib/*.cpp")
 
+file(GLOB graphics_sources
+        "include/Graphics_lib/*.h"
+        "src/Graphics_lib/*.cpp")
 
         
 add_library(map_editor_lib STATIC ${map_editor_sources})
@@ -91,13 +94,15 @@ target_link_libraries(map_editor_lib glad ${GLFW_STATIC_LIBRARIES}
         ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLM_LIBRARIES}
         ${BOOST_LIBRARIES})
 
-
-
-
-
 add_library(features STATIC ${features_sources})
 
-target_link_libraries(features PUBLIC map_editor_lib)
+add_library(graphics STATIC ${graphics_sources})
+
+target_link_libraries(graphics glad ${GLFW_STATIC_LIBRARIES}
+        ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLM_LIBRARIES}
+        ${BOOST_LIBRARIES})
+
+target_link_libraries(features PUBLIC map_editor_lib graphics)
 
 add_library(physics STATIC ${physics_sources})
 

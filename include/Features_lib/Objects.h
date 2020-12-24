@@ -6,6 +6,7 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <list>
+#include "Graphics_lib/Model_class.h"
 
 
 struct Point {
@@ -96,12 +97,14 @@ public:
 
 class Object_static : public Object {
     Size size;
+    Model our_model;
 public:
     Object_static(const int& elem_type, Point& c, Size& sz);
     ~Object_static() = default;
     Size get_size() const;
     Size& get_size();
     void set_size(Size& sz);
+    Model& get_model();
 };
 
 class Object_dynamic : public Object_static {
