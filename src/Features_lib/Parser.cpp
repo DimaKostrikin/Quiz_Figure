@@ -28,7 +28,7 @@ Parser::Parser(std::list<Object_dynamic> &obj_dyn,
     names_static.emplace_back("walls");
     names_static.emplace_back("lights");
     names_static.emplace_back("platforms");
-    names_static.emplace_back("stairs");
+    //names_static.emplace_back("stairs");
 
     names_dynamic.emplace_back("cubes");
     names_dynamic.emplace_back("balls");

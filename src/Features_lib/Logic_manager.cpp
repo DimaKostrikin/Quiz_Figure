@@ -56,9 +56,16 @@ void Logic_manager::start_game(const std::string &level_path) {
 
     Player player(default_player_center, default_player_size);  // Инициализация игрока
 
+
+    Point point = {0,0,0};
+    Size size = {0,0,0};
+
+    Object_static my_static(WALL, point, size);
+
+    obj_stat.push_back(my_static);
     std::cout << level_path;
     Parser p(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);  // Создание парсера для загрузки уровня
-    // (!) p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
+    p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
 
 
     // Хендлер фич, обработка внутриигровых эвентов
@@ -71,11 +78,11 @@ void Logic_manager::start_game(const std::string &level_path) {
     float lastFrame = 0;
 
     Render_manager render_mng(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);
-    Shader ourShader("../Shader_files/shader.vs", "../Shader_files/shader.fs");
+    Shader ourShader("Shader_files/shader.vs", "Shader_files/shader.fs");
 
     //заполняем вектор источников света вручную(для примера, пока не объединили код)
     std::vector <Point_light> point_lights;
-
+    render_mng.setup_camera(glm::vec3(0.f, 0.5f, 3.f));
     glm::vec3 pointLightPositions[] = {
             glm::vec3( -3.0f,  1.0f,  5.0f),
             glm::vec3( -5.0f, 1.0f, 5.0f),

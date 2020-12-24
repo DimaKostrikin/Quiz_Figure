@@ -1,7 +1,7 @@
 #include "Graphics_lib/Shader.h"
 
 Shader::Shader() {
-    Shader("../Shader_files/shader.vs", "../Shader_files/shader.fs");
+    Shader("Shader_files/shader.vs", "Shader_files/shader.fs");
 }
 
 Shader::Shader(const char* vertexPath, const char* fragmentPath) {
