@@ -10,7 +10,6 @@ sudo apt install valgrind
 
 sudo apt-get install libassimp-dev
 sudo apt-get install -y xorg-dev
-make install
 
 
 CMAKE_VERSION=3.1

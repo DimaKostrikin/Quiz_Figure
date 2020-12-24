@@ -32,8 +32,13 @@ TEST(functions, ok) {
             -0.7f, 0.7f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
     };
 
-
-
+    Parameters_label label(h, h);
+    std::shared_ptr<Map_object> mo = std::make_shared<Map_object>("../textures/cube.png", "../textures/cube_act.png", vertices,
+                                                                  CUBE, 1, h, h);
+    //label.draw();
+    //label.set_object(mo);
+    //label.draw();
+    //ASSERT_EQ(label.get_object(), mo);
 
 
 }
