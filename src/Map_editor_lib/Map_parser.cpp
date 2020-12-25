@@ -1,6 +1,6 @@
 #include "Map_editor_lib/Map_parser.h"
 
-std::string Map_parser::create_json(std::vector<Map_object> &map) {
+std::string Map_parser::create_json(std::vector<Map_object> &map) const {
     std::string file_name="filename.json";
     pt::ptree tree;
 
