@@ -19,7 +19,7 @@ public:
     Map_parser(unsigned int h, unsigned int w):
     height(h), width(w){};
     ~Map_parser()= default;
-    std::string create_json(std::vector<Map_object> &map);
+    std::string create_json(std::vector<Map_object> &map) const;
 private:
     unsigned int height, width;
 };

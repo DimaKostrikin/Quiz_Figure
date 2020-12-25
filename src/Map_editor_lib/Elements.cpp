@@ -1,4 +1,3 @@
-#include "Map_editor_lib/Interface.h"
 #include "Map_editor_lib/Elements.h"
 
 //генерация текстуры
@@ -142,25 +141,25 @@ Map_object &Map_object::operator=(const Map_object &elem) {
     return *this;
 }
 
-bool Map_object::is_activator() {
+bool Map_object::is_activator() const {
     return ((type == HOLE) || (type == STEP));
 }
 
-bool Map_object::is_activated() {
+bool Map_object::is_activated() const {
     return ((type == DOOR) || (type == BUTTON) || (type == FINISH)
     || (type == TELEPORT_IN));
 }
 
-bool Map_object::is_dynamic() {
+bool Map_object::is_dynamic() const {
     return ((type == CUBE) || (type == BALL));
 }
 
-bool Map_object::is_static() {
+bool Map_object::is_static() const {
     return ((type == PLATFORM) || (type == WALL));
 }
 
 //
-bool Map_object::is_connected() {
+bool Map_object::is_connected() const {
     return (type == JUMPER);
 }
 
@@ -178,16 +177,16 @@ void Map_object::down_z() {
 
 void Map_object::plus_width(float &rborder, float &lborder, float &tborder, float &bborder, const unsigned int &w) {
     if (check_border(rborder, lborder, tborder, bborder)) {
-        vertices[0] += 0.01f;
-        vertices[8] += 0.01f;
-        vertices[16] -= 0.01f;
-        vertices[24] -= 0.01f;
-    } else if (!check_border_right(rborder) && check_border_left(lborder)){
-        vertices[16] -= 0.01f;
-        vertices[24] -= 0.01f;
-    } else if (!check_border_left(lborder) && check_border_right(rborder)){
-        vertices[0] += 0.01f;
-        vertices[8] += 0.01f;
+        vertices[1] += 0.01f;
+        vertices[9] -= 0.01f;
+        vertices[17] -= 0.01f;
+        vertices[25] += 0.01f;
+    } else if (!check_border_up(rborder) && check_border_down(lborder)){
+        vertices[9] -= 0.01f;
+        vertices[17] -= 0.01f;
+    } else if (!check_border_down(lborder) && check_border_up(rborder)){
+        vertices[1] += 0.01f;
+        vertices[25] += 0.01f;
     }
     change_w(w);
 
@@ -195,26 +194,26 @@ void Map_object::plus_width(float &rborder, float &lborder, float &tborder, floa
 
 void Map_object::minus_width(const unsigned int &w) {
     if (check_elem()) {
-        vertices[0] -= 0.01f;
-        vertices[8] -= 0.01f;
-        vertices[16] += 0.01f;
-        vertices[24] += 0.01f;
+        vertices[1] -= 0.01f;
+        vertices[9] += 0.01f;
+        vertices[17] += 0.01f;
+        vertices[25] -= 0.01f;
         change_w(w);
     }
 }
 
 void Map_object::plus_length(float &rborder, float &lborder, float &tborder, float &bborder, const unsigned int &h) {
     if (check_border(rborder, lborder, tborder, bborder)) {
-        vertices[1] += 0.01f;
-        vertices[9] -= 0.01f;
-        vertices[17] -= 0.01f;
-        vertices[25] += 0.01f;
-    } else if (!check_border_up(tborder) && check_border_down(bborder)){
-        vertices[9] -= 0.01f;
-        vertices[17] -= 0.01f;
-    } else if (!check_border_down(bborder) && check_border_up(tborder)){
-        vertices[1] += 0.01f;
-        vertices[25] += 0.01f;
+        vertices[0] += 0.01f;
+        vertices[8] += 0.01f;
+        vertices[16] -= 0.01f;
+        vertices[24] -= 0.01f;
+    } else if (!check_border_left(tborder) && check_border_right(bborder)){
+        vertices[0] += 0.01f;
+        vertices[8] += 0.01f;
+    } else if (!check_border_right(bborder) && check_border_left(tborder)){
+        vertices[16] -= 0.01f;
+        vertices[24] -= 0.01f;
     }
     change_l(h);
 
@@ -222,10 +221,10 @@ void Map_object::plus_length(float &rborder, float &lborder, float &tborder, flo
 
 void Map_object::minus_length(const unsigned int &h) {
     if (check_elem()) {
-        vertices[1] -= 0.01f;
-        vertices[9] += 0.01f;
-        vertices[17] += 0.01f;
-        vertices[25] -= 0.01f;
+        vertices[0] -= 0.01f;
+        vertices[8] -= 0.01f;
+        vertices[16] += 0.01f;
+        vertices[24] += 0.01f;
         change_l(h);
     }
 }
@@ -254,16 +253,16 @@ bool Map_object::check_border(float &rborder, float &lborder, float &tborder, fl
             && check_border_right(rborder) && check_border_up(tborder));
 }
 
-void Map_object::change_w(const unsigned int &w) {
-    double x1 = (vertices[16] + 0.7f) * (w / 2);
-    double x2 = (vertices[0] + 0.7f ) * (w / 2);
-    this->w = floor(x2 - x1);
-}
-
-void Map_object::change_l(const unsigned int &h) {
+void Map_object::change_w(const unsigned int &h) {
     double y1 = (0.7f - vertices[1]) * (h / 2);
     double y2 = (0.7f - vertices[9]) * (h / 2);
-    this->l = floor(y2 - y1);
+    this->w = floor(y2 - y1);
+}
+
+void Map_object::change_l(const unsigned int &w) {
+    double x1 = (0.7f + vertices[16]) * (w / 2);
+    double x2 = (0.7f + vertices[0]) * (w / 2);
+    this->l = floor(x2 - x1);
 }
 
 void Map_object::change_x(const unsigned int &w) {
