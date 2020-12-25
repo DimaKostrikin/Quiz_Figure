@@ -6,7 +6,7 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
 
     const size_t MAP_SIZE = 1000;
 
-    std::string text[20];
+    std::string text[22];
     text[0] = "SAVE";
     text[1] = "DELETE";
     text[2] = "PLAYER";
@@ -23,10 +23,12 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) {
     text[13] = "BUTTON";
     text[14] = "STEP";
     text[15] = "HOLE";
-    text[16] = "TELEPORT_IN";
-    text[17] = "TELEPORT_OUT";
-    text[18] = "LASER";
-    text[19] = "JUMPER";
+    text[16] = "FAN";
+    text[17] = "TELEPORT";
+    text[18] = "TELEPORT_IN";
+    text[19] = "TELEPORT_OUT";
+    text[20] = "LASER";
+    text[21] = "JUMPER";
 
     std::valarray<pt::ptree> children (COUNT);
     for (auto &i: map){
