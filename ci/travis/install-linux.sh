@@ -10,13 +10,15 @@ sudo apt-get update
 sudo apt-get install build-essential tar curl zip unzip
 
 sudo apt install valgrind
+sudo apt-get install -y xorg-dev
 sudo apt-get install mesa-common-dev
 sudo apt-get install freeglut3-dev
 sudo apt-get install libglm-dev
 sudo apt-get install libboost-dev
 sudo apt-get install libassimp-dev
 sudo apt install assimp-utils
-sudo apt-get install -y xorg-dev
+ls -la /usr/lib/x86_64-linux-gnu/
+ls -la /usr/share/doc/
 
 
 CMAKE_VERSION=3.1
