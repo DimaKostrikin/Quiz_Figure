@@ -1,11 +1,11 @@
 #include "Map_editor_lib/Levels.h"
 #include "Features_lib/Logic_manager.h"
 
+// by DimaKostrikin
+
 const float coord = 0.2f;
 const int num_of_levels = 5;
 bool state = false;
-
-
 
 std::vector<float> vertices_levels {
         // координаты          // цвета           // текстурные координаты

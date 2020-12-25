@@ -4,7 +4,7 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) const {
     std::string file_name="filename.json";
     pt::ptree tree;
 
-    const size_t MAP_SIZE = 100000;
+    const size_t MAP_SIZE = 1000;
 
     std::string text[22];
     text[0] = "save";

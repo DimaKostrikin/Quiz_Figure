@@ -1,5 +1,8 @@
 #include "Map_editor_lib/Interface.h"
 
+
+// edited by DimaKostrikin
+
 int Interface::cycle() {
     int choose = processInput();
 
@@ -20,9 +23,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
     glViewport(0, 0, width, height);
 }
 
-Interface::~Interface() {
-
-}
+Interface::~Interface() = default;
 
 Interface::Interface() {
     // glfw: инициализация и конфигурирование
@@ -44,7 +45,6 @@ Interface::Interface() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
-
 
     menu = std::make_shared<Menu>(window);
     levels = std::make_shared<Levels>(window);
