@@ -588,7 +588,7 @@ void Handler_physics::player_update() {
     new_center.z = player.get_speed().z * passed_time + player.get_center().z;
     player.set_center(new_center);
 
-    if(glfwGetKey(window,GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && player.get_status()) {  // Тут точно != ?
+    if(glfwGetKey(window,GLFW_KEY_E) != GLFW_PRESS && player.get_status()) {  // Тут точно != ?
         auto els = dyn_elems.begin();
         for(els; els != dyn_elems.end(); els++){
             drop_object(els);
@@ -597,7 +597,10 @@ void Handler_physics::player_update() {
    float coll_type = 0;
     auto el = dyn_elems.begin();
     for(el; el != dyn_elems.end(); el++) {
-        if(glfwGetKey(window,GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && look_at(el) && !player.get_status()) {
+        if(glfwGetKey(window,GLFW_KEY_E) == GLFW_PRESS) {
+            std::cout << "got click" << std::endl;
+        }
+        if(glfwGetKey(window,GLFW_KEY_E) == GLFW_PRESS && look_at(el) && !player.get_status()) {
             take_object(el);
         }
         coll_type = player_collision(el);
