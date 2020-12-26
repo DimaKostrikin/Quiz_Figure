@@ -49,8 +49,7 @@ void Logic_manager::start_game(const std::string &level_path) {
     std::list<Object_activator> obj_actor;
     std::list<Object_influence> obj_infl;
 
-    glm::vec3 nullvec = {0,0,0};
-    obj_acted.emplace_back(0, nullvec, nullvec);
+
 
     // Стандартные значения характеристик для игрока
     glm::vec3 default_player_center = {5, 5, 30};

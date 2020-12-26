@@ -25,3 +25,4 @@ cmake-build-debug/
 Quiz_Figure
 *.layout
 *.cbp
+resources/

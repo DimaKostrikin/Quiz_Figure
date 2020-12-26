@@ -32,13 +32,16 @@ private:
     float _yangle = 0.f;
     float _zangle = 0.f;
 
-    void load_model(std::string const &path);
+    bool load_model(std::string const &path);
     void process_node(aiNode *node, const aiScene *scene);
     Mesh process_mesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> load_material_textures(aiMaterial *mat, aiTextureType type, std::string typeName);
 public:
     Model();
     Model(char *path);
+    void reload_model(char* path);
+    void add_model(char* path);
+    void update_model(int type_elem);
     void draw(Shader &shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source = false);
     unsigned int texture_from_file(const char *path, const std::string &directory, bool gamma = false);
     void set_xpos(float xpos);
