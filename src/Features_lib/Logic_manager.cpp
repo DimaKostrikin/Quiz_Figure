@@ -52,7 +52,7 @@ void Logic_manager::start_game(const std::string &level_path) {
 
 
     // Стандартные значения характеристик для игрока
-    glm::vec3 default_player_center = {5, 5, 30};
+    glm::vec3 default_player_center = {1, 2, 3};
     glm::vec3 default_player_size = {0.5, 0.5, 0.5};
 
 
@@ -66,8 +66,7 @@ void Logic_manager::start_game(const std::string &level_path) {
     auto &hand_feat = Handler_feature::instance(obj_acted, obj_actor, obj_dyn, obj_infl, player);
 
 
-    double deltaTime = 0;
-    double lastFrame = 0;
+
 
 
     Render_manager render_mng(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);
@@ -94,10 +93,27 @@ void Logic_manager::start_game(const std::string &level_path) {
         point_lights.push_back(Point_light(pointLightPositions[i]));
     }
 
+    double lastFrame = 0;
+    double currentFrame = glfwGetTime();
+    double deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+
     while (!glfwWindowShouldClose(window)) {  // TODO main cycle
-        double currentFrame = glfwGetTime();
+
+        currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        if (deltaTime > 0.01) {
+            deltaTime = 0.01;
+        }
+        for (auto it = obj_dyn.begin(); it != obj_dyn.end(); ++it) {
+            if (it->get_elem_type() == BALL && it->get_center().z < 10)  {
+                // std::cout << it->get_center().z << std::endl;
+                //std::cout << it->get_speed().z << "time is " << deltaTime << std::endl;
+            }
+            it->update_model();
+        }
 
         hand_feat.do_logic(deltaTime);  // Эвенты
 
@@ -105,10 +121,7 @@ void Logic_manager::start_game(const std::string &level_path) {
         hand_phys.update(deltaTime);  // Физика
         render_mng.process_render(window, ourShader, point_lights);  // Отрисовка
 
-        for (auto it = obj_dyn.begin(); it != obj_dyn.end(); ++it) {
-            //std::cout << it->get_center() << std::endl;
-            it->update_model();
-        }
+
 
         render_mng.get_camera().Position.x = (float)player.get_center().x;
 
@@ -118,6 +131,7 @@ void Logic_manager::start_game(const std::string &level_path) {
 
 
         hand_phys.camera = render_mng.get_camera().Front;
+
     }
 }
 
