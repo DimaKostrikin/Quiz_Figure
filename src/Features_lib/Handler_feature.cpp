@@ -41,8 +41,10 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
     float event_radius_obj = sqrt(diff_x_obj * diff_x_obj + diff_y_obj * diff_y_obj);
     float event_radius_pl = sqrt(diff_x_pl * diff_x_pl + diff_y_pl * diff_y_pl);
 
+    int act_type = obj_a->get_elem_type();
 
-    if (obj_a->get_elem_type() == BUTTON) {  // Обработка нажатия на кнопку
+
+    if (act_type  == BUTTON) {  // Обработка нажатия на кнопку
         float a_radius = obj_a->get_size().r * 1.1;  // Радиусы активации, зависящие от типа элемента. Настраиваемые.
         float a_height = obj_a->get_size().z + 0.3;
 
@@ -56,7 +58,7 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
         }
     }
 
-    if (obj_a->get_elem_type() == FAN) {  // Обработка попадания в зону вентилятора
+    if (act_type  == FAN) {  // Обработка попадания в зону вентилятора
         float a_radius = obj_a->get_size().r * 1.1;
 
         float a_height = 5;
@@ -74,7 +76,7 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
         }
     }
 
-    if (obj_a->get_elem_type() == JUMPER) {  // TODO сделать функции определяющие расстояния
+    if (act_type  == JUMPER) {  // TODO сделать функции определяющие расстояния
         float a_radius = obj_a->get_size().r + 0.05;  // Радиусы активации, зависящие от типа элемента. Настраиваемые.
         float a_height = obj_a->get_size().z + 0.4;
 
@@ -88,7 +90,7 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
         }
     }
 
-    if (obj_a->get_elem_type() == TELEPORT_IN) {
+    if (act_type == TELEPORT_IN) {
         float a_radius = 1.1;  // TODO поменять радиусы
         float a_height = 1.1;
 
@@ -103,6 +105,16 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
             player.get_center().x = obj_a->get_linked_object()->get_center().x;
             player.get_center().y = obj_a->get_linked_object()->get_center().y;
             player.get_center().z = obj_a->get_linked_object()->get_center().z + obj_a->get_linked_object()->get_size().z;
+        }
+    }
+
+    if (act_type == FINISH) {
+        float a_radius = obj_a->get_size().r + 0.1;
+        float a_height = obj_a->get_size().z + 0.2;
+
+        if (event_radius_pl < a_radius && diff_z_pl < a_height) {  // TODO процедура завершения
+            player.get_speed().z += 20;
+            std::cout << "YOU WON!" << std::endl;  // тупа затичка
         }
     }
 }

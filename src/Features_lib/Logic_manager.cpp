@@ -49,25 +49,24 @@ void Logic_manager::start_game(const std::string &level_path) {
     std::list<Object_activator> obj_actor;
     std::list<Object_influence> obj_infl;
 
-
-
     // Стандартные значения характеристик для игрока
     glm::vec3 default_player_center = {1, 2, 3};
     glm::vec3 default_player_size = {0.5, 0.5, 0.5};
 
+    for (auto it = obj_stat.begin(); it!=obj_stat.end(); ++it) {  // Поиск позиции старта, если таковой нет, игрок заспавнится на стандартном месте
+        if (it->get_elem_type() == START) {
+            default_player_center = it->get_center();
+            default_player_center.z += 0.5;
+        }
+    }
 
     Player player(default_player_center, default_player_size);  // Инициализация игрока
-
 
     Parser p(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);  // Создание парсера для загрузки уровня
     p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
 
     // Хендлер фич, обработка внутриигровых эвентов
     auto &hand_feat = Handler_feature::instance(obj_acted, obj_actor, obj_dyn, obj_infl, player);
-
-
-
-
 
     Render_manager render_mng(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);
     Shader ourShader("Shader_files/shader.vs", "Shader_files/shader.fs");
@@ -98,8 +97,8 @@ void Logic_manager::start_game(const std::string &level_path) {
     double deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
-    while (!glfwWindowShouldClose(window)) {  // TODO main cycle
 
+    while (!glfwWindowShouldClose(window)) {
         currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -108,30 +107,19 @@ void Logic_manager::start_game(const std::string &level_path) {
             deltaTime = 0.01;
         }
         for (auto it = obj_dyn.begin(); it != obj_dyn.end(); ++it) {
-            if (it->get_elem_type() == BALL && it->get_center().z < 10)  {
-                // std::cout << it->get_center().z << std::endl;
-                //std::cout << it->get_speed().z << "time is " << deltaTime << std::endl;
-            }
             it->update_model();
         }
 
         hand_feat.do_logic(deltaTime);  // Эвенты
 
-
         hand_phys.update(deltaTime);  // Физика
         render_mng.process_render(window, ourShader, point_lights);  // Отрисовка
 
-
-
         render_mng.get_camera().Position.x = (float)player.get_center().x;
-
         render_mng.get_camera().Position.z = (float)player.get_center().y;
-
         render_mng.get_camera().Position.y = (float)player.get_center().z;
 
-
         hand_phys.camera = render_mng.get_camera().Front;
-
     }
 }
 
