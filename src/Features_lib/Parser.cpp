@@ -29,6 +29,8 @@ Parser::Parser(std::list<Object_dynamic> &obj_dyn,
     names_static.emplace_back("lights");
     names_static.emplace_back("platforms");
     names_static.emplace_back("stairs");
+    names_static.emplace_back("start");
+
 
     names_dynamic.emplace_back("cubes");
     names_dynamic.emplace_back("balls");
@@ -41,6 +43,8 @@ Parser::Parser(std::list<Object_dynamic> &obj_dyn,
     names_actor.emplace_back("holes");
     names_actor.emplace_back("jumpers");
     names_actor.emplace_back("buttons");
+    names_actor.emplace_back("finish");
+
 }
 
 void Parser::fill_from(std::string path_to_json) {
@@ -112,6 +116,12 @@ int Parser::get_elem_enum(const std::string &elem_type) {
 
     if (elem_type == "teleports-out")
         elem_enum = TELEPORT_OUT;
+
+    if (elem_type == "start")
+        elem_enum = START;
+
+    if (elem_type == "finish")
+        elem_enum = FINISH;
 
     return elem_enum;
 }
@@ -299,7 +309,6 @@ void Parser::fill_actor(const std::string &elem_type) {
                     Object_activator emplaced(elem_enum, p, sz, &*it);
                     emplaced.get_id() = id;
                     obj_actor.push_back(emplaced);
-
                     break;
                 }
             }
