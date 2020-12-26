@@ -194,3 +194,17 @@ void Object_activator::deactivate_linked_object() {
 Object_activated *Object_activator::get_linked_object() {
     return linked_object;
 }
+
+void Object_activator::change_model() {
+    if (linked_object->is_activated() && !linked_model_is_changed) {
+        linked_object->get_model().set_xpos(linked_object->get_model().get_xpos() - 0.05);
+        linked_object->get_model().set_zpos(linked_object->get_model().get_zpos() + 0.05);
+        linked_object->get_model().set_yangle(90);
+        linked_model_is_changed = true;
+    } else if (!linked_object->is_activated() && linked_model_is_changed) {
+        linked_object->get_model().set_xpos(linked_object->get_center().x);
+        linked_object->get_model().set_zpos(linked_object->get_center().z);
+        linked_object->get_model().set_yangle(0);
+        linked_model_is_changed = false;
+    }
+}

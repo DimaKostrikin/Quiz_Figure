@@ -578,6 +578,7 @@ bool Handler_physics::look_at(std::list<Object_dynamic>::iterator &dyn) {
 
 }
 
+
 void Handler_physics::player_update() {
     player_speed_change();
     glm::vec3 old_center = player.get_center();
