@@ -43,14 +43,16 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
 
 
     if (obj_a->get_elem_type() == BUTTON) {  // Обработка нажатия на кнопку
-        float a_radius = 1.1;  // Радиусы активации, зависящие от типа элемента. Настраиваемые.
-        float a_height = 1.1;
+        float a_radius = obj_a->get_size().r * 1.1;  // Радиусы активации, зависящие от типа элемента. Настраиваемые.
+        float a_height = obj_a->get_size().z + 0.3;
 
 
         if ((event_radius_obj < a_radius && diff_z_obj < a_height) || (event_radius_pl < a_radius && diff_z_pl < a_height)) {
             obj_a->activate_linked_object();
+            obj_a->change_model();
         } else {
             obj_a->deactivate_linked_object();
+            obj_a->change_model();
         }
     }
 
@@ -62,6 +64,7 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
 
         if (event_radius_obj < a_radius && diff_z_obj < a_height) {
             acceleration_coeff = (a_height - diff_z_obj) / a_height;
+            std::cout << event_radius_obj << "  " << a_radius << std::endl;
             obj_d->get_speed().z += acceleration_coeff * elapsed_time * 10; // TODO коэффициент скорости отладить
         }
 

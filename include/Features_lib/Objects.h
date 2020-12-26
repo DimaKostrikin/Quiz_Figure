@@ -131,12 +131,14 @@ public:
 
 class Object_activator : public Object_activated {
     Object_activated *linked_object;
+    bool linked_model_is_changed = false;
 public:
     Object_activator(const int& elem_type, glm::vec3& c, glm::vec3& sz, Object_activated *linked_object);
     ~Object_activator() = default;
     void activate_linked_object();
     void deactivate_linked_object();
     Object_activated *get_linked_object();
+    void change_model();
 };
 
 #endif //OBJECTS_H

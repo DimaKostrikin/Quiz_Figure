@@ -1,7 +1,7 @@
 #include "Physics_lib/classes.h"
 
 
-#define SPEED_ERROR 0.05
+#define SPEED_ERROR 0.65
 #define X_COLLISION 1
 #define Y_COLLISION 2
 #define Z_COLLISION 3
@@ -244,49 +244,46 @@ int Handler_physics::player_collision(std::list<Object_dynamic>::iterator &dyn) 
 int Handler_physics::collision(std::list<Object_dynamic>::iterator &first, std::list<Object_static>::iterator &second) {
     glm::vec3 new_center = first->get_center();
     auto cmp = [](float x,float y,float a,float b) {return (x - y / 2 < a + b / 2) && (x + y / 2 > a - b / 2);};
-    if(cmp(first->get_center().x, first->get_size().x, second->get_center().x, second->get_size().x) &&
-       cmp(first->get_center().y, first->get_size().y, second->get_center().y, second->get_size().y) &&
-       cmp(first->get_center().z, first->get_size().z, second->get_center().z, second->get_size().z)) {
-        float range = abs(first->get_center().x - second->get_center().x);
-        float characteristics = second->get_size().x / 2;//Длина всегда по x
-        if (range > characteristics) {
-            if(second->get_center().x - first->get_center().x > 0) {
-                new_center.x = second->get_center().x - second->get_size().x / 2 - first->get_size().x / 2;
-                first->set_center(new_center);
+        if (cmp(first->get_center().x, first->get_size().x, second->get_center().x, second->get_size().x) &&
+            cmp(first->get_center().y, first->get_size().y, second->get_center().y, second->get_size().y) &&
+            cmp(first->get_center().z, first->get_size().z, second->get_center().z, second->get_size().z)) {
+            float range = abs(first->get_center().x - second->get_center().x);
+            float characteristics = second->get_size().x / 2;//Длина всегда по x
+            if (range > characteristics) {
+                if (second->get_center().x - first->get_center().x > 0) {
+                    new_center.x = second->get_center().x - second->get_size().x / 2 - first->get_size().x / 2;
+                    first->set_center(new_center);
+                } else {
+                    new_center.x = second->get_center().x + second->get_size().x / 2 + first->get_size().x / 2;
+                    first->set_center(new_center);
+                }
+                return X_COLLISION;
             }
-            else {
-                new_center.x = second->get_center().x + second->get_size().x / 2 + first->get_size().x / 2;
-                first->set_center(new_center);
+            range = abs(first->get_center().y - second->get_center().y);
+            characteristics = second->get_size().y / 2;//Ширина всегда по y
+            if (range > characteristics) {
+                if (second->get_center().y - first->get_center().y > 0) {
+                    new_center.y = second->get_center().y - second->get_size().y / 2 - first->get_size().y / 2;
+                    first->set_center(new_center);
+                } else {
+                    new_center.y = second->get_center().y + second->get_size().y / 2 + first->get_size().y / 2;
+                    first->set_center(new_center);
+                }
+                return Y_COLLISION;
             }
-            return X_COLLISION;
+            range = abs(first->get_center().z - second->get_center().z);
+            characteristics = second->get_size().z / 2;//Высота всегда по z
+            if (range > characteristics) {
+                if (second->get_center().z - first->get_center().z > 0) {
+                    new_center.z = second->get_center().z - second->get_size().z / 2 - first->get_size().z / 2;
+                    first->set_center(new_center);
+                } else {
+                    new_center.z = second->get_center().z + second->get_size().z / 2 + first->get_size().z / 2;
+                    first->set_center(new_center);
+                }
+                return Z_COLLISION;
+            }
         }
-        range = abs(first->get_center().y - second->get_center().y);
-        characteristics = second->get_size().y / 2;//Ширина всегда по y
-        if (range > characteristics) {
-            if(second->get_center().y - first->get_center().y > 0) {
-                new_center.y = second->get_center().y - second->get_size().y / 2 - first->get_size().y / 2;
-                first->set_center(new_center);
-            }
-            else {
-                new_center.y = second->get_center().y + second->get_size().y / 2 + first->get_size().y / 2;
-                first->set_center(new_center);
-            }
-            return Y_COLLISION;
-        }
-        range = abs(first->get_center().z - second->get_center().z);
-        characteristics = second->get_size().z / 2;//Высота всегда по z
-        if (range > characteristics) {
-            if(second->get_center().z - first->get_center().z > 0) {
-                new_center.z = second->get_center().z - second->get_size().z / 2 - first->get_size().z / 2;
-                first->set_center(new_center);
-            }
-            else {
-                new_center.z = second->get_center().z + second->get_size().z / 2 + first->get_size().z / 2;
-                first->set_center(new_center);
-            }
-            return Z_COLLISION;
-        }
-    }
     return false;
 }
 
@@ -478,6 +475,7 @@ void Handler_physics::position_change(std::list<Object_dynamic>::iterator &dyn) 
             coll_speed_change_dyn(dyn, el);
         }
     }
+    dyn->set_on_floor(false);
     for(auto k = stat_elems.begin(); k != stat_elems.end(); k++) {
         col_type = collision(dyn, k);
         if(col_type) {
@@ -560,7 +558,7 @@ void Handler_physics::player_speed_change() {
     if(!player.get_on_floor()) {
         new_speed.z = player.get_speed().z - Z_ACCELERATION * passed_time;
     }
-    if((glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS) || (glfwGetKey(window,GLFW_KEY_B) == GLFW_PRESS) && player.get_on_floor()) {
+    if(((glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS) || (glfwGetKey(window,GLFW_KEY_B) == GLFW_PRESS)) && player.get_on_floor()) {
         new_speed.z = PLAYER_SPEED;
         player.set_on_floor(false);
     }
@@ -579,6 +577,7 @@ bool Handler_physics::look_at(std::list<Object_dynamic>::iterator &dyn) {
     return false;
 
 }
+
 
 void Handler_physics::player_update() {
     player_speed_change();
