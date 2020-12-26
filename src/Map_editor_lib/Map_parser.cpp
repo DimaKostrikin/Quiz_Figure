@@ -4,7 +4,7 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) const {
     std::string file_name="filename.json";
     pt::ptree tree;
 
-    const size_t MAP_SIZE = 1000;
+    const float MAP_SIZE = SCR_HEIGHT / 300;
 
     std::string text[22];
     text[0] = "save";
@@ -30,11 +30,22 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) const {
     text[20] = "lasers";
     text[21] = "jumpers";
 
+    pt::ptree child;
+
     std::valarray<pt::ptree> children (COUNT);
+    child.put("x", 0);
+    child.put("y",0);
+    child.put("z", 0);
+    child.put("length", 50);
+    child.put("width", 50);
+    child.put("height", 0.1);
+    children[WALL].push_back(std::make_pair("", child));
+
     for (auto &i: map){
         pt::ptree child1, child2;
         switch (i.type){
             case WALL_STATIC:
+                i.type = WALL;
             case WALL:
             case HOLE:
             case PLATFORM:
@@ -42,19 +53,19 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) const {
             case TELEPORT_OUT:
             case CUBE:
             case JUMPER:{
-                size_t x = MAP_SIZE * i.x / width;
-                size_t y = MAP_SIZE * i.y / height;
-                size_t z = MAP_SIZE * i.z / height;
-                size_t l = MAP_SIZE * i.l / height;
-                size_t w = MAP_SIZE * i.w / width;
-                size_t h = MAP_SIZE * i.h / height;
+                float x = MAP_SIZE * i.x / width;
+                float y = MAP_SIZE * i.y / height;
+                float z = MAP_SIZE * i.z / height;
+                float l = MAP_SIZE * i.l / height;
+                float w = MAP_SIZE * i.w / width;
+                float h = MAP_SIZE * i.h / height;
                 child1.put("id", i.id);
-                child1.put("x", x);
-                child1.put("y", y);
-                child1.put("z", z);
-                child1.put("length", l);
-                child1.put("width", w);
-                child1.put("height", h);
+                child1.put("x", std::to_string(x));
+                child1.put("y", std::to_string(y));
+                child1.put("z", std::to_string((z+h)/2));
+                child1.put("length", std::to_string(l));
+                child1.put("width", std::to_string(w));
+                child1.put("height", std::to_string(h));
                 child1.put("act_id", i.connect);
                 children[i.type].push_back(std::make_pair("", child1));
                 //
@@ -64,13 +75,13 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) const {
             case FINISH:
                 child1.put("act_id", i.connect);
             case START:{
-                size_t x = MAP_SIZE * i.x / width;
-                size_t y = MAP_SIZE * i.y / height;
-                size_t z = MAP_SIZE * i.z / height;
+                float x = MAP_SIZE * i.x / width;
+                float y = MAP_SIZE * i.y / height;
+                float z = MAP_SIZE * i.z / height;
                 child1.put("id", i.id);
-                child1.put("x", x);
-                child1.put("y", y);
-                child1.put("z", z);
+                child1.put("x", std::to_string(x));
+                child1.put("y", std::to_string(y));
+                child1.put("z", std::to_string(z));
                 children[i.type].push_back(std::make_pair("", child1));
                 //
             }
