@@ -176,7 +176,7 @@ void Object_activated::deactivate() {
 Object_activator::Object_activator(const int &elem_type,
                                    glm::vec3 &c,
                                    glm::vec3 &sz,
-                                   std::list<Object_activated>::iterator &linked_object)
+                                   Object_activated *linked_object)
         : Object_activated(elem_type, c, sz), linked_object(linked_object)
  {}
 
@@ -188,6 +188,6 @@ void Object_activator::deactivate_linked_object() {
     linked_object->deactivate();
 }
 
-std::list<Object_activated>::iterator &Object_activator::get_linked_object() {
+Object_activated *Object_activator::get_linked_object() {
     return linked_object;
 }

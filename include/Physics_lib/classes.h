@@ -11,12 +11,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#define Z_ACCELERATION 0.98
+#define Z_ACCELERATION 3.5
 #define WINDAGE 20
 #define FRICTION 100
 #define LOSS_RATE 0.7
 #define PLAYER_SPEED 2
-#define PLAYER_RANGE 2000
+#define PLAYER_RANGE 2
 
 void print_speed(glm::vec3& speed);
 
