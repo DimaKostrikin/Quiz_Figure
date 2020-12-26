@@ -50,7 +50,7 @@ class Object {  // Базовый класс объектов
 protected:
     glm::vec3 center;
     unsigned int elem_type;
-    unsigned int id;
+    unsigned int id = 0;
 public:
     Object(unsigned int elem_type, glm::vec3& c);
     virtual ~Object() = default;
@@ -130,13 +130,13 @@ public:
 };
 
 class Object_activator : public Object_activated {
-    std::list<Object_activated>::iterator &linked_object;
+    Object_activated *linked_object;
 public:
-    Object_activator(const int& elem_type, glm::vec3& c, glm::vec3& sz, std::list<Object_activated>::iterator &linked_object);
+    Object_activator(const int& elem_type, glm::vec3& c, glm::vec3& sz, Object_activated *linked_object);
     ~Object_activator() = default;
     void activate_linked_object();
     void deactivate_linked_object();
-    std::list<Object_activated>::iterator &get_linked_object();
+    Object_activated *get_linked_object();
 };
 
 #endif //OBJECTS_H

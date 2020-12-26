@@ -28,7 +28,7 @@ Parser::Parser(std::list<Object_dynamic> &obj_dyn,
     names_static.emplace_back("walls");
     names_static.emplace_back("lights");
     names_static.emplace_back("platforms");
-    //names_static.emplace_back("stairs");
+    names_static.emplace_back("stairs");
 
     names_dynamic.emplace_back("cubes");
     names_dynamic.emplace_back("balls");
@@ -39,6 +39,8 @@ Parser::Parser(std::list<Object_dynamic> &obj_dyn,
     names_actor.emplace_back("teleports-in");
     names_actor.emplace_back("teleports-out");
     names_actor.emplace_back("holes");
+    names_actor.emplace_back("jumpers");
+    names_actor.emplace_back("buttons");
 }
 
 void Parser::fill_from(std::string path_to_json) {
@@ -72,6 +74,9 @@ int Parser::get_elem_enum(const std::string &elem_type) {
     if (elem_type == "walls")
         elem_enum = WALL;
 
+    if (elem_type == "fans")
+        elem_enum = FAN;
+
     if (elem_type == "platform")
         elem_enum = PLATFORM;
 
@@ -99,6 +104,9 @@ int Parser::get_elem_enum(const std::string &elem_type) {
     if (elem_type == "holes")
         elem_enum = HOLE;
 
+    if (elem_type == "jumpers")
+        elem_enum = JUMPER;
+
     return elem_enum;
 }
 
@@ -119,7 +127,6 @@ void Parser::fill_static(const std::string &elem_type) {
     if (child) {
         for (auto &wall : pt_json.get_child(elem_type)) {
             for (auto &con : wall.second.get_child("")) {
-                std::cout << con.first << ": " << con.second.data() << std::endl;
                 if (con.first == "id")
                     id = con.second.get_value<float>();
 
@@ -161,7 +168,6 @@ void Parser::fill_dynamic(const std::string &elem_type) {
     if (child) {
         for (auto &wall : pt_json.get_child(elem_type)) {
             for (auto &con : wall.second.get_child("")) {
-                std::cout << con.first << ": " << con.second.data() << std::endl;
                 if (con.first == "id")
                     id = con.second.get_value<float>();
 
@@ -183,7 +189,7 @@ void Parser::fill_dynamic(const std::string &elem_type) {
                 if (con.first == "length")
                     sz.x = con.second.get_value<float>();
 
-                if (con.first == "length")
+                if (con.first == "dx")
                     speed.x = con.second.get_value<float>();
 
                 if (con.first == "dy")
@@ -212,7 +218,6 @@ void Parser::fill_acted(const std::string &elem_type) {
     if (child) {
         for (auto &wall : pt_json.get_child(elem_type)) {
             for (auto &con : wall.second.get_child("")) {
-                std::cout << con.first << ": " << con.second.data() << std::endl;
                 if (con.first == "id")
                     id = con.second.get_value<float>();
 
@@ -256,12 +261,11 @@ void Parser::fill_actor(const std::string &elem_type) {
     if (child) {
         for (auto &wall : pt_json.get_child(elem_type)) {
             for (auto &con : wall.second.get_child("")) {
-                std::cout << con.first << ": " << con.second.data() << std::endl;
                 if (con.first == "id")
-                    id = con.second.get_value<float>();
+                    id = con.second.get_value<int>();
 
                 if (con.first == "act_id")
-                    act_id = con.second.get_value<float>();
+                    act_id = con.second.get_value<int>();
 
                 if (con.first == "x")
                     p.x = con.second.get_value<float>();
@@ -284,10 +288,13 @@ void Parser::fill_actor(const std::string &elem_type) {
             int elem_enum = get_elem_enum(elem_type);
 
             for (auto it = obj_acted.begin(); it != obj_acted.end(); ++it) {
+
                 if (it->get_id() == act_id) {
-                    Object_activator emplaced(elem_enum, p, sz, it);
+                    Object_activator emplaced(elem_enum, p, sz, &*it);
                     emplaced.get_id() = id;
                     obj_actor.push_back(emplaced);
+
+                    break;
                 }
             }
         }

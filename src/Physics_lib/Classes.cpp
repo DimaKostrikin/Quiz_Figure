@@ -1,7 +1,7 @@
 #include "Physics_lib/classes.h"
 
 
-#define SPEED_ERROR 100
+#define SPEED_ERROR 0.05
 #define X_COLLISION 1
 #define Y_COLLISION 2
 #define Z_COLLISION 3
@@ -315,7 +315,7 @@ int Handler_physics::collision_player(std::list<Object_static>::iterator &second
 }
 
 int Handler_physics::collision_act(std::list<Object_dynamic>::iterator &first, std::list<Object_activated>::iterator &second) {
-    if(second->get_elem_type() == DOOR && second->is_activated()) { //Не знаю реализацию, надо пофиксить
+    if(second->get_elem_type() == DOOR && second->is_activated()) { //Не знаю реализацию, надо пофиксить <теперь знаешь, пофиксил>
         return false;
     }
     glm::vec3 new_center = first->get_center();
