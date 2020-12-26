@@ -12,8 +12,8 @@
 #include <GLFW/glfw3.h>
 
 #define Z_ACCELERATION 3.5
-#define WINDAGE 20
-#define FRICTION 100
+#define WINDAGE 0.2
+#define FRICTION 0.1
 #define LOSS_RATE 0.7
 #define PLAYER_SPEED 2
 #define PLAYER_RANGE 2

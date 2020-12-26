@@ -8,19 +8,19 @@
       "z" : 0,
       "length" : 50,
       "width" : 50,
-      "height" : 0.1
+      "height" : 0.3
     }
   ],
   "cubes":
   [
     {
       "id" : 0,
-      "x" : 5,
-      "y" : 0,
-      "z" : 2,
-      "length" : 1,
-      "width" : 1,
-      "height" : 1
+      "x" : -2,
+      "y" : -2,
+      "z" : 0.7,
+      "length" : 0.5,
+      "width" : 0.5,
+      "height" : 0.5
     }
   ],
   "buttons": 
@@ -29,7 +29,7 @@
       "id" : 1,
       "x" : -2,
       "y" : -2,
-      "z" : 0.1,
+      "z" : 0.5,
       "length" : 1,
       "width" : 1,
       "height" : 0.01,
