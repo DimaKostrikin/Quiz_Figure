@@ -8,6 +8,7 @@
 #include "Elements.h"
 #include "Parameters_label.h"
 #include "Map_parser.h"
+#include <Graphics_lib/utils.h>
 
 
 class Map_editor_handler {

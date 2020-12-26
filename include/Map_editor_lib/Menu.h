@@ -33,6 +33,7 @@ public:
 private:
     GLFWwindow *window;
     State_keys state_keys;
+    Shader shader;
 };
 
 

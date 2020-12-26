@@ -53,8 +53,7 @@ Levels::Levels(GLFWwindow *window) : num_of_level(1), window(window) {
 int Levels::process_input() {
 
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-
+        return MENU;
 
     if (Key_press(GLFW_KEY_D, window, state_keys.State_D)) {
         it_lvl->deactivate();

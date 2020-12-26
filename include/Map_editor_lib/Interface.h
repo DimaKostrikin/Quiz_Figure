@@ -18,11 +18,6 @@
 
 #include "Graphics_lib/Shader.h"
 
-
-// Константы
-
-
-
 class Interface {
 public:
     Interface();
@@ -32,12 +27,11 @@ public:
     std::function<int()> processInput;
     GLFWwindow* get_window();
     void draw_menu();
-    void draw_leves();
+    void draw_levels();
     void draw_redactor();
 
 private:
     GLFWwindow *window;
-    int shaderProgram;
     std::shared_ptr<Menu> menu;
     std::shared_ptr<Levels> levels;
     std::shared_ptr<Map_editor_handler> map_editor;

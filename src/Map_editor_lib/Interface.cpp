@@ -60,7 +60,7 @@ void Interface::draw_menu() {
     processInput = menu->processInput;
 }
 
-void Interface::draw_leves() {
+void Interface::draw_levels() {
     draw = levels->draw;
     processInput = levels->processInput;
 }

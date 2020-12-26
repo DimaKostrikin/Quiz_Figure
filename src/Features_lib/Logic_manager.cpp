@@ -14,31 +14,40 @@ void Logic_manager::initialize() {
         int item = interface.cycle();
 
         if (item == START_GAME) { // Проверка нажатия на кнопку начать игру
-            interface.draw_leves();
+            interface.draw_levels();
             std::string lvl_begin_path = "levels/lvl";
             std::string lvl_ending_path = ".json";
 
             std::string level_path;
             while (!glfwWindowShouldClose(window)) {
                 item = interface.cycle();
-                if (item && item != GLFW_KEY_ESCAPE) {
+                if (item || item == MENU) {
                     level_path = lvl_begin_path + std::to_string(item) + lvl_ending_path;
                     break;
                 }
             }
-            start_game(level_path);
+            if (item == MENU) {
+                interface.draw_menu();
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            }
+            else start_game(level_path);
         }
         if (item == REDACTOR) {  // Проверка нажатия на кнопку редактора
             interface.draw_redactor();
-            while (!glfwWindowShouldClose(window)) {
-                interface.cycle();
+            while (!glfwWindowShouldClose(window) && item != MENU) {
+                item = interface.cycle();
             }
+            interface.draw_menu();
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         }
         if (item == EXIT) {  // Проверка нажатия на кнопку выхода
             break;
         }
     }
-    //glfwTerminate();  Это нужно зачем-то? Я не понял для чего. Оно работает и без этого.
+    glfwTerminate();
 }
 
 void Logic_manager::start_game(const std::string &level_path) {

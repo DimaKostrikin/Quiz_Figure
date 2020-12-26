@@ -111,26 +111,26 @@ void Parameters_label::draw() {
     glBindVertexArray(0);
 
     // хардкод кривоой
-    float tx = 1100.0f;
-    float y = (float)SCR_HEIGHT*0.8f;
+    float tx = (float)SCR_WIDTH*0.87f;
+    float y = (float)SCR_HEIGHT;
     float coef = 0.4f;
     glm::vec3 black_color = glm::vec3(0.0f, 0.0f, 0.0f);
     const std::string help_text = "Help text: to change height, width, length, z - ";
-    RenderText(VAO, VBO, shader, help_text, 200, y+180.0f, coef, black_color);
+    RenderText(VAO, VBO, shader, help_text, 200, (float)y*0.95, coef, black_color);
     const std::string help_text2 = "push first letter of the word with - or +";
-    RenderText(VAO, VBO, shader, help_text2, 400, y+150.0f, coef, black_color);
+    RenderText(VAO, VBO, shader, help_text2, 400, (float)y*0.91, coef, black_color);
     const std::string help_text3 = "Press c and select two elements to connect them";
-    RenderText(VAO, VBO, shader, help_text3, 200, y+120.0f, coef, black_color);
+    RenderText(VAO, VBO, shader, help_text3, 200, (float)y*0.87, coef, black_color);
     //внимание! здесь считаем от левого нижнего угла. убрать хардкод
     if (obj) {
         RenderText(VAO, VBO, shader, "ID: " + std::to_string(obj->id), tx, y, coef, black_color);
-        RenderText(VAO, VBO, shader, "X: " + std::to_string(obj->x), tx, y-30.0f, coef, black_color);
-        RenderText(VAO, VBO, shader, "Y: " + std::to_string(obj->y), tx, y-60.0f, coef, black_color);
-        RenderText(VAO, VBO, shader, "Z: " + std::to_string(obj->z) , tx, y-90.0f, coef, black_color);
-        RenderText(VAO, VBO, shader, "Width: " + std::to_string(obj->w), tx, y-120.0f, coef, black_color);
-        RenderText(VAO, VBO, shader, "Length: " + std::to_string(obj->l), tx, y-150.0f, coef, black_color);
-        RenderText(VAO, VBO, shader, "Height: " + std::to_string(obj->h), tx, y-180.0f, coef, black_color);
-        RenderText(VAO, VBO, shader, "Connect: " + std::to_string(obj->connect), tx, y-210.0f, coef, black_color);
+        RenderText(VAO, VBO, shader, "X: " + std::to_string(obj->x), tx, (float)y*0.95, coef, black_color);
+        RenderText(VAO, VBO, shader, "Y: " + std::to_string(obj->y), tx, (float)y*0.91, coef, black_color);
+        RenderText(VAO, VBO, shader, "Z: " + std::to_string(obj->z) , tx, (float)y*0.87, coef, black_color);
+        RenderText(VAO, VBO, shader, "Width: " + std::to_string(obj->w), tx, (float)y*0.83, coef, black_color);
+        RenderText(VAO, VBO, shader, "Length: " + std::to_string(obj->l), tx, (float)y*0.79, coef, black_color);
+        RenderText(VAO, VBO, shader, "Height: " + std::to_string(obj->h), tx, (float)y*0.75, coef, black_color);
+        RenderText(VAO, VBO, shader, "Connect: " + std::to_string(obj->connect), tx, (float)y*0.71, coef, black_color);
     }
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);

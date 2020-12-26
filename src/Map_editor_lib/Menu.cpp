@@ -5,11 +5,12 @@
 #include "Map_editor_lib/Menu.h"
 #include "Features_lib/Logic_manager.h"
 
+/* эт кжтс не нужно
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    if (key == GLFW_KEY_Q && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 }
-
+*/
 std::vector<float> vertices{
         // координаты          // цвета           // текстурные координаты
         0.6f,  0.6f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f,  1.0f, // верхняя правая вершина
@@ -28,7 +29,7 @@ std::vector<float> vertices2 = {
 
 Menu::Menu(GLFWwindow *window): button_start("textures/start_text.png", "textures/start_text_act.png", vertices),
         button_map_editor("textures/map_editor_text.png", "textures/map_editor_text_act.png", vertices2), window(window),
-        map_editor_handler(nullptr){
+        map_editor_handler(nullptr), shader("include/Map_editor_lib/shader.vs", "include/Map_editor_lib/shader.fs"){
     button_start.activate();
     draw = std::bind(&Menu::draw_menu, this);
     processInput = std::bind(&Menu::process_input, this);
@@ -37,13 +38,9 @@ Menu::Menu(GLFWwindow *window): button_start("textures/start_text.png", "texture
 
 int Menu::process_input(){
 
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
-    }
 
     if(Key_press(GLFW_KEY_Q, window, state_keys.State_Q)){
-        Map_editor_handler map_editor;
-        //draw = std::bind(&Map_editor_handler::draw, &map_editor);
+        return EXIT;
     }
 
     if(Key_press(GLFW_KEY_W, window, state_keys.State_W)){
@@ -64,9 +61,6 @@ int Menu::process_input(){
         if (button_start.is_active()) {
             return START_GAME;
         } else {
-            //map_editor_handler = std::make_shared<Map_editor_handler>(window);
-            //draw = std::bind(&Map_editor_handler::draw, map_editor_handler);
-            //processInput = std::bind(&Map_editor_handler::processInput, map_editor_handler);
             return REDACTOR;
         }
     }
@@ -75,7 +69,6 @@ int Menu::process_input(){
 }
 
 void Menu::draw_menu() {
-    Shader shader("include/Map_editor_lib/shader.vs", "include/Map_editor_lib/shader.fs");
     shader.use();
     glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);

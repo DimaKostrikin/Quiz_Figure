@@ -7,14 +7,8 @@
 #include "Features_lib/Parser.h"
 #include "Physics_lib/classes.h"
 #include "Graphics_lib/Render_manager.h"
+#include "Graphics_lib/utils.h"
 // include all features
-
-enum {
-    NOTHING = 0, // NOTHING должен быть равен 0, не меняйте (!)
-    START_GAME,
-    REDACTOR,
-    EXIT
-};
 
 class Logic_manager {
 public:
