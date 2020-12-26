@@ -123,12 +123,12 @@ public:
     bool check_border(float &rborder, float &lborder, float &tborder, float &bborder);
     Map_object& operator= (const Map_object &elem);
 
-    bool is_activator();
-    bool is_activated();
-    bool is_dynamic();
-    bool is_static();
+    bool is_activator() const;
+    bool is_activated() const;
+    bool is_dynamic() const;
+    bool is_static() const;
     // for jumper - connected object
-    bool is_connected();
+    bool is_connected() const;
 
     ~Map_object()=default;
 
