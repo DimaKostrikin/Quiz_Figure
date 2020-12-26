@@ -20,6 +20,7 @@ void Model::add_model(char* path) {
 void Model::update_model(int type_elem) {
     std::string path;
     srand(time(0));
+
     switch (type_elem) {
         case PLAYER:
             path = "button";
@@ -76,7 +77,7 @@ void Model::update_model(int type_elem) {
             path = "jumper";
             break;
         default:
-            std::cout << "!Объект не распознан!" << std::endl;
+            std::cout << "!Объект не распознан!" << type_elem << std::endl;
             break;
     }
 //    std::cout << (char*)("resources/objects/" + path + "/" + path + ".obj").c_str() << std::endl;

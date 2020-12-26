@@ -43,12 +43,13 @@ Object_static::Object_static(const int& elem_type, glm::vec3 &c, glm::vec3 &sz)
     our_model.set_ypos(float(c.z));
     our_model.set_zpos(float(c.y));
 
-    our_model.set_xscale(float(size.x) * 1.55);
-    our_model.set_yscale(float(size.z) * 1.55);
-    our_model.set_zscale(float(size.y) * 1.55);
+    our_model.set_xscale(float(size.x) * 1);
+    our_model.set_yscale(float(size.z) * 1);
+    if (elem_type != JUMPER && elem_type != TELEPORT_IN && elem_type != TELEPORT_OUT && elem_type != BUTTON && elem_type != FAN) {
+        our_model.set_zscale(float(size.y) * 1);
+    }
 
     our_model.update_model(elem_type);
-
 }
 
 glm::vec3 Object_static::get_size() const {

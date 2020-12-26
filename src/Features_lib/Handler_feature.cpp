@@ -55,7 +55,7 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
     }
 
     if (obj_a->get_elem_type() == FAN) {  // Обработка попадания в зону вентилятора
-        float a_radius = sqrt(obj_a->get_size().y + obj_a->get_size().x) * 1.1;
+        float a_radius = obj_a->get_size().r * 1.1;
 
         float a_height = 5;
         float acceleration_coeff = 0;
@@ -72,16 +72,16 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
     }
 
     if (obj_a->get_elem_type() == JUMPER) {  // TODO сделать функции определяющие расстояния
-        float a_radius = 1.1;  // Радиусы активации, зависящие от типа элемента. Настраиваемые.
-        float a_height = 1;
+        float a_radius = obj_a->get_size().r + 0.05;  // Радиусы активации, зависящие от типа элемента. Настраиваемые.
+        float a_height = obj_a->get_size().z + 0.4;
 
-        float changing_speed = 0.05;
+        float changing_speed = 1.3;
 
         if (event_radius_pl < a_radius && diff_z_pl < a_height) {
 
             player.set_on_floor(false);
-            player.get_speed().z += changing_speed;
-            player.get_speed().x += changing_speed / 4;
+            player.get_speed().z = changing_speed * abs(player.get_speed().z);
+            player.get_speed().x = changing_speed / 4;
         }
     }
 
