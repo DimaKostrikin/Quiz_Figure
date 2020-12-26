@@ -57,9 +57,13 @@ pkg_search_module(GLFW REQUIRED glfw3)
 
 find_package(Freetype REQUIRED)
 
+find_package(glm REQUIRED)
+
+message(${glm_DIR})
 
 find_package(Boost REQUIRED)
 
+find_package(ASSIMP REQUIRED)
 
 
 INCLUDE_DIRECTORIES(${GLFW_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS}
