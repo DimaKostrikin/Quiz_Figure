@@ -30,8 +30,8 @@ bool Render_manager::preparation(GLFWwindow* window) {
         return 0;
     }
 
-    // говорим stb_image.h чтобы он перевернул загруженные текстуры относительно y-оси (до загрузки модели).
-    //    stbi_set_flip_vertically_on_load(true);
+//     говорим stb_image.h чтобы он перевернул загруженные текстуры относительно y-оси (до загрузки модели).
+//        stbi_set_flip_vertically_on_load(true);
 
     //включаем Z-буфер
     glEnable(GL_DEPTH_TEST);
@@ -52,7 +52,7 @@ void Render_manager::render(Shader cur_shader_prog, Model cur_model, std::vector
     cur_shader_prog.use();
 
     // преобразования Вида/Проекции
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
     glm::mat4 view = camera.get_view_matrix();
     cur_shader_prog.setMat4("projection", projection);
     cur_shader_prog.setMat4("view", view);

@@ -32,7 +32,7 @@ private:
     float _yangle = 0.f;
     float _zangle = 0.f;
 
-    void load_model(std::string const &path);
+    bool load_model(std::string const &path);
     void process_node(aiNode *node, const aiScene *scene);
     Mesh process_mesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> load_material_textures(aiMaterial *mat, aiTextureType type, std::string typeName);

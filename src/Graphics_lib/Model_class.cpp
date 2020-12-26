@@ -11,7 +11,7 @@ Model::Model(char *path) {
 
 void Model::reload_model(char* path) {
     meshes.clear();
-    load_model(path);
+    if (!load_model(path)) load_model("resources/objects/funny_cube/funny_cube.obj");
 }
 void Model::add_model(char* path) {
     load_model(path);
@@ -19,15 +19,16 @@ void Model::add_model(char* path) {
 
 void Model::update_model(int type_elem) {
     std::string path;
+    srand(time(0));
     switch (type_elem) {
         case PLAYER:
-            path = "player";
+            path = "button";
             break;
         case WALL:
             path = "wall";
             break;
         case HINT:
-            path = "platform";
+            path = "hint";
             break;
         case PLATFORM:
             path = "platform";
@@ -45,10 +46,10 @@ void Model::update_model(int type_elem) {
             path = "cube";
             break;
         case BALL:
-            path = "ball";
+            path = "ball" + std::to_string(rand()%4 + 1);
             break;
         case DOOR:
-            path = "start";
+            path = "door";
             break;
         case BUTTON:
             path = "button";
@@ -63,10 +64,10 @@ void Model::update_model(int type_elem) {
             path = "fan";
             break;
         case TELEPORT_IN:
-            path = "teleport_in";
+            path = "teleport_in" + std::to_string(rand()%2 + 1);
             break;
         case TELEPORT_OUT:
-            path = "teleport_out";
+            path = "teleport_out" + std::to_string(rand()%2 + 1);
             break;
         case LASER:
             path = "laser";
@@ -87,16 +88,22 @@ void Model::draw(Shader &shader, Camera camera, std::map <std::string, bool> con
         meshes[i].draw(shader, camera, control_tools, point_lights, is_light_source);
 }
 
-void Model::load_model(std::string const &path) {
+bool Model::load_model(std::string const &path) {
+
     // Чтение файла с помощью Assimp
     Assimp::Importer importer;
+
+//     говорим stb_image.h чтобы он НЕ переворачивал загруженные текстуры относительно y-оси (до загрузки модели).
+    stbi_set_flip_vertically_on_load(false);
+
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
 
     // Проверка на ошибки
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // если НЕ 0
     {
         std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-        return;
+        return 0;
     }
 
     // Получение пути к файлу
@@ -104,6 +111,7 @@ void Model::load_model(std::string const &path) {
 
     // Рекурсивная обработка корневого узла Assimp
     process_node(scene->mRootNode, scene);
+    return 1;
 
 }
 
