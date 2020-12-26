@@ -12,7 +12,6 @@ void Logic_manager::initialize() {
     interface.draw_menu();
     while (!glfwWindowShouldClose(window)) {
         int item = interface.cycle();
-
         if (item == START_GAME) { // Проверка нажатия на кнопку начать игру
             interface.draw_leves();
             std::string lvl_begin_path = "levels/lvl";
