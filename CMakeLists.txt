@@ -59,7 +59,6 @@ find_package(Freetype REQUIRED)
 
 find_package(glm REQUIRED)
 
-message(${glm_DIR})
 
 find_package(Boost REQUIRED)
 

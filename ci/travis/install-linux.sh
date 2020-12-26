@@ -16,9 +16,8 @@ sudo apt-get install freeglut3-dev
 sudo apt-get install libglm-dev
 sudo apt-get install libboost-dev
 sudo apt-get install libassimp-dev
-sudo apt install assimp-utils
+sudo apt-get install assimp-utils
 ls -la /usr/lib/x86_64-linux-gnu/
-ls -la /usr/lib/cmake/
 
 
 CMAKE_VERSION=3.1

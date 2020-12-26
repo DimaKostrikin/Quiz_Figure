@@ -38,6 +38,11 @@ install:
 
 script:
 
+    - mkdir build
+    - cd build
+    - cmake ..
+    - cd ..
+    - locate glmConfig.cmake
     - git clone https://github.com/glfw/glfw
     - mkdir glfw-build
     - cd glfw-build
@@ -46,7 +51,6 @@ script:
     - sudo make install
     - cd ..
     - git clone https://github.com/assimp/assimp.git
-    - mkdir build
     - cd build
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
