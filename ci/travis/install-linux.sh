@@ -19,6 +19,7 @@ sudo apt-get install libassimp-dev
 sudo apt-get install assimp-utils
 ls -la /usr/lib/x86_64-linux-gnu/
 ls -la
+sudo updatedb
 locate .tar.gz
 
 
