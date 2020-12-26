@@ -18,6 +18,11 @@ void Handler_physics::take_object(std::list<Object_dynamic>::iterator &object_ta
     player.set_status(true);
     object_taken->set_on_floor(false);
     object_taken->set_taken(true);
+    glm::vec3 new_center = {0,0,0};
+    new_center.x = player.get_center().x + camera.x * PLAYER_RANGE;
+    new_center.y = player.get_center().y + camera.y * PLAYER_RANGE;
+    new_center.z = player.get_center().z + camera.z * PLAYER_RANGE;
+    object_taken->set_center(new_center);
 }
 
 void Handler_physics::drop_object(std::list<Object_dynamic>::iterator &object_dropped) {
@@ -571,7 +576,8 @@ bool Handler_physics::look_at(std::list<Object_dynamic>::iterator &dyn) {
     distant.x = -player.get_center().x + dyn->get_center().x;
     distant.y = -player.get_center().y + dyn->get_center().y;
     distant.z = -player.get_center().z + dyn->get_center().z;
-    if(glm::length(distant) < PLAYER_RANGE && glm::degrees(glm::angle(camera, distant)) < 75.0f) {
+    glm::vec3 norm_dist = glm::normalize(distant);
+    if(glm::length(distant) < PLAYER_RANGE && glm::angle(camera, norm_dist) < 0.0872665) {
         return true;
     }
     return false;
@@ -588,7 +594,7 @@ void Handler_physics::player_update() {
     new_center.z = player.get_speed().z * passed_time + player.get_center().z;
     player.set_center(new_center);
 
-    if(glfwGetKey(window,GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && player.get_status()) {  // Тут точно != ?
+    if(glfwGetKey(window,GLFW_KEY_E) != GLFW_PRESS && player.get_status()) {
         auto els = dyn_elems.begin();
         for(els; els != dyn_elems.end(); els++){
             drop_object(els);
@@ -597,7 +603,7 @@ void Handler_physics::player_update() {
    float coll_type = 0;
     auto el = dyn_elems.begin();
     for(el; el != dyn_elems.end(); el++) {
-        if(glfwGetKey(window,GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && look_at(el) && !player.get_status()) {
+        if(glfwGetKey(window,GLFW_KEY_E) == GLFW_PRESS && look_at(el) && !player.get_status()) {
             take_object(el);
         }
         coll_type = player_collision(el);
