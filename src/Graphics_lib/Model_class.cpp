@@ -1,3 +1,4 @@
+#include <Features_lib/Objects.h>
 #include "Graphics_lib/Model_class.h"
 
 Model::Model() {
@@ -6,6 +7,79 @@ Model::Model() {
 
 Model::Model(char *path) {
     load_model(path);
+}
+
+void Model::reload_model(char* path) {
+    meshes.clear();
+    load_model(path);
+}
+void Model::add_model(char* path) {
+    load_model(path);
+}
+
+void Model::update_model(int type_elem) {
+    std::string path;
+    switch (type_elem) {
+        case PLAYER:
+            path = "player";
+            break;
+        case WALL:
+            path = "wall";
+            break;
+        case HINT:
+            path = "platform";
+            break;
+        case PLATFORM:
+            path = "platform";
+            break;
+        case STAIRS:
+            path = "stairs";
+            break;
+        case START:
+            path = "start";
+            break;
+        case FINISH:
+            path = "finish";
+            break;
+        case CUBE:
+            path = "cube";
+            break;
+        case BALL:
+            path = "ball";
+            break;
+        case DOOR:
+            path = "start";
+            break;
+        case BUTTON:
+            path = "button";
+            break;
+        case STEP:
+            path = "step";
+            break;
+        case HOLE:
+            path = "hole";
+            break;
+        case FAN:
+            path = "fan";
+            break;
+        case TELEPORT_IN:
+            path = "teleport_in";
+            break;
+        case TELEPORT_OUT:
+            path = "teleport_out";
+            break;
+        case LASER:
+            path = "laser";
+            break;
+        case JUMPER:
+            path = "jumper";
+            break;
+        default:
+            std::cout << "!Объект не распознан!" << std::endl;
+            break;
+    }
+//    std::cout << (char*)("resources/objects/" + path + "/" + path + ".obj").c_str() << std::endl;
+    reload_model((char*)("resources/objects/" + path + "/" + path + ".obj").c_str());
 }
 
 void Model::draw(Shader &shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source) {

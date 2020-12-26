@@ -47,6 +47,8 @@ Object_static::Object_static(const int& elem_type, glm::vec3 &c, glm::vec3 &sz)
     our_model.set_yscale(float(size.z) * 1.55);
     our_model.set_zscale(float(size.y) * 1.55);
 
+    our_model.update_model(elem_type);
+
 }
 
 glm::vec3 Object_static::get_size() const {
