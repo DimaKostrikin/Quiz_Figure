@@ -59,7 +59,7 @@
       "width" : 1,
       "height" : 2
     },
-    
+
     {
       "id" : 100,
       "x" : 4,
@@ -68,6 +68,44 @@
       "length" : 1,
       "width" : 1,
       "height" : 2
+    }
+  ],
+  "teleports-in": 
+  [
+    {
+      "id" : 0,
+      "x" : 10,
+      "y" : 2,
+      "z" : 0.5,
+      "length" : 1,
+      "width" : 1,
+      "height" : 0.1,
+      "act_id" : 99
+    }
+  ],
+  "teleports-out": 
+  [
+    {
+      "id" : 99,
+      "x" : -10,
+      "y" : 2,
+      "z" : 0.5,
+      "length" : 1,
+      "width" : 1,
+      "height" : 0.1
+    }
+  ],
+  "fans":
+  [
+    {
+      "id" : 228,
+      "x" : 15,
+      "y" : 2,
+      "z" : 0.5,
+      "length" : 2,
+      "width" : 2,
+      "height" : 0.1,
+      "act_id" : 0
     }
   ]
 }

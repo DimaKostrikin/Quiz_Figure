@@ -1,3 +1,4 @@
+#include <Features_lib/Objects.h>
 #include "Graphics_lib/Model_class.h"
 
 Model::Model() {
@@ -8,21 +9,102 @@ Model::Model(char *path) {
     load_model(path);
 }
 
+void Model::reload_model(char* path) {
+    meshes.clear();
+    if (!load_model(path)) load_model("resources/objects/funny_cube/funny_cube.obj");
+}
+void Model::add_model(char* path) {
+    load_model(path);
+}
+
+void Model::update_model(int type_elem) {
+    std::string path;
+    srand(time(0));
+
+    switch (type_elem) {
+        case PLAYER:
+            path = "button";
+            break;
+        case WALL:
+            path = "wall";
+            break;
+        case HINT:
+            path = "hint";
+            break;
+        case PLATFORM:
+            path = "platform";
+            break;
+        case STAIRS:
+            path = "stairs";
+            break;
+        case START:
+            path = "start";
+            break;
+        case FINISH:
+            path = "finish";
+            break;
+        case CUBE:
+            path = "cube";
+            break;
+        case BALL:
+            path = "ball" + std::to_string(rand()%4 + 1);
+            break;
+        case DOOR:
+            path = "door";
+            break;
+        case BUTTON:
+            path = "button";
+            break;
+        case STEP:
+            path = "step";
+            break;
+        case HOLE:
+            path = "hole";
+            break;
+        case FAN:
+            path = "fan";
+            break;
+        case TELEPORT_IN:
+            path = "teleport_in" + std::to_string(rand()%2 + 1);
+            break;
+        case TELEPORT_OUT:
+            path = "teleport_out" + std::to_string(rand()%2 + 1);
+            break;
+        case LASER:
+            path = "laser";
+            break;
+        case JUMPER:
+            path = "jumper";
+            break;
+        default:
+            std::cout << "!Объект не распознан!" << type_elem << std::endl;
+            break;
+    }
+//    std::cout << (char*)("resources/objects/" + path + "/" + path + ".obj").c_str() << std::endl;
+    reload_model((char*)("resources/objects/" + path + "/" + path + ".obj").c_str());
+}
+
 void Model::draw(Shader &shader, Camera camera, std::map <std::string, bool> control_tools, std::vector <Point_light> point_lights, bool is_light_source) {
     for(unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].draw(shader, camera, control_tools, point_lights, is_light_source);
 }
 
-void Model::load_model(std::string const &path) {
+bool Model::load_model(std::string const &path) {
+
     // Чтение файла с помощью Assimp
     Assimp::Importer importer;
+
+//     говорим stb_image.h чтобы он НЕ переворачивал загруженные текстуры относительно y-оси (до загрузки модели).
+    stbi_set_flip_vertically_on_load(false);
+
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
 
     // Проверка на ошибки
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // если НЕ 0
     {
         std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-        return;
+        return 0;
     }
 
     // Получение пути к файлу
@@ -30,6 +112,7 @@ void Model::load_model(std::string const &path) {
 
     // Рекурсивная обработка корневого узла Assimp
     process_node(scene->mRootNode, scene);
+    return 1;
 
 }
 

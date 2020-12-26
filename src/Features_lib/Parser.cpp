@@ -34,10 +34,10 @@ Parser::Parser(std::list<Object_dynamic> &obj_dyn,
     names_dynamic.emplace_back("balls");
 
     names_acted.emplace_back("doors");
+    names_acted.emplace_back("teleports-out");
 
     names_actor.emplace_back("fans");
     names_actor.emplace_back("teleports-in");
-    names_actor.emplace_back("teleports-out");
     names_actor.emplace_back("holes");
     names_actor.emplace_back("jumpers");
     names_actor.emplace_back("buttons");
@@ -106,6 +106,12 @@ int Parser::get_elem_enum(const std::string &elem_type) {
 
     if (elem_type == "jumpers")
         elem_enum = JUMPER;
+
+    if (elem_type == "teleports-in")
+        elem_enum = TELEPORT_IN;
+
+    if (elem_type == "teleports-out")
+        elem_enum = TELEPORT_OUT;
 
     return elem_enum;
 }

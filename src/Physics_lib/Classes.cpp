@@ -560,7 +560,7 @@ void Handler_physics::player_speed_change() {
     if(!player.get_on_floor()) {
         new_speed.z = player.get_speed().z - Z_ACCELERATION * passed_time;
     }
-    if(glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS && player.get_on_floor()) {
+    if((glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS) || (glfwGetKey(window,GLFW_KEY_B) == GLFW_PRESS) && player.get_on_floor()) {
         new_speed.z = PLAYER_SPEED;
         player.set_on_floor(false);
     }
