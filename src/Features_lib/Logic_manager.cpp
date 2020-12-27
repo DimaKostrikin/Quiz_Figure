@@ -67,7 +67,7 @@ int Logic_manager::start_game(const std::string &level_path) {
     std::list<Object_influence> obj_infl;
 
     // Стандартные значения характеристик для игрока
-    glm::vec3 default_player_center = {-2, -1, 0};
+    glm::vec3 default_player_center = {1, 2, 3};
     glm::vec3 default_player_size = {0.5, 0.5, 0.5};
 
     for (auto it = obj_stat.begin(); it!=obj_stat.end(); ++it) {  // Поиск позиции старта, если таковой нет, игрок заспавнится на стандартном месте
