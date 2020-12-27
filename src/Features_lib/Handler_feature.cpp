@@ -91,8 +91,8 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
     }
 
     if (act_type == TELEPORT_IN) {
-        float a_radius = 1.1;  // TODO поменять радиусы
-        float a_height = 1.1;
+        float a_radius = obj_a->get_size().r + 0.1;  // TODO поменять радиусы
+        float a_height = obj_a->get_size().z + 0.1;
 
 
         if (event_radius_obj < a_radius && diff_z_obj < a_height) {

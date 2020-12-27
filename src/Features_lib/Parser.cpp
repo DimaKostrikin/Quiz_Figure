@@ -81,7 +81,7 @@ int Parser::get_elem_enum(const std::string &elem_type) {
     if (elem_type == "fans")
         elem_enum = FAN;
 
-    if (elem_type == "platform")
+    if (elem_type == "platforms")
         elem_enum = PLATFORM;
 
     if (elem_type == "stairs")
