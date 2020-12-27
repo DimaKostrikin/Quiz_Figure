@@ -81,7 +81,10 @@ int Logic_manager::start_game(const std::string &level_path) {
 
     Parser p(obj_dyn, obj_stat, obj_acted, obj_actor, obj_infl);  // Создание парсера для загрузки уровня
     p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
-
+    //добавление неба
+    glm::vec3 point(0,0,0);
+    glm::vec3 size(1,1,1);
+    obj_stat.push_back(Object_static(STAIRS, point, size));
     // Хендлер фич, обработка внутриигровых эвентов
     auto &hand_feat = Handler_feature::instance(obj_acted, obj_actor, obj_dyn, obj_infl, player);
 

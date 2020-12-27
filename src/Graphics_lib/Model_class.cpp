@@ -35,7 +35,7 @@ void Model::update_model(int type_elem) {
             path = "platform";
             break;
         case STAIRS:
-            path = "stairs";
+            path = "sky_sphere";
             break;
         case START:
             path = "start";

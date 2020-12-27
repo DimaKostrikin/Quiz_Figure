@@ -45,10 +45,10 @@ Object_static::Object_static(const int& elem_type, glm::vec3 &c, glm::vec3 &sz)
 
     if (elem_type != DOOR) {
         our_model.set_xscale(float(size.x));
-        our_model.set_yscale(float(size.z));
+        our_model.set_zscale(float(size.y));
     }
     if (elem_type != JUMPER && elem_type != TELEPORT_IN && elem_type != TELEPORT_OUT && elem_type != BUTTON && elem_type != FAN) {
-        our_model.set_zscale(float(size.y));
+        our_model.set_yscale(float(size.z));
     }
 
     our_model.update_model(elem_type);
