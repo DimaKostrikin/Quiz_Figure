@@ -8,6 +8,7 @@
 #include "Physics_lib/classes.h"
 #include "Graphics_lib/Render_manager.h"
 #include "Graphics_lib/utils.h"
+#include "Map_editor_lib/Elements.h"
 // include all features
 
 class Logic_manager {
@@ -19,7 +20,7 @@ private:
     ~Logic_manager() = default;
 
     GLFWwindow *window;
-    void start_game(const std::string &level_path);
+    int start_game(const std::string &level_path);
     void start_redactor();
     void draw_menu();
     int cursor_check();

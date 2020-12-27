@@ -30,7 +30,16 @@ void Logic_manager::initialize() {
                 glEnable(GL_BLEND);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             }
-            else start_game(level_path);
+            else item = start_game(level_path);
+            if (item == WIN){
+                interface.draw_win();
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
+                    interface.cycle();
+                }
+                glfwWindowShouldClose(window);
+                item = EXIT;
+            }
         }
         if (item == REDACTOR) {  // Проверка нажатия на кнопку редактора
             interface.draw_redactor();
@@ -49,7 +58,7 @@ void Logic_manager::initialize() {
     glfwTerminate();
 }
 
-void Logic_manager::start_game(const std::string &level_path) {
+int Logic_manager::start_game(const std::string &level_path) {
     // Создание списков объектов
     std::list<Object_dynamic> obj_dyn;
     std::list<Object_static> obj_stat;
@@ -128,6 +137,9 @@ void Logic_manager::start_game(const std::string &level_path) {
         render_mng.get_camera().Position.y = (float)player.get_center().z;
 
         hand_phys.camera = render_mng.get_camera().Front;
+
+        if (hand_feat.get_flag())
+            return WIN;
     }
 }
 

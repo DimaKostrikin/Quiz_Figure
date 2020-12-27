@@ -18,7 +18,7 @@ Handler_feature::Handler_feature(std::list<Object_activated> &in_acted,
                                  std::list<Object_dynamic> &in_dyn,
                                  std::list<Object_influence>& in_infl,
                                  Player& pl)
-                                 : obj_actor(in_actor), obj_acted(in_acted), obj_dyn(in_dyn), obj_infl(in_infl), player(pl) {}
+                                 : obj_actor(in_actor), obj_acted(in_acted), obj_dyn(in_dyn), obj_infl(in_infl), player(pl), flag_win(false) {}
 
 void Handler_feature::do_logic(const double &elapsed_time) {
     for (auto it_actor = obj_actor.begin(); it_actor != obj_actor.end(); ++it_actor) {
@@ -114,8 +114,12 @@ void Handler_feature::action(std::list<Object_dynamic>::iterator &obj_d, std::li
 
         if (event_radius_pl < a_radius && diff_z_pl < a_height) {  // TODO процедура завершения
             player.get_speed().z += 20;
-            std::cout << "YOU WON!" << std::endl;  // тупа затичка
+            flag_win = true;
         }
     }
+}
+
+bool Handler_feature::get_flag() const {
+    return flag_win;
 }
 

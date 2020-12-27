@@ -10,6 +10,7 @@ enum {
     REDACTOR,
     EXIT,
     MENU,
+    WIN
 };
 
 #endif //PROJECT_QUIZ_FIGURE_UTILS_H

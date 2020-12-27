@@ -29,6 +29,7 @@ public:
     void draw_menu();
     void draw_levels();
     void draw_redactor();
+    void draw_win();
 
 private:
     GLFWwindow *window;

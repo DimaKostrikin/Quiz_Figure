@@ -70,5 +70,37 @@ void Interface::draw_redactor() {
     processInput = std::bind(&Map_editor_handler::processInput, map_editor);
 }
 
+void dwin(){
+    std::vector<float>vertices = {
+            // координаты
+
+            1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // верхняя правая
+            1.0f, -1.0f, 0.0f,  1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // нижняя правая
+            -1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // нижняя левая
+            -1.0f, 1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f
+    };
+    Elem win("textures/win.png", vertices);
+    Shader shader("include/Map_editor_lib/shader.vs", "include/Map_editor_lib/shader.fs");
+    unsigned int VBO, VAO, EBO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+    shader.use();
+    win.draw(VAO, VBO, EBO);
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+
+}
+
+
+void Interface::draw_win() {
+    draw = dwin;
+}
+
+
+
+
+
 
 

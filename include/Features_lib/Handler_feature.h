@@ -11,6 +11,7 @@ public:
                                      std::list<Object_influence>& in_infl,
                                      Player& pl);
     void do_logic(const double &elapsed_time);
+    bool get_flag() const;
 
 private:
     Handler_feature(std::list<Object_activated>& in_acted,
@@ -30,6 +31,7 @@ private:
     std::list<Object_dynamic>& obj_dyn;
     std::list<Object_influence>& obj_infl;
     Player& player;
+    bool flag_win;
 };
 
 
