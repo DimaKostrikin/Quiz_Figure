@@ -181,10 +181,10 @@ void Map_object::plus_width(float &rborder, float &lborder, float &tborder, floa
         vertices[9] -= 0.01f;
         vertices[17] -= 0.01f;
         vertices[25] += 0.01f;
-    } else if (!check_border_up(rborder) && check_border_down(lborder)){
+    } else if (!check_border_up(tborder) && check_border_down(bborder)){
         vertices[9] -= 0.01f;
         vertices[17] -= 0.01f;
-    } else if (!check_border_down(lborder) && check_border_up(rborder)){
+    } else if (!check_border_down(bborder) && check_border_up(tborder)){
         vertices[1] += 0.01f;
         vertices[25] += 0.01f;
     }
@@ -208,10 +208,10 @@ void Map_object::plus_length(float &rborder, float &lborder, float &tborder, flo
         vertices[8] += 0.01f;
         vertices[16] -= 0.01f;
         vertices[24] -= 0.01f;
-    } else if (!check_border_left(tborder) && check_border_right(bborder)){
+    } else if (!check_border_left(lborder) && check_border_right(rborder)){
         vertices[0] += 0.01f;
         vertices[8] += 0.01f;
-    } else if (!check_border_right(bborder) && check_border_left(tborder)){
+    } else if (!check_border_right(rborder) && check_border_left(lborder)){
         vertices[16] -= 0.01f;
         vertices[24] -= 0.01f;
     }
@@ -266,14 +266,14 @@ void Map_object::change_l(const unsigned int &w) {
 }
 
 void Map_object::change_x(const unsigned int &w) {
-    double x1 = (vertices[16] + 0.7f) * (w / 2);
-    double x2 = (vertices[0] + 0.7f) * (w / 2);
+    double x1 = (vertices[16]) * (w / 2);
+    double x2 = (vertices[0] ) * (w / 2);
     this->x = floor(x1+(x2 - x1)/2);
 }
 
 void Map_object::change_y(const unsigned int &h) {
-    double y1 = (vertices[1]+0.7f) * (h / 2);
-    double y2 = ( vertices[9]+0.7f) * (h / 2);
+    double y1 = (vertices[1]) * (h / 2);
+    double y2 = ( vertices[9]) * (h / 2);
     this->y = floor(y1+(y2 - y1)/2);
 }
 

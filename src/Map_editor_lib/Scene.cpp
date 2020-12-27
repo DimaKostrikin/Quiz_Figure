@@ -103,27 +103,21 @@ void Scene::scene_action(double &x, double &y, const unsigned int &h, const unsi
 void Scene::connect(size_t &i, size_t &j) {
     if (container[i].is_activator()){
         if (container[j].is_activated())
-            container[j].connect = container[i].id; // финиш открывается из-за дырки
+            container[i].connect = container[j].id; // hole открывает финиш
         if (container[j].is_dynamic())
-            container[i].connect = container[j].id; // дырка открывается из-за куба
+            container[j].connect = container[i].id; // куб открывает hole
     } else if (container[i].is_activated()){
         if (container[j].is_activator())
             container[i].connect = container[j].id; // финиш открывается из-за отверстия
     } else if (container[i].is_dynamic()){
         if (container[j].is_activator())
-            container[j].connect = container[i].id; // финиш открывается из-за отверстия
-    } else if (container[i].is_connected()){
-        if (container[j].is_static())
-            container[i].connect = container[j].id; // jumper
-    } else if (container[j].is_connected()) {
-        if (container[i].is_static())
-            container[j].connect = container[i].id;
+            container[i].connect = container[j].id; // финиш открывается из-за отверстия
     } else if (container[i].type == TELEPORT_IN) {
         if (container[j].type == TELEPORT_OUT)
-            container[j].connect = container[i].id;
+            container[i].connect = container[j].id;
     } else if (container[j].type == TELEPORT_IN) {
         if (container[i].type == TELEPORT_OUT)
-            container[i].connect = container[j].id;
+            container[j].connect = container[i].id;
     }
 }
 

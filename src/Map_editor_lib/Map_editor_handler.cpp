@@ -115,9 +115,7 @@ void Map_editor_handler::draw() {
     }
     label->draw();
 
-
 }
-
 
 
 int Map_editor_handler::processInput() {

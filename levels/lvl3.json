@@ -2,33 +2,72 @@
   "walls":
   [
     {
-      "id" : 102,
+      "id" : 101,
       "x" : 0,
       "y" : 0,
       "z" : 0,
+      "length" : 100,
+      "width" : 100,
+      "height" : 0.1,
+      "act_id" : 0
+    },
+    {
+      "id" : 102,
+      "x" : 0,
+      "y" : 5,
+      "z" : 0,
       "length" : 50,
-      "width" : 50,
-      "height" : 0.1
-    }
-  ],
-  "cubes":
-  [
+      "width" : 0.1,
+      "height" : 50,
+      "act_id" : 0
+    },
     {
-      "id" : 1234,
-      "x" : 100,
+      "id" : 103,
+      "x" : 0,
+      "y" : -5,
+      "z" : 0,
+      "length" : 50,
+      "width" : 0.1,
+      "height" : 50,
+      "act_id" : 0
+    },
+    {
+      "id" : 104,
+      "x" : 0,
       "y" : 0,
-      "z" : 3,
-      "length" : 1,
-      "width" : 1,
-      "height" : 1
+      "z" : 10,
+      "length" : 100,
+      "width" : 100,
+      "height" : 0.1,
+      "act_id" : 0
+    },
+    {
+      "id" : 105,
+      "x" : 5,
+      "y" : 0,
+      "z" : 0,
+      "length" : 0.1,
+      "width" : 100,
+      "height" : 100,
+      "act_id" : 0
+    },
+    {
+      "id" : 106,
+      "x" : -5,
+      "y" : 0,
+      "z" : 0,
+      "length" : 0.1,
+      "width" : 100,
+      "height" : 100,
+      "act_id" : 0
     }
   ],
-  "buttons": 
+  "doors":
   [
     {
-      "id" : 1,
-      "x" : -2,
-      "y" : -2,
+      "id" : 0,
+      "x" : 200,
+      "y" : 3,
       "z" : 0.1,
       "length" : 1,
       "width" : 1,
@@ -40,8 +79,8 @@
   [
     {
       "id" : 2,
-      "x" : 0,
-      "y" : 0,
+      "x" : -3,
+      "y" : -1,
       "z" : 0.1,
       "length" : 1,
       "width" : 1,
@@ -49,77 +88,90 @@
       "act_id" : 0
     }
   ],
-  "doors":
+  "platforms":
   [
     {
-      "id" : 2222,
-      "x" : 2,
-      "y" : 2,
-      "z" : 1,
-      "length" : 1,
-      "width" : 1,
-      "height" : 2
-    },
-
-    {
-      "id" : 0,
-      "x" : 4,
-      "y" : 4,
-      "z" : 1,
-      "length" : 1,
-      "width" : 1,
-      "height" : 2
+      "id" : 222,
+      "x" : 0,
+      "y" : 0,
+      "z" : 0,
+      "length" : 100,
+      "width" : 0.1,
+      "height" : 4.5,
+      "act_id" : 0
     }
   ],
-  "balls":
+  "cubes":
   [
     {
-      "id" : 101,
+      "id" : 12,
       "x" : 1,
       "y" : 1,
-      "z" : 2,
-      "length" : 0.3,
-      "width" : 0.3,
-      "height" : 0.3
+      "z" : 0.1,
+      "length" : 1,
+      "width" : 1,
+      "height" : 1,
+      "act_id" : 22
     }
   ],
-  "teleports-in": 
+  "teleports-in":
   [
     {
       "id" : 0,
-      "x" : 10,
+      "x" : 3,
       "y" : 2,
-      "z" : 0.5,
+      "z" : 0.1,
       "length" : 1,
       "width" : 1,
       "height" : 0.1,
       "act_id" : 99
     }
   ],
-  "teleports-out": 
+  "teleports-out":
   [
     {
       "id" : 99,
-      "x" : -10,
-      "y" : 2,
-      "z" : 0.5,
+      "x" : -2,
+      "y" : -2,
+      "z" : 0.1,
       "length" : 1,
       "width" : 1,
-      "height" : 0.1
-    }
-  ],
-  "fans":
-  [
-    {
-      "id" : 228,
-      "x" : 25,
-      "y" : 2,
-      "z" : 0.5,
-      "length" : 2,
-      "width" : 2,
       "height" : 0.1,
       "act_id" : 0
     }
+  ],
+  "start":
+  [
+    {
+      "x" : -2,
+      "y" : -1,
+      "z" : 0
+    }
+  ],
+  "finish":
+  [
+    {
+      "id": 777,
+      "x" : -2,
+      "y" : 1,
+      "z" : 0,
+      "length" : 1,
+      "width" : 1,
+      "height" : 0.01,
+      "act_id": 0
+    }
+  ],
+  "buttons":
+  [
+    {
+      "id": 22,
+      "x" : -2,
+      "y" : 1,
+      "z" : 0.1,
+      "length" : 1,
+      "width" : 1,
+      "height" : 0.1,
+      "act_id": 777
+    }
   ]
 }
-
