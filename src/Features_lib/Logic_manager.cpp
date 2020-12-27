@@ -83,7 +83,7 @@ int Logic_manager::start_game(const std::string &level_path) {
     p.fill_from(level_path);  // Заполнение списков соответственно json файлу.
     //добавление неба
     glm::vec3 point(0,0,0);
-    glm::vec3 size(1,1,1);
+    glm::vec3 size(0,0,0);
     obj_stat.push_back(Object_static(STAIRS, point, size));
     // Хендлер фич, обработка внутриигровых эвентов
     auto &hand_feat = Handler_feature::instance(obj_acted, obj_actor, obj_dyn, obj_infl, player);
