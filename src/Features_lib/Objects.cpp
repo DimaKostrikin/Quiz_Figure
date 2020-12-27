@@ -43,10 +43,12 @@ Object_static::Object_static(const int& elem_type, glm::vec3 &c, glm::vec3 &sz)
     our_model.set_ypos(float(c.z));
     our_model.set_zpos(float(c.y));
 
-    our_model.set_xscale(float(size.x) * 1);
-    our_model.set_yscale(float(size.z) * 1);
+    if (elem_type != DOOR) {
+        our_model.set_xscale(float(size.x));
+        our_model.set_yscale(float(size.z));
+    }
     if (elem_type != JUMPER && elem_type != TELEPORT_IN && elem_type != TELEPORT_OUT && elem_type != BUTTON && elem_type != FAN) {
-        our_model.set_zscale(float(size.y) * 1);
+        our_model.set_zscale(float(size.y));
     }
 
     our_model.update_model(elem_type);
@@ -197,13 +199,13 @@ Object_activated *Object_activator::get_linked_object() {
 
 void Object_activator::change_model() {
     if (linked_object->is_activated() && !linked_model_is_changed) {
-        linked_object->get_model().set_xpos(linked_object->get_model().get_xpos() - 0.05);
-        linked_object->get_model().set_zpos(linked_object->get_model().get_zpos() + 0.05);
+        linked_object->get_model().set_xpos(linked_object->get_model().get_xpos() - 0.25);
+        linked_object->get_model().set_zpos(linked_object->get_model().get_zpos() + 0.25);
         linked_object->get_model().set_yangle(90);
         linked_model_is_changed = true;
     } else if (!linked_object->is_activated() && linked_model_is_changed) {
         linked_object->get_model().set_xpos(linked_object->get_center().x);
-        linked_object->get_model().set_zpos(linked_object->get_center().z);
+        linked_object->get_model().set_zpos(linked_object->get_center().y);
         linked_object->get_model().set_yangle(0);
         linked_model_is_changed = false;
     }
