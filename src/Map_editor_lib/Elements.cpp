@@ -291,7 +291,7 @@ void Map_object::plus_height() {
 Map_object::Map_object(std::string f1, std::string f2, std::vector<float> vertices, type_elem type, size_t id,
                        const unsigned int &SCR_HEIGHT, const unsigned int &SCR_WIDTH) :
         Button_entry(std::move(f1), std::move(f2), std::move(vertices)),
-        id(id), connect(0),type(type), z(0), h(0){
+        id(id), connect(0),type(type), z(0), h(3){
     change_w(SCR_WIDTH);
     change_l(SCR_HEIGHT);
     change_x(SCR_WIDTH);

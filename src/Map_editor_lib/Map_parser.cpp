@@ -42,18 +42,22 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) const {
     child.put("height", 0.1);
     children[WALL].push_back(std::make_pair("", child));
 
+    //костыль
+    child.put("id", 0);
+    child.put("x", 1002);
+    child.put("y",0);
+    child.put("z", 0);
+    child.put("length", 50);
+    child.put("width", 50);
+    child.put("height", 0.1);
+    children[DOOR].push_back(std::make_pair("", child));
+
     for (auto &i: map){
         pt::ptree child1, child2;
         switch (i.type){
             case WALL_STATIC:
                 i.type = WALL;
-            case WALL:
-            case HOLE:
-            case PLATFORM:
-            case TELEPORT_IN:
-            case TELEPORT_OUT:
-            case CUBE:
-            case JUMPER:{
+            default:{
                 float x = MAP_SIZE * i.x / width;
                 float y = MAP_SIZE * i.y / height;
                 float z = MAP_SIZE * i.z / height;
@@ -68,21 +72,6 @@ std::string Map_parser::create_json(std::vector<Map_object> &map) const {
                 child1.put("width", std::to_string(w));
                 child1.put("height", std::to_string(h));
                 child1.put("act_id", i.connect);
-                children[i.type].push_back(std::make_pair("", child1));
-                //
-            }
-                break;
-
-            case FINISH:
-                child1.put("act_id", i.connect);
-            case START:{
-                float x = MAP_SIZE * i.x / width;
-                float y = MAP_SIZE * i.y / height;
-                float z = MAP_SIZE * i.z / height;
-                child1.put("id", i.id);
-                child1.put("x", std::to_string(x));
-                child1.put("y", std::to_string(y));
-                child1.put("z", std::to_string(z));
                 children[i.type].push_back(std::make_pair("", child1));
                 //
             }
